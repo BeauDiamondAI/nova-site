@@ -1,0 +1,383 @@
+'use client';
+
+import { useState, useEffect } from 'react';
+
+export default function Hero() {
+  const [showIntro, setShowIntro] = useState(true);
+  const [showHeadline, setShowHeadline] = useState(false);
+  const [showSubheadline, setShowSubheadline] = useState(false);
+
+  useEffect(() => {
+    const introTimer = setTimeout(() => {
+      setShowIntro(false);
+      setShowHeadline(true);
+      setTimeout(() => {
+        setShowSubheadline(true);
+      }, 600);
+    }, 2000);
+    return () => clearTimeout(introTimer);
+  }, []);
+
+  return (
+    <section className="relative w-full h-[95vh] sm:h-screen overflow-hidden bg-black text-white flex items-center justify-center">
+      {/* Logo */}
+      <div className="absolute top-6 left-6 z-30">
+        <img src="/novathink-logo-w.png" alt="NovaThink Logo" className="h-14 md:h-20 w-auto" />
+      </div>
+
+      {/* Video Background */}
+      <video
+        className="absolute top-0 left-0 w-full h-full z-0 
+                   object-cover sm:object-cover object-center"
+        autoPlay
+        muted
+        loop
+        playsInline
+      >
+        <source src="/video1.mp4" type="video/mp4" />
+      </video>
+
+      {/* ⬛️ Overlay Layer */}
+      <div className="absolute inset-0 bg-black opacity-40 z-10" />
+
+      {/* Content */}
+      <div className="relative z-20 text-center px-4 mt-[-2rem] sm:mt-0">
+        {/* Intro Animation */}
+        {showIntro && (
+          <div className="relative inline-block">
+            <h1
+              className={`text-5xl md:text-7xl font-bold font-headline text-white ${
+                showIntro ? 'animate-fadeInStrong' : 'opacity-0'
+              }`}
+            >
+              NovaThink
+              <span className="absolute -top-2 right-[-0.6rem] text-xs">™</span>
+            </h1>
+          </div>
+        )}
+
+        {/* Headline + Subheadline */}
+        <div className="transition-opacity duration-1000">
+          <h1
+            className={`font-headline text-4xl md:text-6xl font-bold tracking-tight leading-tight mt-4 ${
+              showHeadline ? 'animate-slideUpFast' : 'opacity-0'
+            }`}
+          >
+            Strategic AI Infrastructure for
+            <br />
+            Real-Time Intelligence and
+            <br />
+            Enterprise Execution
+          </h1>
+          <p
+            className={`mt-6 text-xl md:text-2xl max-w-3xl mx-auto ${
+              showSubheadline ? 'animate-slideUpFast' : 'opacity-0'
+            }`}
+          >
+            Engineering the cognitive architecture that powers the future of real-time intelligence,
+            strategic execution, and enterprise-scale decision systems.
+          </p>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+
+
+'use client';
+
+import { useState, useEffect } from 'react';
+
+export default function Hero() {
+  const [showIntro, setShowIntro] = useState(true);
+  const [showHeadline, setShowHeadline] = useState(false);
+  const [showSubheadline, setShowSubheadline] = useState(false);
+
+  useEffect(() => {
+    const introTimer = setTimeout(() => {
+      setShowIntro(false);
+      setShowHeadline(true);
+      setTimeout(() => {
+        setShowSubheadline(true);
+      }, 600);
+    }, 2000);
+    return () => clearTimeout(introTimer);
+  }, []);
+
+  return (
+    <section className="relative w-full h-[65vh] md:h-screen overflow-hidden bg-black text-white">
+      {/* Logo */}
+      <div className="absolute top-6 left-6 z-30">
+        <img src="/novathink-logo-w.png" alt="NovaThink Logo" className="h-14 md:h-20 w-auto" />
+      </div>
+
+      {/* Video Background */}
+      <video
+        className="absolute top-0 left-0 w-full h-full object-cover z-0 scale-[1] object-center"
+        autoPlay
+        muted
+        loop
+        playsInline
+      >
+        <source src="/video1.mp4" type="video/mp4" />
+      </video>
+
+      {/* ⬛️ Overlay */}
+      <div className="absolute inset-0 bg-black opacity-40 z-10" />
+
+      {/* NovaThink TM */}
+      {!showIntro && (
+        <div className="absolute top-4 left-4 md:top-8 md:left-8 z-20">
+          <h1 className="text-5xl md:text-7xl font-bold font-headline text-white">
+            NovaThink
+            <span className="text-xs align-super">™</span>
+          </h1>
+        </div>
+      )}
+
+      {/* Headline + Subheadline */}
+      <div className="relative z-20 px-4 w-full h-full flex flex-col items-center justify-center text-center">
+        <h1
+          className={`font-headline text-4xl md:text-6xl font-bold tracking-tight leading-tight ${
+            showHeadline ? 'animate-slideUpFast' : 'opacity-0'
+          }`}
+        >
+          Strategic AI Infrastructure for
+          <br />
+          Real-Time Intelligence and
+          <br />
+          Enterprise Execution
+        </h1>
+        <p
+          className={`mt-6 text-xl md:text-2xl max-w-3xl mx-auto ${
+            showSubheadline ? 'animate-slideUpFast' : 'opacity-0'
+          }`}
+        >
+          Engineering the cognitive architecture that powers the future of real-time intelligence,
+          strategic execution, and enterprise-scale decision systems.
+        </p>
+      </div>
+    </section>
+  );
+}
+
+
+
+'use client';
+
+import { useState, useEffect } from 'react';
+
+export default function Hero() {
+  const [showIntro, setShowIntro] = useState(true);
+  const [showHeadline, setShowHeadline] = useState(false);
+  const [showSubheadline, setShowSubheadline] = useState(false);
+
+  useEffect(() => {
+    const introTimer = setTimeout(() => {
+      setShowIntro(false);
+      setShowHeadline(true);
+      setTimeout(() => {
+        setShowSubheadline(true);
+      }, 600);
+    }, 2000);
+    return () => clearTimeout(introTimer);
+  }, []);
+
+  return (
+    <section className="relative w-full h-[72vh] md:h-screen overflow-hidden bg-black text-white">
+      {/* Logo */}
+      <div className="absolute top-6 left-6 z-30">
+        <img src="/novathink-logo-w.png" alt="NovaThink Logo" className="h-14 md:h-20 w-auto" />
+      </div>
+
+      {/* Video Background */}
+      <video
+        className="absolute top-0 left-0 w-full h-full object-cover z-0 scale-[1] object-center"
+        autoPlay
+        muted
+        loop
+        playsInline
+      >
+        <source src="/video1.mp4" type="video/mp4" />
+      </video>
+
+      {/* ⬛️ Overlay */}
+      <div className="absolute inset-0 bg-black opacity-40 z-10" />
+
+      {showIntro && (
+        <div className="absolute inset-0 flex items-center justify-center z-40 animate-fadeInOut">
+          <h1 className="text-5xl md:text-7xl font-bold font-headline text-white">
+            NovaThink
+            <span className="relative text-xs" style={{ top: '-4.2em', left: '0.07em' }}>™</span>
+
+          </h1>
+        </div>
+      )}
+
+      {/* Headline + Subheadline */}
+      <div className="relative z-20 px-4 w-full h-full flex flex-col items-center justify-center text-center">
+        <h1
+          className={`font-headline text-4xl md:text-6xl font-bold tracking-tight leading-tight ${
+            showHeadline ? 'animate-slideUpFast' : 'opacity-0'
+          }`}
+        >
+          Strategic AI Infrastructure for
+          <br />
+          Real-Time Intelligence and
+          <br />
+          Enterprise Execution
+        </h1>
+        <p
+          className={`mt-6 text-xl md:text-2xl max-w-3xl mx-auto ${
+            showSubheadline ? 'animate-slideUpFast' : 'opacity-0'
+          }`}
+        >
+          Engineering the cognitive architecture that powers the future of real-time intelligence,
+          strategic execution, and enterprise-scale decision systems.
+        </p>
+      </div>
+    </section>
+  );
+}
+
+
+
+
+
+
+'use client';
+
+import { useState, useEffect } from 'react';
+
+export default function Hero() {
+  const [showIntro, setShowIntro] = useState(true);
+  const [showHeadline, setShowHeadline] = useState(false);
+  const [showSubheadline, setShowSubheadline] = useState(false);
+
+  useEffect(() => {
+    const introTimer = setTimeout(() => {
+      setShowIntro(false);
+      setShowHeadline(true);
+      setTimeout(() => {
+        setShowSubheadline(true);
+      }, 600);
+    }, 2000);
+    return () => clearTimeout(introTimer);
+  }, []);
+
+  return (
+    <section className="relative w-full h-[51vh] md:h-screen overflow-hidden bg-black text-white">
+      {/* Logo */}
+      <div className="absolute top-6 left-6 z-30">
+        <img src="/novathink-logo-w.png" alt="NovaThink Logo" className="h-14 md:h-20 w-auto" />
+      </div>
+
+      {/* Video Background */}
+      <video
+        className="absolute top-0 left-0 w-full h-full object-cover z-0 scale-[1] object-center"
+        autoPlay
+        muted
+        loop
+        playsInline
+      >
+        <source src="/video1.mp4" type="video/mp4" />
+      </video>
+
+      {/* ⬛️ Overlay */}
+      <div className="absolute inset-0 bg-black opacity-40 z-10" />
+
+      {showIntro && (
+        <div className="absolute inset-0 flex items-center justify-center z-40 animate-fadeInOut">
+          <h1 className="text-5xl md:text-7xl font-bold font-headline text-white">
+            NovaThink
+            <span className="relative text-xs" style={{ top: '-4.2em', left: '0.07em' }}>™</span>
+
+          </h1>
+        </div>
+      )}
+
+      {/* Headline + Subheadline */}
+      <div className="relative z-20 px-4 w-full h-full flex flex-col items-center justify-center text-center pt-27 sm:pt-0">
+        <h1
+          className={`font-headline text-4xl md:text-6xl font-bold tracking-tight leading-tight ${
+            showHeadline ? 'animate-slideUpFast' : 'opacity-0'
+          }`}
+        >
+          Strategic AI Infrastructure for
+          <br />
+          Real-Time Intelligence and
+          <br />
+          Enterprise Execution
+        </h1>
+        <p
+          className={`mt-6 text-xl md:text-2xl max-w-3xl mx-auto ${
+            showSubheadline ? 'animate-slideUpFast' : 'opacity-0'
+          }`}
+        >
+          Engineering the cognitive architecture that powers the future of real-time intelligence,
+          strategic execution, and enterprise-scale decision systems.
+        </p>
+      </div>
+    </section>
+  );
+}
+
+
+
+  return (
+    <section className="py-16 bg-black text-white relative">
+      <div className="flex justify-between items-center px-4 md:px-16 mb-6">
+        <h2 className="text-3xl md:text-5xl font-headline font-bold">
+          What We’re Building
+        </h2>
+        <div className="hidden md:flex gap-2">
+          <button
+            onClick={scrollLeft}
+            className="p-2 bg-white/10 hover:bg-white/20 rounded-full"
+          >
+            <ChevronLeft />
+          </button>
+          <button
+            onClick={scrollRight}
+            className="p-2 bg-white/10 hover:bg-white/20 rounded-full"
+          >
+            <ChevronRight />
+          </button>
+        </div>
+      </div>
+      <div
+        ref={containerRef}
+        className="flex overflow-x-auto snap-x snap-mandatory scroll-smooth scrollbar-hide px-4 md:px-16"
+      >
+        {cards.map((card, i) => (
+          <motion.div
+            key={i}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: i * 0.2 }}
+            className="snap-start shrink-0 w-80 md:w-[28rem] h-auto min-h-[43rem] relative rounded-xl overflow-hidden shadow-lg mx-2 bg-black"
+          >
+            <Image
+              src={card.image}
+              alt={card.title}
+              fill
+              className="object-cover opacity-70"
+            />
+            <div className="absolute inset-0 bg-gradient-to-b from-black/10 to-black/27 p-6 flex flex-col justify-end">
+              <span className="text-xs font-semibold text-teal-400 mb-1 uppercase tracking-wide">
+                {card.tag}
+              </span>
+              <h3 className="text-xl md:text-2xl font-bold mb-2">
+                {card.title}
+              </h3>
+              <p className="text-sm text-white/90 leading-snug">
+                {card.paragraph}
+              </p>
+            </div>
+          </motion.div>
+        ))}
+      </div>
+    </section>
+  );
+}
