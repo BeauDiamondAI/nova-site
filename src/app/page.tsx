@@ -1,7 +1,6 @@
 // src/app/page.tsx
 'use client'
 
-import { motion } from 'framer-motion'
 import Hero from '@/components/Hero'
 import SectionAbout from '@/components/SectionAbout';
 import SectionCorePillars from '@/components/SectionCorePillars';
