@@ -1,7 +1,7 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import { useState, useEffect } from 'react';
 
 export default function Hero() {
   const [showIntro, setShowIntro] = useState(true);
@@ -9,12 +9,12 @@ export default function Hero() {
   useEffect(() => {
     const introTimer = setTimeout(() => {
       setShowIntro(false);
-    }, 5200); // allow full fade-out of NovaThink
+    }, 5200);
     return () => clearTimeout(introTimer);
   }, []);
 
   return (
-    <section className="relative w-full h-screen md:h-screen overflow-hidden bg-black text-white pb-2">
+    <section className="relative w-full h-[49vh] md:h-screen overflow-hidden bg-black text-white">
       {/* Logo */}
       <div className="absolute top-6 left-6 z-30">
         <img src="/novathink-logo-w.png" alt="NovaThink Logo" className="h-14 md:h-20 w-auto" />
@@ -34,31 +34,30 @@ export default function Hero() {
       {/* Overlay */}
       <div className="absolute inset-0 bg-black opacity-40 z-10" />
 
-      {/* Intro NovaThink Title */}
-      <motion.div
-        className="absolute inset-0 flex items-center justify-center z-40"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 1.2 }}
-      >
-        <motion.h1
-          className="relative text-5xl md:text-7xl font-bold font-headline text-white"
+      {/* Intro Title */}
+      {showIntro && (
+        <motion.div
+          className="absolute inset-0 flex items-center justify-center z-40"
           initial={{ opacity: 0 }}
-          animate={{ opacity: [0, 1, 1, 0] }}
-          transition={{ duration: 4.8, times: [0, 0.5, 0.5, 1] }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1.2 }}
         >
-          NovaThink
-          <span
-            className="absolute text-xs"
-            style={{
-              top: '-0.3em',
-              right: '-0.8em',
-            }}
+          <motion.h1
+            className="relative text-5xl md:text-7xl font-bold font-headline text-white"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: [0, 1, 1, 0] }}
+            transition={{ duration: 4.8, times: [0, 0.5, 0.5, 1] }}
           >
-            ™
-          </span>
-        </motion.h1>
-      </motion.div>
+            NovaThink
+            <span
+              className="absolute text-xs"
+              style={{ top: '-0.3em', right: '-0.8em' }}
+            >
+              ™
+            </span>
+          </motion.h1>
+        </motion.div>
+      )}
 
       {/* Headline + Subheadline */}
       <div className="relative z-20 px-4 w-full h-full flex flex-col items-center justify-center text-center pt-24 sm:pt-0">
