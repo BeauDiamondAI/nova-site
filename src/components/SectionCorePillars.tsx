@@ -43,7 +43,7 @@ const cards: Card[] = [
     tag: 'mission_ready',
     title: 'Deployment Ready by Design',
     paragraph:
-      "These systems don't just demo well - they operate in the wild. Built for execution, not just experimentation.",
+      'These systems don&apos;t just demo well - they operate in the wild. Built for execution, not just experimentation.',
     image: '/images/cards/DeploymentReadybyDesign.webp',
   },
 ];
