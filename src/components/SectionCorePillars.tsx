@@ -115,7 +115,7 @@ export default function SectionCorePillars() {
             />
   
             {/* Tag in top-left */}
-            <div className="absolute top-4 left-4 bg-black/60 px-3 py-1 rounded-md text-xs text-teal-400 font-mono z-10 tracking-wide lowercase">
+            <div className="absolute top-4 left-4 bg-black/60 px-3 py-1 rounded-md text-xs text-teal-400 font-mono z-10 tracking-wide lowercase normal-case">
               {card.tag}
             </div>
   
