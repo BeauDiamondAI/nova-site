@@ -77,7 +77,7 @@ export default function SectionCorePillars() {
     <section className="py-16 bg-black text-white relative">
       <div className="flex justify-between items-center px-4 md:px-16 mb-6">
         <h2 className="text-3xl md:text-5xl font-headline font-bold">
-          What We're Building
+          What We&apos;re Building
         </h2>
         <div className="hidden md:flex gap-2">
           <button
