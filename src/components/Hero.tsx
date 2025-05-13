@@ -35,35 +35,30 @@ export default function Hero() {
       <div className="absolute inset-0 bg-black opacity-40 z-10" />
 
       {/* Intro NovaThink Title */}
-      <AnimatePresence>
-        {showIntro && (
-          <motion.div
-            className="absolute inset-0 flex items-center justify-center z-40"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 1 }}
+      <motion.div
+        className="absolute inset-0 flex items-center justify-center z-40"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1.2 }}
+      >
+        <motion.h1
+          className="relative text-5xl md:text-7xl font-bold font-headline text-white"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: [0, 1, 1, 0] }}
+          transition={{ duration: 4.8, times: [0, 0.5, 0.5, 1] }}
+        >
+          NovaThink
+          <span
+            className="absolute text-xs"
+            style={{
+              top: '-0.3em',
+              right: '-0.8em',
+            }}
           >
-            <motion.h1
-              className="relative text-5xl md:text-7xl font-bold font-headline text-white"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: [0, 1, 1, 0] }}
-              transition={{ duration: 4.8, times: [0, 0.5, 0.5, 1] }}
-            >
-              NovaThink
-              <span
-                className="absolute text-xs"
-                style={{
-                  top: '-0.3em',
-                  right: '-0.8em',
-                }}
-              >
-                ™
-              </span>
-            </motion.h1>
-          </motion.div>
-        )}
-      </AnimatePresence>
+            ™
+          </span>
+        </motion.h1>
+      </motion.div>
 
       {/* Headline + Subheadline */}
       <div className="relative z-20 px-4 w-full h-full flex flex-col items-center justify-center text-center pt-24 sm:pt-0">
