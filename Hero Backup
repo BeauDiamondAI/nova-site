@@ -381,3 +381,7 @@ export default function Hero() {
     </section>
   );
 }
+
+
+
+line 17 in hero <section className="relative w-full h-[49vh] md:h-screen overflow-hidden bg-black text-white pb-2">
