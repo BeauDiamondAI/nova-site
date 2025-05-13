@@ -19,7 +19,7 @@ const cards: Card[] = [
     image: '/images/cards/Security-FirstArchitecture.webp',
   },
   {
-    tag: 'insight_at_velocity',
+    tag: 'insight_at_velocity_test_test',
     title: 'Dynamic Data Intelligence',
     paragraph:
       'Our models adapt to real-world signals - fusing behavioral, contextual, and operational data into fluid intelligence layers.',
@@ -97,7 +97,7 @@ export default function SectionCorePillars() {
   
       <div
         ref={containerRef}
-        className="flex overflow-x-auto snap-x snap-mandatory scroll-smooth scrollbar-hide px-4 md:px-16 min-h-[50rem]"
+        className="flex overflow-x-auto snap-x snap-mandatory scroll-smooth scrollbar-hide px-4 md:px-16 min-h-[53rem]"
       >
         {cards.map((card, i) => (
           <motion.div
