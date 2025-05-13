@@ -19,7 +19,7 @@ const cards: Card[] = [
     image: '/images/cards/Security-FirstArchitecture.webp',
   },
   {
-    tag: 'insight_at_velocity_test_test',
+    tag: 'insight_at_velocity',
     title: 'Dynamic Data Intelligence',
     paragraph:
       'Our models adapt to real-world signals - fusing behavioral, contextual, and operational data into fluid intelligence layers.',
@@ -105,7 +105,7 @@ export default function SectionCorePillars() {
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: i * 0.2 }}
-            className="snap-start shrink-0 w-[95vw] md:w-[28rem] h-[80vh] md:h-[26rem] relative rounded-xl overflow-hidden shadow-lg mx-2 bg-black"
+            className="snap-start shrink-0 w-[95vw] md:w-[40rem] h-[80vh] md:h-[36rem] relative rounded-xl overflow-hidden shadow-lg mx-2 bg-black"
           >
             <Image
               src={card.image}
