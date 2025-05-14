@@ -28,7 +28,7 @@ export default function SectionAbout() {
     <section className="relative w-full text-white pt-32 pb-16 sm:pb-32 px-6 flex flex-col items-center justify-center text-center overflow-visible">
       {/* Background Image Layer */}
       <div
-        className="fixed top-0 left-0 w-full h-full -z-10 pointer-events-none"
+        className="pointer-events-none absolute inset-0 w-full h-full z-0"
         style={{
           backgroundImage: `url('/images/SectionAboutBluewave.webp')`,
           backgroundSize: 'cover',
@@ -36,7 +36,7 @@ export default function SectionAbout() {
           backgroundRepeat: 'no-repeat',
           opacity: 0.4,
         }}
-      ></div>   
+      ></div>
 
       {/* Divider Glow */}
       <div className="absolute top-0 left-1/2 transform -translate-x-1/2 h-full w-px bg-cyan-400 opacity-20 blur-xl z-10" />
@@ -46,7 +46,8 @@ export default function SectionAbout() {
         className="relative z-20 max-w-4xl"
         variants={container}
         initial="hidden"
-        animate="show"
+        whileInView="show"
+        viewport={{ once: true }}
       >
         <motion.h2
           className="text-4xl sm:text-5xl font-bold font-headline mb-3"
