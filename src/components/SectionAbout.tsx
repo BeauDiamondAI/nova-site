@@ -9,7 +9,6 @@ export default function SectionAbout() {
     offset: ['start end', 'end start'],
   });
 
-  // Smooth eased values
   const y = useSpring(useTransform(scrollYProgress, [0, 1], [50, -50]), {
     stiffness: 60,
     damping: 20,
@@ -17,12 +16,12 @@ export default function SectionAbout() {
 
   const opacity = useTransform(scrollYProgress, [0, 0.3, 1], [0.2, 1, 1]);
 
-  const lineHeight = useTransform(scrollYProgress, [0, 1], [2.2, 1.6]); // rems
+  const lineHeight = useTransform(scrollYProgress, [0, 1], [2.2, 1.6]);
 
   return (
     <section
       ref={ref}
-      className="relative w-full text-white h-screen pt-32 pb-16 sm:pb-32 px-6 flex flex-col items-center justify-center text-center overflow-visible"
+      className="relative w-full text-white min-h-screen pt-32 pb-16 sm:pb-32 px-6 flex flex-col items-center justify-center text-center overflow-visible"
     >
       {/* Flicker Video Layer */}
       <div className="absolute inset-0 z-0 pointer-events-none">
@@ -31,9 +30,12 @@ export default function SectionAbout() {
           loop
           muted
           playsInline
-          className="w-full h-full object-cover opacity-28"
+          className="w-full h-full object-cover opacity-25"
         >
-          <source src="/images/SectionAboutMedia/SectionAboutVideo2.mp4" type="video/mp4" />
+          <source
+            src="/images/SectionAboutMedia/SectionAboutVideo2.mp4"
+            type="video/mp4"
+          />
         </video>
       </div>
 
@@ -52,16 +54,16 @@ export default function SectionAbout() {
       {/* Divider Glow */}
       <div className="absolute top-0 left-1/2 transform -translate-x-1/2 h-full w-[40%] bg-cyan-400 opacity-20 blur-xl z-40" />
 
-      {/* Content Layer with Scroll Animation */}
+      {/* Content */}
       <motion.div
-        className="relative z-20 max-w-4xl"
+        className="relative z-30 max-w-4xl px-4"
         style={{ y, opacity, lineHeight }}
       >
-        <h2 className="text-4xl sm:text-5xl font-bold font-headline mb-3">
+        <h2 className="text-4xl sm:text-5xl font-bold font-headline mb-5">
           Thinks Deeper. Moves Faster. Deploys Intelligently.
         </h2>
 
-        <p className="mt-4 text-sm text-slate-400 tracking-wide uppercase mb-8">
+        <p className="text-sm text-slate-400 tracking-wide uppercase mb-10">
           Built for mission-critical cognitive infrastructure.
         </p>
 
@@ -97,7 +99,7 @@ export default function SectionAbout() {
       </motion.div>
 
       {/* Cyan Accent Line */}
-      <div className="h-[3px] mx-auto mt-12 bg-cyan-400 rounded-full shadow-[0_0_20px_5px_rgba(34,211,238,0.5)] w-1/4 z-40" />
+      <div className="h-[3px] mx-auto mt-12 bg-cyan-400 rounded-full shadow-[0_0_20px_5px_rgba(34,211,238,0.5)] w-1/4 z-50" />
     </section>
   );
 }
