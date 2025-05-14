@@ -25,7 +25,7 @@ const fadeUp = {
 
 export default function SectionAbout() {
   return (
-    <section className="relative w-full text-white pt-32 pb-16 sm:pb-32 px-6 flex flex-col items-center justify-center text-center overflow-visible">
+    <section className="relative w-full min-h-screen text-white pt-32 pb-16 sm:pb-32 px-6 flex flex-col items-center justify-center text-center overflow-visible">
       {/* Background Image Layer */}
       <div
         className="pointer-events-none absolute inset-0 w-full h-full z-0"
@@ -46,8 +46,7 @@ export default function SectionAbout() {
         className="relative z-20 max-w-4xl"
         variants={container}
         initial="hidden"
-        whileInView="show"
-        viewport={{ once: true }}
+        animate="show"
       >
         <motion.h2
           className="text-4xl sm:text-5xl font-bold font-headline mb-3"
