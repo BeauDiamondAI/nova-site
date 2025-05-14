@@ -7,7 +7,7 @@ export default function SectionAbout() {
         <div
           className="w-full h-full"
           style={{
-            backgroundImage: "url('/images/SectionAboutBluewave.webp')",
+            backgroundImage: "url('/images/SectionAboutBlueWave.webp')",
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             backgroundRepeat: 'no-repeat',
