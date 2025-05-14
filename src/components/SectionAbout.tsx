@@ -26,6 +26,22 @@ const fadeUp = {
 export default function SectionAbout() {
   return (
     <section className="relative w-full text-white pt-32 pb-16 sm:pb-32 px-6 flex flex-col items-center justify-center text-center overflow-visible">
+      
+      {/* Flicker Video Layer */}
+      <div className="absolute inset-0 z-0 pointer-events-none">
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="w-full h-full object-cover opacity-10"
+        >
+          <source src="/images/SectionAboutMedia/SectionAboutVideo1.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+      </div>
+
+      
       {/* Background Image Layer */}
       <div
         className="pointer-events-none absolute inset-0 w-full h-full z-0"
