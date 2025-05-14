@@ -13,27 +13,35 @@ const container = {
 
 const fadeUp = {
   hidden: { opacity: 0, y: 20 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.9, ease: [0.33, 0.1, 0.5, 1] } },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.9,
+      ease: [0.25, 0.1, 0.25, 1],
+    },
+  },
 };
 
 export default function SectionAbout() {
   return (
-    <section className="relative z-0 w-full text-white pt-32 pb-16 sm:pb-32 px-6 flex flex-col items-center justify-center text-center overflow-visible">
+    <section className="relative w-full text-white pt-32 pb-16 sm:pb-32 px-6 flex flex-col items-center justify-center text-center overflow-visible">
+      {/* Background Image Layer */}
       <div
-  className="pointer-events-none absolute inset-0 w-full h-full z-0"
-  style={{
-    backgroundImage: `url('/images/SectionAboutBluewave.webp')`,
-    backgroundSize: 'cover',
-    backgroundPosition: 'center',
-    backgroundRepeat: 'no-repeat',
-    opacity: 0.4,
-  }}
-></div>
- 
-      {/* Optional Divider Glow */}
-      <div className="absolute top-0 left-1/2 transform -translate-x-1/2 h-full w-px bg-cyan-400 opacity-20 blur-xl z-20" />
+        className="pointer-events-none absolute inset-0 w-full h-full z-0"
+        style={{
+          backgroundImage: `url('/images/SectionAboutBluewave.webp')`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+          opacity: 0.4,
+        }}
+      ></div>
 
-      {/* Text Content Layer */}
+      {/* Divider Glow */}
+      <div className="absolute top-0 left-1/2 transform -translate-x-1/2 h-full w-px bg-cyan-400 opacity-20 blur-xl z-10" />
+
+      {/* Content Layer */}
       <motion.div
         className="relative z-20 max-w-4xl"
         variants={container}
@@ -41,7 +49,6 @@ export default function SectionAbout() {
         whileInView="show"
         viewport={{ once: true }}
       >
-        {/* New Section Title */}
         <motion.h2
           className="text-4xl sm:text-5xl font-bold font-headline mb-3"
           variants={fadeUp}
@@ -49,7 +56,6 @@ export default function SectionAbout() {
           Thinks Deeper. Moves Faster. Deploys Intelligently.
         </motion.h2>
 
-        {/* Microtag */}
         <motion.p
           className="text-sm text-slate-400 tracking-wide uppercase mb-8"
           variants={fadeUp}
@@ -57,7 +63,6 @@ export default function SectionAbout() {
           Built for mission-critical cognitive infrastructure.
         </motion.p>
 
-        {/* Paragraphs */}
         <motion.p className="text-lg mb-6" variants={fadeUp}>
           NovaThink is a U.S.-based AI infrastructure company engineering secure,
           enterprise-grade systems for reasoning, analysis, and strategic intelligence.
@@ -90,9 +95,7 @@ export default function SectionAbout() {
       </motion.div>
 
       {/* Cyan Accent Line */}
-      <div
-        className="h-[3px] mx-auto mt-12 bg-cyan-400 rounded-full shadow-[0_0_20px_5px_rgba(34,211,238,0.5)] w-1/2"
-      />
+      <div className="h-[3px] mx-auto mt-12 bg-cyan-400 rounded-full shadow-[0_0_20px_5px_rgba(34,211,238,0.5)] w-1/2" />
     </section>
   );
 }
