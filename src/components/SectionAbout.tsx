@@ -18,9 +18,9 @@ const fadeUp = {
 
 export default function SectionAbout() {
   return (
-    <section className="relative w-full text-white pt-32 pb-16 sm:pb-32 px-6 flex flex-col items-center justify-center text-center overflow-hidden">
+    <section className="relative z-0 w-full text-white pt-32 pb-16 sm:pb-32 px-6 flex flex-col items-center justify-center text-center overflow-hidden">
       <div
-  className="absolute inset-0 z-0 w-full h-full"
+  className="absolute inset-0 z-10 w-full h-full"
   style={{
     backgroundImage: `url('/images/SectionAboutBluewave.webp')`,
     backgroundSize: 'cover',
