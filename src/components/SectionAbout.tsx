@@ -34,7 +34,7 @@ export default function SectionAbout() {
           loop
           muted
           playsInline
-          className="w-full h-full object-cover opacity-10"
+          className="w-full h-full object-cover opacity-20"
         >
           <source src="/images/SectionAboutMedia/SectionAboutVideo2.mp4" type="video/mp4" />
           Your browser does not support the video tag.
