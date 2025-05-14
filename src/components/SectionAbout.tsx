@@ -47,7 +47,6 @@ export default function SectionAbout() {
         variants={container}
         initial="hidden"
         whileInView="show"
-        viewport={{ once: true }}
       >
         <motion.h2
           className="text-4xl sm:text-5xl font-bold font-headline mb-3"
