@@ -52,7 +52,7 @@ export default function SectionAbout() {
       ></div>
 
       {/* Divider Glow */}
-      <div className="absolute top-0 left-1/2 transform -translate-x-1/2 h-full w-[90%] bg-cyan-400 opacity-20 blur-xl z-40" />
+      <div className="absolute top-0 left-1/2 transform -translate-x-1/2 h-full w-[40%] bg-cyan-400 opacity-20 blur-xl z-40" />
 
       {/* Content */}
       <motion.div
