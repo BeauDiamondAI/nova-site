@@ -36,7 +36,7 @@ export default function SectionAbout() {
           playsInline
           className="w-full h-full object-cover opacity-10"
         >
-          <source src="/images/SectionAboutMedia/SectionAboutVideo1.mp4" type="video/mp4" />
+          <source src="/images/SectionAboutMedia/SectionAboutVideo2.mp4" type="video/mp4" />
           Your browser does not support the video tag.
         </video>
       </div>
