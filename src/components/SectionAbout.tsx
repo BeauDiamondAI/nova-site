@@ -20,7 +20,7 @@ export default function SectionAbout() {
   return (
     <section className="relative z-0 w-full text-white pt-32 pb-16 sm:pb-32 px-6 flex flex-col items-center justify-center text-center overflow-hidden">
       <div
-  className="absolute inset-0 z-10 w-full h-full"
+  className="pointer-events-none absolute inset-0 w-full h-full z-0"
   style={{
     backgroundImage: `url('/images/SectionAboutBluewave.webp')`,
     backgroundSize: 'cover',
