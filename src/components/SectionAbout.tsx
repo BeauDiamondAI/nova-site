@@ -28,7 +28,7 @@ export default function SectionAbout() {
     <section className="relative w-full text-white pt-32 pb-16 sm:pb-32 px-6 flex flex-col items-center justify-center text-center overflow-visible">
       {/* Background Image Layer */}
       <div
-        className="absolute top-0 left-0 w-full h-full min-h-screen -z-10"
+        className="fixed top-0 left-0 w-full h-full -z-10 pointer-events-none"
         style={{
           backgroundImage: `url('/images/SectionAboutBluewave.webp')`,
           backgroundSize: 'cover',
@@ -37,7 +37,6 @@ export default function SectionAbout() {
           opacity: 0.4,
         }}
       ></div>   
-
 
       {/* Divider Glow */}
       <div className="absolute top-0 left-1/2 transform -translate-x-1/2 h-full w-px bg-cyan-400 opacity-20 blur-xl z-10" />
