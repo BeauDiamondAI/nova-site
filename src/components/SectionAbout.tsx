@@ -20,7 +20,7 @@ export default function SectionAbout() {
   return (
     <section className="relative z-0 w-full text-white pt-32 pb-16 sm:pb-32 px-6 flex flex-col items-center justify-center text-center overflow-hidden">
       <div
-  className="absolute inset-0 z-10 w-full h-full"
+  className="absolute inset-0 z-0 w-full h-full"
   style={{
     backgroundImage: `url('/images/SectionAboutBluewave.webp')`,
     backgroundSize: 'cover',
@@ -31,7 +31,7 @@ export default function SectionAbout() {
 ></div>
  
       {/* Optional Divider Glow */}
-      <div className="absolute top-0 left-1/2 transform -translate-x-1/2 h-full w-px bg-cyan-400 opacity-20 blur-xl z-10" />
+      <div className="absolute top-0 left-1/2 transform -translate-x-1/2 h-full w-px bg-cyan-400 opacity-20 blur-xl z-20" />
 
       {/* Text Content Layer */}
       <motion.div
