@@ -1,52 +1,6 @@
 'use client';
 import { motion } from 'framer-motion';
-import Image from 'next/image';
 import React from 'react';
-
-interface Card {
-  tag: string;
-  title: string;
-  paragraph: string;
-  image: string;
-}
-
-const cards: Card[] = [
-  {
-    tag: 'zero_trust',
-    title: 'Security-First Architecture',
-    paragraph:
-      'Our infrastructure starts from zero trust — encrypted, isolated, and fortified for high-sensitivity deployments.',
-    image: '/images/cards/Security-FirstArchitecture.webp',
-  },
-  {
-    tag: 'data_intelligence',
-    title: 'Dynamic Data Intelligence',
-    paragraph:
-      'NovaThink systems ingest and reason over real-time market, behavioral, and operational signals — built for strategic action.',
-    image: '/images/cards/Data-Intelligence.webp',
-  },
-  {
-    tag: 'reasoning_engines',
-    title: 'Proprietary Reasoning Engines',
-    paragraph:
-      'We deploy domain-specific logic stacks — AI agents tuned to think, decide, and act in your operational context.',
-    image: '/images/cards/Proprietary-ReasoningEngines.webp',
-  },
-  {
-    tag: 'cloud_framework',
-    title: 'Scalable Cloud Framework',
-    paragraph:
-      'Modular infrastructure for inference, execution, and secure model deployment — designed to evolve as you scale.',
-    image: '/images/cards/Scalable-CloudFramework.webp',
-  },
-  {
-    tag: 'mission_ready',
-    title: 'Deployment-Ready by Design',
-    paragraph:
-      'We don’t ship prototypes. We ship live systems — secure endpoints, cloud-native, and field-tested.',
-    image: '/images/cards/Deployment-Ready.webp',
-  },
-];
 
 const container = {
   hidden: {},
@@ -59,50 +13,86 @@ const container = {
 
 const fadeUp = {
   hidden: { opacity: 0, y: 20 },
-  show: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.9,
-      ease: [0.33, 0.1, 0.5, 1],
-    },
-  },
+  show: { opacity: 1, y: 0, transition: { duration: 0.9, ease: [0.33, 0.1, 0.5, 1] } },
 };
 
-export default function SectionCorePillars() {
+export default function SectionAbout() {
   return (
-    <section className="relative w-full bg-black text-white py-24 px-6 overflow-hidden">
+    <section className="relative z-0 w-full text-white pt-32 pb-16 sm:pb-32 px-6 flex flex-col items-center justify-center text-center overflow-hidden">
+      <div
+  className="absolute inset-0 z-10 w-full h-full"
+  style={{
+    backgroundImage: `url('/images/SectionAboutBluewave.webp')`,
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+    backgroundRepeat: 'no-repeat',
+    opacity: 0.4,
+  }}
+></div>
+ 
+      {/* Optional Divider Glow */}
+      <div className="absolute top-0 left-1/2 transform -translate-x-1/2 h-full w-px bg-cyan-400 opacity-20 blur-xl z-20" />
+
+      {/* Text Content Layer */}
       <motion.div
-        className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"
+        className="relative z-20 max-w-4xl"
         variants={container}
         initial="hidden"
         whileInView="show"
         viewport={{ once: true }}
       >
-        {cards.map((card) => (
-          <motion.div
-            key={card.tag}
-            className="bg-[#0f1116] border border-slate-800 rounded-2xl p-6 flex flex-col justify-between min-h-[32rem] shadow-lg hover:shadow-cyan-500/10 transition-shadow duration-300"
-            variants={fadeUp}
-          >
-            <div className="mb-6">
-              <div className="text-xs text-cyan-400 font-mono uppercase tracking-wide mb-2">
-                {card.tag.replace(/_/g, ' ')}
-              </div>
-              <h3 className="text-xl font-semibold mb-3">{card.title}</h3>
-              <p className="text-sm text-slate-400 leading-relaxed">{card.paragraph}</p>
-            </div>
-            <div className="relative w-full h-48 rounded-lg overflow-hidden">
-              <Image
-                src={card.image}
-                alt={card.title}
-                fill
-                className="object-cover object-center rounded-md"
-              />
-            </div>
-          </motion.div>
-        ))}
+        {/* New Section Title */}
+        <motion.h2
+          className="text-4xl sm:text-5xl font-bold font-headline mb-3"
+          variants={fadeUp}
+        >
+          Thinks Deeper. Moves Faster. Deploys Intelligently.
+        </motion.h2>
+
+        {/* Microtag */}
+        <motion.p
+          className="text-sm text-slate-400 tracking-wide uppercase mb-8"
+          variants={fadeUp}
+        >
+          Built for mission-critical cognitive infrastructure.
+        </motion.p>
+
+        {/* Paragraphs */}
+        <motion.p className="text-lg mb-6" variants={fadeUp}>
+          NovaThink is a U.S.-based AI infrastructure company engineering secure,
+          enterprise-grade systems for reasoning, analysis, and strategic intelligence.
+        </motion.p>
+
+        <motion.p className="text-lg mb-6" variants={fadeUp}>
+          We’re building advanced cognitive architectures that blend multi-step logic
+          frameworks with large language models — primarily OpenAI GPT models via API —
+          unlocking advanced systems for real-time decision intelligence and autonomous
+          execution—purpose-built for operators, analysts, researchers, and executives
+          alike.
+        </motion.p>
+
+        <motion.p className="text-lg mb-6" variants={fadeUp}>
+          To ensure resilience and continuity, NovaThink’s systems are also designed to
+          interface with select open-source models, enabling multi-model redundancy across
+          critical operations.
+        </motion.p>
+
+        <motion.p className="text-lg mb-6" variants={fadeUp}>
+          All AI interactions are executed securely inside a fully isolated, encrypted
+          Virtual Private Cloud (VPC), ensuring end-to-end privacy, compliance, and
+          control.
+        </motion.p>
+
+        <motion.p className="text-lg" variants={fadeUp}>
+          Our infrastructure is built from the ground up to meet SOC 2 and ISO 27001
+          compliance standards — and beyond.
+        </motion.p>
       </motion.div>
+
+      {/* Cyan Accent Line */}
+      <div
+        className="h-[3px] mx-auto mt-12 bg-cyan-400 rounded-full shadow-[0_0_20px_5px_rgba(34,211,238,0.5)] w-1/2"
+      />
     </section>
   );
 }
