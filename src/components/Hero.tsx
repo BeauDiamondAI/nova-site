@@ -14,7 +14,7 @@ export default function Hero() {
   }, []);
 
   return (
-    <section className="relative w-full h-[49vh] md:h-screen overflow-hidden bg-black text-white">
+    <section className="relative w-full h-[90vh] md:h-screen overflow-hidden bg-black text-white">
       {/* Logo */}
       <div className="absolute top-6 left-6 z-30">
         <img src="/novathink-logo-w.png" alt="NovaThink Logo" className="h-14 md:h-20 w-auto" />
