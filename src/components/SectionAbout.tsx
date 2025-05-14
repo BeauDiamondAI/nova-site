@@ -34,7 +34,7 @@ export default function SectionAbout() {
           loop
           muted
           playsInline
-          className="w-full h-full object-cover opacity-25"
+          className="w-full h-full object-cover opacity-28"
         >
           <source src="/images/SectionAboutMedia/SectionAboutVideo2.mp4" type="video/mp4" />
           Your browser does not support the video tag.
@@ -73,7 +73,7 @@ export default function SectionAbout() {
         </motion.h2>
 
         <motion.p
-          className="text-sm text-slate-400 tracking-wide uppercase mb-8"
+          className="mt-4 text-sm text-slate-400 tracking-wide uppercase mb-8"
           variants={fadeUp}
         >
           Built for mission-critical cognitive infrastructure.
