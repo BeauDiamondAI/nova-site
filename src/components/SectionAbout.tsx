@@ -19,33 +19,17 @@ const fadeUp = {
 export default function SectionAbout() {
   return (
     <section className="relative w-full text-white pt-32 pb-16 sm:pb-32 px-6 flex flex-col items-center justify-center text-center overflow-hidden">
-      {/* Background Image Layer */}
       <div
-        className="absolute inset-0 z-0"
-        style={{
-          backgroundImage: "url('/images/SectionAboutBluewave.webp')",
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat',
-          opacity: 0.4,
-        }}
-      />
-
-       {/* Background Image Layer */}
-      <div className="absolute inset-0 z-0">
-        <div
-          className="w-full h-full"
-          style={{
-            backgroundImage: "url('/images/SectionAboutBluewave.webp')",
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            backgroundRepeat: 'no-repeat',
-            opacity: 0.4,
-          }}
-        />
-      </div>
+  className="absolute inset-0 z-0 w-full h-full"
+  style={{
+    backgroundImage: `url('/images/SectionAboutBluewave.webp')`,
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+    backgroundRepeat: 'no-repeat',
+    opacity: 0.4,
+  }}
+></div>
  
-
       {/* Optional Divider Glow */}
       <div className="absolute top-0 left-1/2 transform -translate-x-1/2 h-full w-px bg-cyan-400 opacity-20 blur-xl z-10" />
 
