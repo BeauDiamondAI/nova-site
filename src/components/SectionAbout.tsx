@@ -16,7 +16,7 @@ export default function SectionAbout() {
 
   const opacity = useTransform(scrollYProgress, [0, 0.3, 1], [0.2, 1, 1]);
 
-  const lineHeight = useTransform(scrollYProgress, [0, 1], [2.2, 1.6]);
+  const lineHeight = useTransform(scrollYProgress, [0, 1], [1.4, 1.2]);
 
   return (
     <section
