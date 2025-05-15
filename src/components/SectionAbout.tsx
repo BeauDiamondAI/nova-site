@@ -16,7 +16,7 @@ export default function SectionAbout() {
 
   const opacity = useTransform(scrollYProgress, [0, 0.3, 1], [0.2, 1, 1]);
 
-  const lineHeight = useTransform(scrollYProgress, [0, 1], [1.4, 1.2]);
+  const lineHeight = useTransform(scrollYProgress, [0, 1], [2.2, 1.6]);
 
   return (
     <section
@@ -52,14 +52,15 @@ export default function SectionAbout() {
       ></div>
   
       {/* Dark Background Overlayw */}
-      <div className="absolute inset-0 bg-black opacity-30 z-20 pointer-events-none" />  
+      <div className="absolute inset-0 bg-black opacity-30 z-10 pointer-events-none" />  
 
       {/* Divider Glow */}
       <div className="absolute top-0 left-1/2 transform -translate-x-1/2 h-full w-[40%] bg-cyan-400 opacity-20 blur-xl z-40" /> 
 
       {/* Content */}
+    <div className="relative z-30 max-w-4xl px-4"> 
       <motion.div
-        className="relative z-30 max-w-4xl px-4"
+        className="relative bg-black/60 backdrop-blur-sm rounded-md p-6"
         style={{ y, opacity, lineHeight }}
       >
         <h2 className="text-4xl sm:text-5xl font-bold font-headline mb-5">
@@ -103,6 +104,7 @@ export default function SectionAbout() {
 
       {/* Cyan Accent Line */}
       <div className="h-[3px] mx-auto mt-12 bg-cyan-400 rounded-full shadow-[0_0_20px_5px_rgba(34,211,238,0.5)] w-1/4 z-50" />
+    </div>
     </section>
   );
 }
