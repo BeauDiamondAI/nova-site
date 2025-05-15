@@ -13,10 +13,10 @@ export default function SectionAbout() {
     stiffness: 40,
     damping: 12,
   });
-
+  
   const opacity = useTransform(scrollYProgress, [0, 0.3, 1], [0.2, 1, 1]);
 
-  const lineHeight = useTransform(scrollYProgress, [0, 1], [1.4, 1.2]);
+  const lineHeight = useTransform(scrollYProgress, [0, 1], [1.8, 1.2]);
 
   return (
     <section
@@ -70,12 +70,12 @@ export default function SectionAbout() {
           Built for mission-critical cognitive infrastructure.
         </p>
 
-        <p className="text-lg mb-6">
+        <p className="mb-6 text-base" style={{ lineHeight: `${lineHeight}px` }}>
           NovaThink is a U.S.-based AI infrastructure company engineering secure,
           enterprise-grade systems for reasoning, analysis, and strategic intelligence.
         </p>
 
-        <p className="text-lg mb-6">
+        <p className="mb-6 text-base" style={{ lineHeight: `${lineHeight}px` }}>
           We’re building advanced cognitive architectures that blend multi-step logic
           frameworks with large language models — primarily OpenAI GPT models via API —
           unlocking advanced systems for real-time decision intelligence and autonomous
@@ -83,19 +83,19 @@ export default function SectionAbout() {
           alike.
         </p>
 
-        <p className="text-lg mb-6">
+        <p className="mb-6 text-base" style={{ lineHeight: `${lineHeight}px` }}>
           To ensure resilience and continuity, NovaThink’s systems are also designed to
           interface with select open-source models, enabling multi-model redundancy across
           critical operations.
         </p>
 
-        <p className="text-lg mb-6">
+        <p className="mb-6 text-base" style={{ lineHeight: `${lineHeight}px` }}>
           All AI interactions are executed securely inside a fully isolated, encrypted
           Virtual Private Cloud (VPC), ensuring end-to-end privacy, compliance, and
           control.
         </p>
 
-        <p className="text-lg">
+        <p className="mb-6 text-base" style={{ lineHeight: `${lineHeight}px` }}>
           Our infrastructure is built from the ground up to meet SOC 2 and ISO 27001
           compliance standards — and beyond.
         </p>
