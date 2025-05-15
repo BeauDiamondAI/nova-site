@@ -14,7 +14,7 @@ export default function SectionAbout() {
     damping: 20,
   });
 
-  
+  const opacity = useTransform(scrollYProgress, [0, 0.3, 1], [0.2, 1, 1]);
 
   const lineHeight = useTransform(scrollYProgress, [0, 1], [1.4, 1.2]);
 
@@ -55,12 +55,12 @@ export default function SectionAbout() {
       <div className="absolute inset-0 bg-black opacity-30 z-50 pointer-events-none" />  
 
       {/* Divider Glow */}
-      <div className="absolute top-0 left-1/2 transform -translate-x-1/2 h-full w-[40%] bg-cyan-400 opacity-20 blur-xl z-40" /> 
+       
 
       {/* Content */}
       <motion.div
-        className="relative z-30 max-w-4xl px-4 opacity-100"
-        style={{ y, lineHeight }}
+        className="relative z-30 max-w-4xl px-4"
+        style={{ y, opacity, lineHeight }}
       >
         <h2 className="text-4xl sm:text-5xl font-bold font-headline mb-5">
           Thinks Deeper. Moves Faster. Deploys Intelligently.
