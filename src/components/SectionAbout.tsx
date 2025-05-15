@@ -14,9 +14,7 @@ export default function SectionAbout() {
     damping: 20,
   });
 
-  const opacity = useTransform(scrollYProgress, [0, 0.3, 1], [0.2, 1, 1]);
-
-  const lineHeight = useTransform(scrollYProgress, [0, 1], [1.4, 1.2]);
+ 
 
   return (
     <section
@@ -60,7 +58,7 @@ export default function SectionAbout() {
       {/* Content */}
       <motion.div
         className="relative z-30 max-w-4xl px-4"
-        style={{ y, opacity, lineHeight }}
+        
       >
         <h2 className="text-4xl sm:text-5xl font-bold font-headline mb-5">
           Thinks Deeper. Moves Faster. Deploys Intelligently.
