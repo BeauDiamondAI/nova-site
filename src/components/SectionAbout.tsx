@@ -9,9 +9,9 @@ export default function SectionAbout() {
     offset: ['start end', 'end start'],
   });
 
-  const y = useSpring(useTransform(scrollYProgress, [0, 1], [50, -50]), {
-    stiffness: 60,
-    damping: 20,
+  const y = useSpring(useTransform(scrollYProgress, [0, 1], [75, -75]), {
+    stiffness: 40,
+    damping: 12,
   });
 
   const opacity = useTransform(scrollYProgress, [0, 0.3, 1], [0.2, 1, 1]);
