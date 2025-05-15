@@ -47,7 +47,7 @@ export default function SectionAbout() {
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',
-          opacity: 0.4,
+          opacity: 0.2,
         }}
       ></div>
 
