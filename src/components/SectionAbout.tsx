@@ -50,6 +50,9 @@ export default function SectionAbout() {
           opacity: 0.2,
         }}
       ></div>
+  
+      {/* Dark Background Overlayw */}
+      <div className="absolute inset-0 bg-black opacity-30 z-10 pointer-events-none" />  
 
       {/* Divider Glow */}
       <div className="absolute top-0 left-1/2 transform -translate-x-1/2 h-full w-[40%] bg-cyan-400 opacity-20 blur-xl z-40" />
