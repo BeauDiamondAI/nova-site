@@ -1,8 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: [
-    './src/**/*.{js,ts,jsx,tsx,mdx}',
-  ],
+  content: ['./src/**/*.{js,ts,jsx,tsx,mdx}'],
   theme: {
     extend: {
       fontFamily: {
@@ -12,7 +10,7 @@ module.exports = {
         'fade-in': 'fadeIn 4s ease-out forwards',
         'slide-up': 'slideUp 0.8s ease-out forwards',
         'slide-up-fast': 'slideUp 0.5s ease-out forwards',
-        'fadeInOut': 'fadeInOut 4s ease-in-out forwards',
+        'fade-in-out': 'fadeInOut 4s ease-in-out forwards',
       },
       keyframes: {
         fadeIn: {
