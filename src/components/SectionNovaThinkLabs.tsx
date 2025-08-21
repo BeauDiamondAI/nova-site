@@ -4,33 +4,33 @@ import { motion } from "framer-motion";
 
 const cardData = [
   {
-    src: "src/images/NovaThinkLabsMedia/Card1.jpg",
+    image: '/images/NovaThinkLabsMedia/Card1.jpg',
     headline: "Proprietary Market & Financial Intelligence Systems",
     subheadline:
       "AI-driven analysis models used exclusively within NovaThink for high-signal insights, pattern detection, and private execution. (Not client-facing.)",
   },
   {
-    src: "src/images/NovaThinkLabsMedia/Card2.jpg",
+    image: '/images/NovaThinkLabsMedia/Card2.jpg',
     headline: "AI-Led Executive Reasoning Engines",
     subheadline:
       "Simulated decision-making structures for roles like Co-CEO, CMO, and CTO—paired with human execution to carry out AI-optimized directives.",
   },
   {
-    src: "/src/images/NovaThinkLabsMedia/Card3_Animated.mp4",
+    image: '/images/NovaThinkLabsMedia/Card3_Animated.mp4',
     isVideo: true,
     headline: "Self-Directed Internal Strategy Frameworks",
     subheadline:
       "AI tools that co-develop strategic roadmaps, product prioritization, and adaptive planning across NovaThink’s operational ecosystem.",
   },
   {
-    src: "src/images/NovaThinkLabsMedia/Card4.mp4",
+    image: '/images/NovaThinkLabsMedia/Card4.mp4',
     isVideo: true,
     headline: "Recursive Strategic Adaptation",
     subheadline:
       "Internal frameworks that adjust and evolve based on performance feedback, market conditions, and multi-agent reasoning—enabling increasingly effective execution over time.",
   },
   {
-    src: "src/images/NovaThinkLabsMedia/Card5.mp4",
+    image: '/images/NovaThinkLabsMedia/Card5.mp4',
     isVideo: true,
     headline: "Private R&D Acceleration Tools",
     subheadline:
@@ -74,21 +74,22 @@ export default function SectionNovaThinkLabs() {
                 playsInline
                 className="rounded-xl mb-4 w-full h-56 object-cover brightness-90"
               >
-                <source src={card.src} type="video/mp4" />
+                <source src={card.image} type="video/mp4" />
               </video>
             ) : (
               <img
-                src={card.src}
-                alt={card.headline}
+                src={card.image} // <-- was card.src
+                alt={card.headline} // <-- was card.headline
                 className="rounded-xl mb-4 w-full h-56 object-cover"
               />
             )}
             <h3 className="text-xl font-semibold mb-2 text-white">
-              {card.headline}
+              {card.headline} {/* <-- was card.headline */}
             </h3>
             <p className="text-base text-gray-300" style={{ lineHeight: "1.6" }}>
-              {card.subheadline}
+              {card.subheadline} {/* <-- was card.subheadline */}
             </p>
+
           </motion.div>
         ))}
       </div>
