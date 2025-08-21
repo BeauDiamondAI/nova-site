@@ -56,7 +56,7 @@ export default function SectionNovaThinkLabs() {
         </p>
       </motion.div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 mt-20 max-w-7xl mx-auto">
+      <div className="grid gap-10 mt-20 max-w-7xl mx-auto justify-center lg:grid-cols-3 auto-rows-auto">
         {cardData.map((card, index) => (
           <motion.div
             key={index}
