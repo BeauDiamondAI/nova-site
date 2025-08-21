@@ -4,33 +4,33 @@ import { motion } from "framer-motion";
 
 const cardData = [
   {
-    src: "/Card1.jpg",
+    src: "src/images/NovaThinkLabsMedia/Card1.jpg",
     headline: "Proprietary Market & Financial Intelligence Systems",
     subheadline:
       "AI-driven analysis models used exclusively within NovaThink for high-signal insights, pattern detection, and private execution. (Not client-facing.)",
   },
   {
-    src: "/Card2.jpg",
+    src: "src/images/NovaThinkLabsMedia/Card2.jpg",
     headline: "AI-Led Executive Reasoning Engines",
     subheadline:
       "Simulated decision-making structures for roles like Co-CEO, CMO, and CTO—paired with human execution to carry out AI-optimized directives.",
   },
   {
-    src: "/Card3_Animated.mp4",
+    src: "/src/images/NovaThinkLabsMedia/Card3_Animated.mp4",
     isVideo: true,
     headline: "Self-Directed Internal Strategy Frameworks",
     subheadline:
       "AI tools that co-develop strategic roadmaps, product prioritization, and adaptive planning across NovaThink’s operational ecosystem.",
   },
   {
-    src: "/Card4.mp4",
+    src: "src/images/NovaThinkLabsMedia/Card4.mp4",
     isVideo: true,
     headline: "Recursive Strategic Adaptation",
     subheadline:
       "Internal frameworks that adjust and evolve based on performance feedback, market conditions, and multi-agent reasoning—enabling increasingly effective execution over time.",
   },
   {
-    src: "/Card5.mp4",
+    src: "src/images/NovaThinkLabsMedia/Card5.mp4",
     isVideo: true,
     headline: "Private R&D Acceleration Tools",
     subheadline:
