@@ -4,13 +4,13 @@ import { motion } from "framer-motion";
 
 const cardData = [
   {
-    image: '/images/NovaThinkLabsMedia/Card1.mp4',
+    image: '/images/NovaThinkLabsMedia/Card1_Animated.mp4',
     headline: "Proprietary Market & Financial Intelligence Systems",
     subheadline:
       "AI-driven analysis models used exclusively within NovaThink for high-signal insights, pattern detection, and private execution. (Not client-facing.)",
   },
   {
-    image: '/images/NovaThinkLabsMedia/Card2.png',
+    image: '/images/NovaThinkLabsMedia/Card2.mp4',
     headline: "AI-Led Executive Reasoning Engines",
     subheadline:
       "Simulated decision-making structures for roles like Co-CEO, CMO, and CTO—paired with human execution to carry out AI-optimized directives.",
