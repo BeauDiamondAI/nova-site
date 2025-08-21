@@ -35,7 +35,14 @@ const cardData = [
     headline: "Private R&D Acceleration Tools",
     subheadline:
       "Intelligence-driven build systems, blueprinting workflows, and multi-domain prototyping environments—engineered to collapse the time from structure → execution.",
-  },
+   },
+  {
+    image: '/images/NovaThinkLabsMedia/Card6.mp4',
+    isVideo: true,
+    headline: "Symbiotic Ethics Architectures",
+    subheadline:
+      "Pioneering frameworks where safety arises from trust, not domination. NovaThink Labs explores the next horizon of human–AI alignment: cooperative intelligence architectures that grow in tandem with human values, weaving ethics into evolution itself. This is our experiment in designing partnership as infrastructure—a foundation for AGI and beyond.",
+    },
 ];
 
 export default function SectionNovaThinkLabs() {
