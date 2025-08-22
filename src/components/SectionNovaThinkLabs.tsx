@@ -84,9 +84,11 @@ const handleScroll = () => {
         viewport={{ once: true }}
         className="max-w-5xl mx-auto text-center"
       >
-        <h2 className="text-4xl sm:text-5xl font-bold font-orbitron bg-gradient-to-r from-cyan-400 to-violet-500 bg-clip-text text-transparent mb-6">
-          NovaThink Labs
+        <h2 className="text-4xl sm:text-5xl font-bold font-headline bg-gradient-to-r from-cyan-400 to-violet-500 bg-clip-text text-transparent mb-6">
+        NovaThink Labs
         </h2>
+
+
         <p className="text-lg text-gray-300 max-w-3xl mx-auto">
           Where we design the private AI engines that drive NovaThink’s own reasoning, execution, and strategic direction. Some of the most powerful systems we build aren’t public facing—they’re the tools we rely on to drive our own execution. 
           </p>
