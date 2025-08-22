@@ -62,13 +62,12 @@ const handleScroll = () => {
   if (!scrollRef.current) return;
 
   const scrollLeft = scrollRef.current.scrollLeft;
+  const scrollWidth = scrollRef.current.scrollWidth;
+  const clientWidth = scrollRef.current.clientWidth;
 
-  const cardElement = scrollRef.current.querySelector("div > div");
-  const cardWidth = cardElement?.clientWidth ?? 1;
-  const totalCards = cardData.length;
-  const totalScrollableWidth = cardWidth * totalCards;
+  const totalScrollable = scrollWidth - clientWidth;
+  const progress = scrollLeft / totalScrollable;
 
-  const progress = scrollLeft / (totalScrollableWidth - scrollRef.current.clientWidth);
   setScrollProgress(Math.min(progress, 1)); // cap at 100%
 };
 
