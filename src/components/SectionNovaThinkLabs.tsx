@@ -119,53 +119,52 @@ const handleScroll = () => {
       </div>
 
       {/* MOBILE VIEW */}
+<div
+  className="sm:hidden mt-12 overflow-x-auto snap-x snap-mandatory px-2 pb-16 no-scrollbar relative"
+  ref={scrollRef}
+  onScroll={handleScroll}
+>
+  <div className="flex space-x-4">
+    {cardData.map((card, index) => (
       <div
-        className="sm:hidden mt-12 overflow-x-auto snap-x snap-mandatory px-2 pb-12 no-scrollbar relative"
-        ref={scrollRef}
-        onScroll={handleScroll}
+        key={index}
+        className="snap-center shrink-0 w-[calc(100vw-3rem)] max-w-sm bg-gray-800 rounded-2xl p-5 shadow-xl border border-cyan-400 hover:border-cyan-300 transition-colors duration-300"
       >
-        <div className="flex space-x-4">
-          {cardData.map((card, index) => (
-            <div
-              key={index}
-              className="snap-center shrink-0 w-[calc(100vw-3rem)] max-w-sm bg-gray-800 rounded-2xl p-5 shadow-xl border border-cyan-400 hover:border-cyan-300 transition-colors duration-300"
-            >
-              <video
-                src={card.image}
-                autoPlay
-                loop
-                muted
-                playsInline
-                className="rounded-xl mb-4 w-full h-56 object-cover brightness-90"
-              />
-              <h3 className="text-xl font-semibold mb-2 text-white">
-                {card.headline}
-              </h3>
-              <p className="text-base text-gray-300" style={{ lineHeight: "1.6" }}>
-                {card.subheadline}
-              </p>
-            </div>
-          ))}
-        </div>
-
-          {/* Cyan blinking arrow */}
-  {/* Cyan blinking arrow */}
-{scrollProgress < 0.98 && (
-  <div className="absolute right-4 top-1/2 transform -translate-y-1/2 animate-pulse text-cyan-400 z-10 text-2xl">
-    →
+        <video
+          src={card.image}
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="rounded-xl mb-4 w-full h-56 object-cover brightness-90"
+        />
+        <h3 className="text-xl font-semibold mb-2 text-white">
+          {card.headline}
+        </h3>
+        <p className="text-base text-gray-300" style={{ lineHeight: "1.6" }}>
+          {card.subheadline}
+        </p>
+      </div>
+    ))}
   </div>
-)}
-</div>  
 
-{/* Scroll progress indicator */}
-<div className="absolute -bottom-4 left-1/2 transform -translate-x-1/2 flex justify-center w-full z-10">
-  <div className="relative w-24 h-1 bg-gray-700 rounded-full overflow-hidden">
-    <div
-      className="absolute top-0 left-0 h-full bg-white transition-all duration-300 rounded-full"
-      style={{
-        width: `${scrollProgress * 100}%`,
-      }}
-    />
+  {/* Cyan blinking arrow */}
+  {scrollProgress < 0.98 && (
+    <div className="absolute right-4 top-1/2 transform -translate-y-1/2 animate-pulse text-cyan-400 z-10 text-2xl">
+      →
+    </div>
+  )}
+
+  {/* ✅ Scroll progress indicator moved here */}
+  <div className="mt-4 flex justify-center w-full z-10">
+    <div className="relative w-24 h-1 bg-gray-700 rounded-full overflow-hidden">
+      <div
+        className="absolute top-0 left-0 h-full bg-white transition-all duration-300 rounded-full"
+        style={{
+          width: `${scrollProgress * 100}%`,
+        }}
+      />
+    </div>
   </div>
 </div>
 
