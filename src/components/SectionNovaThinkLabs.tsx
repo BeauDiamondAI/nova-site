@@ -157,14 +157,6 @@ const handleScroll = () => {
       </div>
     ))}
   </div>
-
-  {/* Cyan blinking arrow */}
-  {scrollProgress < 0.98 && (
-    <div className="absolute right-4 top-1/2 transform -translate-y-1/2 animate-pulse text-cyan-400 z-10 text-2xl">
-      →
-    </div>
-  )}
-
   {/* ✅ Scroll progress indicator moved here */}
   <div className="mt-4 flex justify-center w-full z-10">
     <div className="relative w-24 h-1 bg-gray-700 rounded-full overflow-hidden">
@@ -176,6 +168,13 @@ const handleScroll = () => {
       />
     </div>
   </div>
+
+  {/* Cyan blinking arrow */}
+  {scrollProgress < 0.98 && (
+    <div className="absolute right-4 top-1/2 transform -translate-y-1/2 animate-pulse text-cyan-400 z-10 text-2xl">
+      →
+    </div>
+  )}
 </div>
 
     </section>
