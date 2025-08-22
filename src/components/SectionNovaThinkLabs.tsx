@@ -158,7 +158,7 @@ const handleScroll = () => {
 </div>  
 
 {/* Scroll progress indicator */}
-<div className="absolute bottom-3 left-0 w-full flex justify-center">
+<div className="absolute -bottom-4 left-1/2 transform -translate-x-1/2 flex justify-center w-full z-10">
   <div className="relative w-24 h-1 bg-gray-700 rounded-full overflow-hidden">
     <div
       className="absolute top-0 left-0 h-full bg-white transition-all duration-300 rounded-full"
