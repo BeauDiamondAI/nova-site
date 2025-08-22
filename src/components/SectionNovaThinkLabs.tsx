@@ -46,7 +46,6 @@ const cardData = [
 export default function SectionNovaThinkLabs() {
   const videoRefs = useRef<HTMLVideoElement[]>([]);
   const scrollRef = useRef<HTMLDivElement>(null);
-  const [currentCardIndex, setCurrentCardIndex] = useState(0);
 
   const [scrollProgress, setScrollProgress] = useState(0);
 
@@ -150,13 +149,13 @@ const handleScroll = () => {
         </div>
 
           {/* Cyan blinking arrow */}
-  {currentCardIndex < cardData.length - 1 && (
-    <div className="absolute right-4 top-1/2 transform -translate-y-1/2 animate-pulse text-cyan-400 z-10">
-    ...
-    </div>
-  )}
-</div>  {/* 👈 This is where the scroll container ends */}
-
+  {/* Cyan blinking arrow */}
+{scrollProgress < 0.98 && (
+  <div className="absolute right-4 top-1/2 transform -translate-y-1/2 animate-pulse text-cyan-400 z-10 text-2xl">
+    →
+  </div>
+)}
+</div>  
 
 {/* Scroll progress indicator */}
 <div className="absolute bottom-3 left-0 w-full flex justify-center">
