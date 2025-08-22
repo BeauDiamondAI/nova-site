@@ -3,6 +3,9 @@
 import { motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 
+const [scrollProgress, setScrollProgress] = useState(0);
+
+
 const cardData = [
   {
     image: '/images/NovaThinkLabsMedia/Card1.mp4',
@@ -55,13 +58,13 @@ export default function SectionNovaThinkLabs() {
   }, []);
 
   // Track scroll position for mobile scroll indicator
-  const handleScroll = () => {
-    if (!scrollRef.current) return;
-    const scrollLeft = scrollRef.current.scrollLeft;
-    const cardWidth = (scrollRef.current.firstChild?.firstChild as HTMLElement)?.clientWidth || 1;
-    const index = Math.round(scrollLeft / (cardWidth + 16)); // 16px gap
-    setCurrentCardIndex(index);
-  };
+const handleScroll = () => {
+  if (!scrollRef.current) return;
+  const scrollLeft = scrollRef.current.scrollLeft;
+  const totalScrollWidth = scrollRef.current.scrollWidth - scrollRef.current.clientWidth;
+  const progress = scrollLeft / totalScrollWidth;
+  setScrollProgress(progress);
+};
 
   return (
     <section
@@ -149,20 +152,19 @@ export default function SectionNovaThinkLabs() {
           {/* Cyan blinking arrow */}
   {currentCardIndex < cardData.length - 1 && (
     <div className="absolute right-4 top-1/2 transform -translate-y-1/2 animate-pulse text-cyan-400 z-10">
-      ...
+    ...
     </div>
   )}
 </div>  {/* 👈 This is where the scroll container ends */}
 
 
-{/* ✅ Scroll indicator goes here — NOT inside the scroll container */}
-<div className="sm:hidden relative w-full mt-[-2rem] flex justify-center">
+{/* Scroll progress indicator */}
+<div className="absolute bottom-3 left-0 w-full flex justify-center">
   <div className="relative w-24 h-1 bg-gray-700 rounded-full overflow-hidden">
     <div
       className="absolute top-0 left-0 h-full bg-white transition-all duration-300 rounded-full"
       style={{
-        width: `${100 / cardData.length}%`,
-        transform: `translateX(${(100 / cardData.length) * currentCardIndex}%)`,
+        width: `${scrollProgress * 100}%`,
       }}
     />
   </div>
