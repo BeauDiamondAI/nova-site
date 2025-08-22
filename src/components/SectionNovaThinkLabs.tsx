@@ -146,28 +146,27 @@ export default function SectionNovaThinkLabs() {
           ))}
         </div>
 
-        {/* Cyan blinking arrow indicator */}
-        {currentCardIndex < cardData.length - 1 && (
-          <div className="absolute right-4 top-1/2 transform -translate-y-1/2 animate-pulse text-cyan-400 z-10">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-6 h-6">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-            </svg>
-          </div>
-        )}
+          {/* Cyan blinking arrow */}
+  {currentCardIndex < cardData.length - 1 && (
+    <div className="absolute right-4 top-1/2 transform -translate-y-1/2 animate-pulse text-cyan-400 z-10">
+      ...
+    </div>
+  )}
+</div>  {/* 👈 This is where the scroll container ends */}
 
-        {/* Scroll progress indicator */}
-        <div className="absolute bottom-3 left-0 w-full flex justify-center">
-          <div className="relative w-24 h-1 bg-gray-700 rounded-full overflow-hidden">
-            <div
-              className="absolute top-0 left-0 h-full bg-white transition-all duration-300 rounded-full"
-              style={{
-                width: `${100 / cardData.length}%`,
-                transform: `translateX(${(100 / cardData.length) * currentCardIndex}%)`,
-              }}
-            />
-          </div>
-        </div>
-      </div>
+
+{/* ✅ Scroll indicator goes here — NOT inside the scroll container */}
+<div className="sm:hidden relative w-full mt-[-2rem] flex justify-center">
+  <div className="relative w-24 h-1 bg-gray-700 rounded-full overflow-hidden">
+    <div
+      className="absolute top-0 left-0 h-full bg-white transition-all duration-300 rounded-full"
+      style={{
+        width: `${100 / cardData.length}%`,
+        transform: `translateX(${(100 / cardData.length) * currentCardIndex}%)`,
+      }}
+    />
+  </div>
+</div>
     </section>
   );
 }
