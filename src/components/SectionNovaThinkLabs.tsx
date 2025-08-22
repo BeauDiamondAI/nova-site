@@ -49,6 +49,7 @@ export default function SectionNovaThinkLabs() {
 
   const [scrollProgress, setScrollProgress] = useState(0);
 
+
   // Pause all desktop videos by default
   useEffect(() => {
     videoRefs.current.forEach((video) => {
@@ -59,8 +60,10 @@ export default function SectionNovaThinkLabs() {
   // Track scroll position for mobile scroll indicator
 const handleScroll = () => {
   if (!scrollRef.current) return;
+
   const scrollLeft = scrollRef.current.scrollLeft;
   const totalScrollWidth = scrollRef.current.scrollWidth - scrollRef.current.clientWidth;
+
   const progress = scrollLeft / totalScrollWidth;
   setScrollProgress(progress);
 };
@@ -81,7 +84,9 @@ const handleScroll = () => {
           NovaThink Labs
         </h2>
         <p className="text-lg text-gray-300 max-w-3xl mx-auto">
-          Where we design the private AI engines that drive NovaThink’s own reasoning, execution, and strategic direction. Some of the most powerful systems we build aren’t public facing—they’re the tools we rely on to drive our own execution. This is where we experiment, iterate, and deploy intelligence frameworks that give us a unique strategic edge—the kind that lets us deliver AI products operating at the frontier of what’s possible. From private market reasoning engines to simulated AI-led C-suite infrastructure, NovaThink Labs is our internal launchpad for what’s next.
+          Where we design the private AI engines that drive NovaThink’s own reasoning, execution, and strategic direction. Some of the most powerful systems we build aren’t public facing—they’re the tools we rely on to drive our own execution. 
+          
+          This is where we experiment, iterate, and deploy intelligence frameworks that give us a unique strategic edge—the kind that lets us deliver AI products operating at the frontier of what’s possible. From private market reasoning engines to simulated AI-led C-suite infrastructure, NovaThink Labs is our internal launchpad for what’s next.
         </p>
       </motion.div>
 
