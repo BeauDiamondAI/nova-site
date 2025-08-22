@@ -129,6 +129,7 @@ const handleScroll = () => {
       </div>
 
       {/* MOBILE VIEW */}
+{/* MOBILE VIEW */}
 <div
   className="sm:hidden mt-12 overflow-x-auto snap-x snap-mandatory px-2 pb-16 no-scrollbar relative"
   ref={scrollRef}
@@ -157,17 +158,6 @@ const handleScroll = () => {
       </div>
     ))}
   </div>
-  {/* ✅ Scroll progress indicator moved here */}
-  <div className="mt-4 flex justify-center w-full z-10">
-    <div className="relative w-24 h-1 bg-gray-700 rounded-full overflow-hidden">
-      <div
-        className="absolute top-0 left-0 h-full bg-white transition-all duration-300 rounded-full"
-        style={{
-          width: `${scrollProgress * 100}%`,
-        }}
-      />
-    </div>
-  </div>
 
   {/* Cyan blinking arrow */}
   {scrollProgress < 0.98 && (
@@ -177,6 +167,17 @@ const handleScroll = () => {
   )}
 </div>
 
+{/* ✅ Scroll indicator OUTSIDE scroll container */}
+<div className="mt-4 flex justify-center w-full z-10">
+  <div className="relative w-24 h-1 bg-gray-700 rounded-full overflow-hidden">
+    <div
+      className="absolute top-0 left-0 h-full bg-white transition-all duration-300 rounded-full"
+      style={{
+        width: `${scrollProgress * 100}%`,
+      }}
+    />
+  </div>
+</div>
     </section>
   );
 }
