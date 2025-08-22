@@ -3,8 +3,6 @@
 import { motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 
-const [scrollProgress, setScrollProgress] = useState(0);
-
 
 const cardData = [
   {
@@ -49,6 +47,8 @@ export default function SectionNovaThinkLabs() {
   const videoRefs = useRef<HTMLVideoElement[]>([]);
   const scrollRef = useRef<HTMLDivElement>(null);
   const [currentCardIndex, setCurrentCardIndex] = useState(0);
+
+  const [scrollProgress, setScrollProgress] = useState(0);
 
   // Pause all desktop videos by default
   useEffect(() => {
