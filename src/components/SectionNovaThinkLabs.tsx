@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from "framer-motion";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const cardData = [
   {
@@ -43,14 +43,25 @@ const cardData = [
 ];
 
 export default function SectionNovaThinkLabs() {
-  // Pause all videos by default
   const videoRefs = useRef<HTMLVideoElement[]>([]);
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [currentCardIndex, setCurrentCardIndex] = useState(0);
 
+  // Pause all desktop videos by default
   useEffect(() => {
     videoRefs.current.forEach((video) => {
       if (video) video.pause();
     });
   }, []);
+
+  // Track scroll position for mobile scroll indicator
+  const handleScroll = () => {
+    if (!scrollRef.current) return;
+    const scrollLeft = scrollRef.current.scrollLeft;
+    const cardWidth = (scrollRef.current.firstChild?.firstChild as HTMLElement)?.clientWidth || 1;
+    const index = Math.round(scrollLeft / (cardWidth + 16)); // 16px gap
+    setCurrentCardIndex(index);
+  };
 
   return (
     <section
@@ -75,71 +86,88 @@ export default function SectionNovaThinkLabs() {
       {/* DESKTOP VIEW */}
       <div className="hidden sm:grid gap-10 mt-20 max-w-7xl mx-auto justify-center lg:grid-cols-3 auto-rows-auto">
         {cardData.map((card, index) => (
-          <motion.div
+          <div
             key={index}
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ delay: index * 0.2, duration: 0.6 }}
-            viewport={{ once: true }}
-            className="bg-gray-800 rounded-2xl p-5 shadow-xl hover:shadow-cyan-500/30 border border-cyan-600/20 hover:border-cyan-400/50 hover:scale-[1.02] transition-all duration-300"
+            className="group relative bg-gray-800 rounded-2xl p-5 shadow-xl hover:shadow-cyan-500/30 border border-cyan-600/20 hover:border-cyan-400/50 hover:scale-[1.02] transition-all duration-300"
+            onMouseEnter={() => {
+              const video = document.getElementById(`desktop-video-${index}`) as HTMLVideoElement;
+              video?.play();
+            }}
+            onMouseLeave={() => {
+              const video = document.getElementById(`desktop-video-${index}`) as HTMLVideoElement;
+              video?.pause();
+            }}
           >
             <video
-              ref={(el: HTMLVideoElement | null) => {
-                if (el) {
-                  videoRefs.current[index] = el;
-                }
-              }}
+              id={`desktop-video-${index}`}
+              src={card.image}
               loop
               muted
               playsInline
-              className="rounded-xl mb-4 w-full h-56 object-cover brightness-90"
-              onMouseEnter={(e) => e.currentTarget.play()}
-              onMouseLeave={(e) => e.currentTarget.pause()}
-            >
-              <source src={card.image} type="video/mp4" />
-            </video>
+              className="rounded-xl mb-4 w-full h-56 object-cover brightness-90 pointer-events-none"
+            />
             <h3 className="text-xl font-semibold mb-2 text-white">
               {card.headline}
             </h3>
             <p className="text-base text-gray-300" style={{ lineHeight: "1.6" }}>
               {card.subheadline}
             </p>
-          </motion.div>
+          </div>
         ))}
       </div>
 
-      {/* MOBILE VIEW – horizontal swipeable cards */}
-<div className="sm:hidden mt-12 overflow-x-auto snap-x snap-mandatory px-2 pb-6 no-scrollbar relative">
-  <div className="flex space-x-4">
-    {cardData.map((card, index) => (
+      {/* MOBILE VIEW */}
       <div
-        key={index}
-        className={`snap-center shrink-0 w-[calc(100vw-3rem)] max-w-sm bg-gray-800 rounded-2xl p-5 shadow-xl border border-cyan-400 hover:border-cyan-300 transition-colors duration-300`}
+        className="sm:hidden mt-12 overflow-x-auto snap-x snap-mandatory px-2 pb-12 no-scrollbar relative"
+        ref={scrollRef}
+        onScroll={handleScroll}
       >
-        <video
-          src={card.image}
-          autoPlay
-          loop
-          muted
-          playsInline
-          className="rounded-xl mb-4 w-full h-56 object-cover brightness-90"
-        />
-        <h3 className="text-xl font-semibold mb-2 text-white">
-          {card.headline}
-        </h3>
-        <p className="text-base text-gray-300" style={{ lineHeight: "1.6" }}>
-          {card.subheadline}
-        </p>
+        <div className="flex space-x-4">
+          {cardData.map((card, index) => (
+            <div
+              key={index}
+              className="snap-center shrink-0 w-[calc(100vw-3rem)] max-w-sm bg-gray-800 rounded-2xl p-5 shadow-xl border border-cyan-400 hover:border-cyan-300 transition-colors duration-300"
+            >
+              <video
+                src={card.image}
+                autoPlay
+                loop
+                muted
+                playsInline
+                className="rounded-xl mb-4 w-full h-56 object-cover brightness-90"
+              />
+              <h3 className="text-xl font-semibold mb-2 text-white">
+                {card.headline}
+              </h3>
+              <p className="text-base text-gray-300" style={{ lineHeight: "1.6" }}>
+                {card.subheadline}
+              </p>
+            </div>
+          ))}
+        </div>
+
+        {/* Cyan blinking arrow indicator */}
+        {currentCardIndex < cardData.length - 1 && (
+          <div className="absolute right-4 top-1/2 transform -translate-y-1/2 animate-pulse text-cyan-400 z-10">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-6 h-6">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            </svg>
+          </div>
+        )}
+
+        {/* Scroll progress indicator */}
+        <div className="absolute bottom-3 left-0 w-full flex justify-center">
+          <div className="relative w-24 h-1 bg-gray-700 rounded-full overflow-hidden">
+            <div
+              className="absolute top-0 left-0 h-full bg-white transition-all duration-300 rounded-full"
+              style={{
+                width: `${100 / cardData.length}%`,
+                transform: `translateX(${(100 / cardData.length) * currentCardIndex}%)`,
+              }}
+            />
+          </div>
+        </div>
       </div>
-    ))}
-    {/* Cyan blinking arrow indicator */}
-      <div className="absolute right-4 top-1/2 transform -translate-y-1/2 animate-pulse text-cyan-400 z-10">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-6 h-6">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-        </svg>
-      </div>
-  </div>
-</div>
     </section>
   );
 }
