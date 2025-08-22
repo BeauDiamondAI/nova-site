@@ -89,6 +89,7 @@ export default function SectionNovaThinkLabs() {
                   videoRefs.current[index] = el;
                 }
               }}
+              loop
               muted
               playsInline
               className="rounded-xl mb-4 w-full h-56 object-cover brightness-90"
@@ -108,31 +109,31 @@ export default function SectionNovaThinkLabs() {
       </div>
 
       {/* MOBILE VIEW – horizontal swipeable cards */}
-      <div className="sm:hidden mt-12 overflow-x-auto whitespace-nowrap space-x-6 px-2 pb-6">
-        <div className="inline-flex space-x-6">
-          {cardData.map((card, index) => (
-            <div
-              key={index}
-              className="min-w-[85%] bg-gray-800 rounded-2xl p-5 shadow-xl border border-cyan-500"
-            >
-              <video
-                src={card.image}
-                autoPlay
-                loop
-                muted
-                playsInline
-                className="rounded-xl mb-4 w-full h-56 object-cover brightness-90"
-              />
-              <h3 className="text-xl font-semibold mb-2 text-white">
-                {card.headline}
-              </h3>
-              <p className="text-base text-gray-300" style={{ lineHeight: "1.6" }}>
-                {card.subheadline}
-              </p>
-            </div>
-          ))}
-        </div>
+<div className="sm:hidden mt-12 overflow-x-auto snap-x snap-mandatory px-2 pb-6 no-scrollbar">
+  <div className="flex space-x-4">
+    {cardData.map((card, index) => (
+      <div
+        key={index}
+        className="snap-center shrink-0 min-w-[90%] bg-gray-800 rounded-2xl p-5 shadow-xl border border-cyan-600/20"
+      >
+        <video
+          src={card.image}
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="rounded-xl mb-4 w-full h-56 object-cover brightness-90"
+        />
+        <h3 className="text-xl font-semibold mb-2 text-white">
+          {card.headline}
+        </h3>
+        <p className="text-base text-gray-300" style={{ lineHeight: "1.6" }}>
+          {card.subheadline}
+        </p>
       </div>
+    ))}
+  </div>
+</div>
     </section>
   );
 }
