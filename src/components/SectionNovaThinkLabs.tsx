@@ -62,11 +62,16 @@ const handleScroll = () => {
   if (!scrollRef.current) return;
 
   const scrollLeft = scrollRef.current.scrollLeft;
-  const totalScrollWidth = scrollRef.current.scrollWidth - scrollRef.current.clientWidth;
 
-  const progress = scrollLeft / totalScrollWidth;
-  setScrollProgress(progress);
+  const cardElement = scrollRef.current.querySelector("div > div");
+  const cardWidth = cardElement?.clientWidth ?? 1;
+  const totalCards = cardData.length;
+  const totalScrollableWidth = cardWidth * totalCards;
+
+  const progress = scrollLeft / (totalScrollableWidth - scrollRef.current.clientWidth);
+  setScrollProgress(Math.min(progress, 1)); // cap at 100%
 };
+
 
   return (
     <section
@@ -85,7 +90,8 @@ const handleScroll = () => {
         </h2>
         <p className="text-lg text-gray-300 max-w-3xl mx-auto">
           Where we design the private AI engines that drive NovaThink’s own reasoning, execution, and strategic direction. Some of the most powerful systems we build aren’t public facing—they’re the tools we rely on to drive our own execution. 
-          
+          </p>
+        <p className="text-lg text-gray-300 max-w-3xl mx-auto">
           This is where we experiment, iterate, and deploy intelligence frameworks that give us a unique strategic edge—the kind that lets us deliver AI products operating at the frontier of what’s possible. From private market reasoning engines to simulated AI-led C-suite infrastructure, NovaThink Labs is our internal launchpad for what’s next.
         </p>
       </motion.div>
