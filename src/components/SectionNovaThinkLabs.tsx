@@ -114,7 +114,7 @@ export default function SectionNovaThinkLabs() {
     {cardData.map((card, index) => (
       <div
         key={index}
-        className="snap-center shrink-0 min-w-[90%] bg-gray-800 rounded-2xl p-5 shadow-xl border border-cyan-600/20"
+        className="snap-center shrink-0 w-[calc(100vw-3rem)] max-w-sm bg-gray-800 rounded-2xl p-5 shadow-xl border border-cyan-600/20"
       >
         <video
           src={card.image}
