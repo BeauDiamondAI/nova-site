@@ -1,71 +1,92 @@
 // components/SectionWhoWeServe/WhoWeServeSection.tsx
-import React, { useState } from 'react';
-import AudienceCard from './AudienceCard';
+
+"use client";
+
+import React, { useState } from "react";
+import AudienceCard from "./AudienceCard";
+import "./AudienceCard.css";
 
 const audienceData = [
   {
-    id: 'founders',
-    headline: 'Founders & Creators',
+    id: "founders",
+    icon: "🚀",
+    headline: "Founders & Creators",
     description:
-      'Operational clarity, positioning precision, and business frameworks that think with you — and execute for you.',
-    colorClass: 'bg-gradient-to-br from-fuchsia-500 to-pink-500',
+      "Operational clarity, positioning precision, and business frameworks that think with you — and execute for you.",
   },
   {
-    id: 'operators',
-    headline: 'Operators & Teams',
+    id: "operators",
+    icon: "🧠",
+    headline: "Operators & Teams",
     description:
-      'Cognitive engines for real-time execution, workflow orchestration, and cross-domain decisioning.',
-    colorClass: 'bg-gradient-to-br from-orange-500 to-yellow-500',
+      "Cognitive engines for real-time execution, workflow orchestration, and cross-domain decisioning.",
   },
   {
-    id: 'enterprises',
-    headline: 'Enterprises',
+    id: "enterprises",
+    icon: "🏢",
+    headline: "Enterprises",
     description:
-      'Deployable self-optimizing intelligence that integrates directly into core infrastructure — revolutionizing strategy and execution across every dimension.',
-    colorClass: 'bg-gradient-to-br from-blue-500 to-cyan-500',
+      "Deployable self-optimizing intelligence that integrates directly into core infrastructure — revolutionizing strategy and execution across every dimension.",
   },
   {
-    id: 'privacy',
-    headline: 'Privacy-First Companies',
+    id: "privacy",
+    icon: "🛡️",
+    headline: "Privacy-First Companies",
     description:
-      'Zero-trust compatible deployments with VPC integration — data discretion by design.',
-    colorClass: 'bg-gradient-to-br from-green-500 to-emerald-500',
+      "Zero-trust compatible deployments with VPC integration — data discretion by design.",
   },
   {
-    id: 'future',
-    headline: 'Future-Facing Innovators',
+    id: "innovators",
+    icon: "🌌",
+    headline: "Future-Facing Innovators",
     description:
-      'Soon: branded intelligence + marketing systems engineered for elite precision, creative excellence, and explosive growth.',
-    colorClass: 'bg-gradient-to-br from-purple-600 to-indigo-500',
+      "Soon: branded intelligence + marketing systems engineered for elite precision, creative excellence, and explosive growth.",
   },
 ];
 
-const WhoWeServeSection = () => {
-  const [activeCardId, setActiveCardId] = useState<string | null>(null);
+export default function WhoWeServeSection() {
+  const [activeId, setActiveId] = useState<string | null>(null);
 
   const handleCardClick = (id: string) => {
-    setActiveCardId(activeCardId === id ? null : id);
+    setActiveId((prev) => (prev === id ? null : id));
   };
 
   return (
-    <section className="bg-gray-50 py-20">
-      <h2 className="text-center text-white font-headline text-3xl sm:text-4xl font-bold mb-12">
-        Who We Serve
-      </h2>
-      <div className="max-w-7xl mx-auto px-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-8">
-        {audienceData.map((audience) => (
-          <AudienceCard
-            key={audience.id}
-            headline={audience.headline}
-            description={audience.description}
-            isActive={activeCardId === audience.id}
-            onClick={() => handleCardClick(audience.id)}
-            colorClass={audience.colorClass}
-          />
-        ))}
+    <section className="relative z-10 py-20 px-4 sm:px-8 lg:px-24 overflow-hidden">
+      {/* Background Video Layer */}
+      <video
+        autoPlay
+        muted
+        loop
+        playsInline
+        className="absolute inset-0 w-full h-full object-cover opacity-40"
+      >
+        <source src="/images/SectionWhoWeServeMedia/Network.mp4" type="video/mp4" />
+      </video>
+
+      {/* Overlay Layer */}
+      <div className="absolute inset-0 bg-black bg-opacity-60 z-0" />
+
+      {/* Content Layer */}
+      <div className="relative z-10 max-w-7xl mx-auto">
+        <h2 className="text-center text-3xl md:text-4xl font-bold text-white mb-12 font-orbitron">
+          Who We Serve
+        </h2>
+
+        <div className="flex flex-wrap justify-center gap-6">
+          {audienceData.map(({ id, icon, headline, description }) => (
+            <AudienceCard
+              key={id}
+              id={id}
+              icon={icon}
+              headline={headline}
+              description={description}
+              isActive={activeId === id}
+              onClick={() => handleCardClick(id)}
+            />
+          ))}
+        </div>
       </div>
     </section>
   );
-};
-
-export default WhoWeServeSection;
+}
