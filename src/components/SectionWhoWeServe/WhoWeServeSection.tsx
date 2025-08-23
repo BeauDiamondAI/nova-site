@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { AudienceCard } from "./AudienceCard";
 import "./SectionWhoWeServe.css";
 
+
 const audienceData = [
   {
     icon: "🚀",
