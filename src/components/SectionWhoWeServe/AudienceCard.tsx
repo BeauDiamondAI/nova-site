@@ -14,7 +14,6 @@ type AudienceCardProps = {
 }
 
 const AudienceCard: React.FC<AudienceCardProps> = ({
-  id,
   headline,
   description,
   isActive,
