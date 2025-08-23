@@ -1,5 +1,5 @@
 // components/SectionWhoWeServe/AudienceCard.tsx
-import React, { useState } from 'react';
+
 import { motion, AnimatePresence } from 'framer-motion';
 
 type AudienceCardProps = {
