@@ -56,7 +56,6 @@ const WhoWeServeSection = () => {
         {audienceData.map((audience) => (
           <AudienceCard
             key={audience.id}
-            id={audience.id}
             headline={audience.headline}
             description={audience.description}
             isActive={activeCardId === audience.id}

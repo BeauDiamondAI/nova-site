@@ -1,8 +1,8 @@
-import React from 'react';
+// components/SectionWhoWeServe/AudienceCard.tsx
+import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 type AudienceCardProps = {
-  id: string;
   headline: string;
   description: string;
   colorClass: string;
@@ -11,7 +11,6 @@ type AudienceCardProps = {
 };
 
 const AudienceCard: React.FC<AudienceCardProps> = ({
-  id,
   headline,
   description,
   colorClass,
@@ -19,11 +18,10 @@ const AudienceCard: React.FC<AudienceCardProps> = ({
   onClick,
 }) => {
   return (
-    <motion.div
-      layout
-      initial={{ borderRadius: 16 }}
-      animate={{ borderRadius: isActive ? 24 : 16 }}
-      className={`cursor-pointer rounded-xl p-6 text-white shadow-lg transition-all duration-300 ease-in-out transform hover:scale-105 ${colorClass}`}
+    <div
+      className={`cursor-pointer rounded-xl p-6 text-white shadow-lg transition-all duration-500 transform hover:scale-105 ${colorClass} ${
+        isActive ? 'min-h-[280px]' : 'h-[180px]'
+      }`}
       onClick={onClick}
     >
       <h3 className="text-xl font-bold mb-2 text-center">{headline}</h3>
@@ -41,7 +39,7 @@ const AudienceCard: React.FC<AudienceCardProps> = ({
           </motion.div>
         )}
       </AnimatePresence>
-    </motion.div>
+    </div>
   );
 };
 
