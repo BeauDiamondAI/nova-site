@@ -1,46 +1,57 @@
-// components/SectionWhoWeServe/AudienceCard.tsx
-
-import { motion, AnimatePresence } from 'framer-motion';
+// components/AudienceCard.tsx
+import React from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import "./AudienceCard.css";
 
 type AudienceCardProps = {
+  id: string;
+  isActive: boolean;
+  onClick: (id: string) => void;
   headline: string;
   description: string;
-  colorClass: string;
-  isActive: boolean;
-  onClick: () => void;
+  icon?: React.ReactNode;
 };
 
-const AudienceCard: React.FC<AudienceCardProps> = ({
-  headline,
-  description,
-  colorClass,
+export default function AudienceCard({
+  id,
   isActive,
   onClick,
-}) => {
+  headline,
+  description,
+  icon,
+}: AudienceCardProps) {
   return (
-    <div
-      className={`cursor-pointer rounded-xl p-6 text-white shadow-lg transition-all duration-500 transform hover:scale-105 ${colorClass} ${
-        isActive ? 'min-h-[280px]' : 'h-[180px]'
-      }`}
-      onClick={onClick}
+    <motion.div
+      className={`audience-card ${isActive ? "active" : ""}`}
+      onClick={() => onClick(id)}
+      initial={false}
+      animate={{
+        scale: isActive ? 1.05 : 1,
+        zIndex: isActive ? 2 : 1,
+        rotateX: isActive ? 0 : 4,
+        rotateY: isActive ? 0 : -4,
+      }}
+      transition={{ type: "spring", stiffness: 200, damping: 20 }}
     >
-      <h3 className="text-xl font-bold mb-2 text-center">{headline}</h3>
+      <div className="card-glass">
+        {icon && <div className="card-icon">{icon}</div>}
+        <h3 className="card-headline">{headline}</h3>
 
-      <AnimatePresence>
-        {isActive && (
-          <motion.div
-            className="text-sm leading-relaxed text-center"
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: 'auto', opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.3 }}
-          >
-            <p>{description}</p>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </div>
+        <AnimatePresence>
+          {isActive && (
+            <motion.div
+              className="card-description"
+              key="desc"
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.4 }}
+            >
+              <p>{description}</p>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+    </motion.div>
   );
-};
-
-export default AudienceCard;
+}

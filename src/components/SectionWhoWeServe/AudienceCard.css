@@ -1,41 +1,85 @@
-/* components/AudienceCard.css */
-.audience-card-wrapper {
-  perspective: 1000px;
-  width: 200px;
-  height: 200px;
-}
-
-.audience-card-inner {
+.audience-card {
   position: relative;
-  width: 100%;
-  height: 100%;
-  transform-style: preserve-3d;
-  transition: transform 0.8s ease;
+  width: 240px;
+  min-height: 160px;
+  padding: 1.5rem;
+  margin: 1rem;
+  cursor: pointer;
+  border-radius: 1rem;
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 0 0px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+  overflow: hidden;
 }
 
-.audience-card-inner.flipped {
-  transform: rotateY(180deg);
+.audience-card.active {
+  transform: translateY(-6px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
 }
 
-.audience-card-front,
-.audience-card-back {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  backface-visibility: hidden;
-  border-radius: 0.75rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 1.25rem;
-  text-align: center;
-  box-shadow: 0 0 20px rgba(0,0,0,0.3);
-}
-
-.audience-card-front {
+.card-glass {
+  position: relative;
   z-index: 2;
+  color: white;
+  text-align: center;
 }
 
-.audience-card-back {
-  transform: rotateY(180deg);
+.card-icon {
+  font-size: 2.2rem;
+  margin-bottom: 0.5rem;
+  color: #86e9ff;
+}
+
+.card-headline {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.6rem;
+  text-transform: uppercase;
+  color: #ffffff;
+}
+
+.card-description {
+  font-size: 0.88rem;
+  line-height: 1.4;
+  margin-top: 0.5rem;
+  color: #d0d0d0;
+  padding: 0 0.2rem;
+}
+
+/* Grain Overlay */
+.audience-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  background: url('/images/SectionWhoWeServeMedia/Grain.mp4') center center / cover no-repeat;
+  mix-blend-mode: overlay;
+  opacity: 0.3;
+  z-index: 1;
+  animation: grainFlicker 0.8s steps(1) infinite;
+}
+
+/* Flicker animation */
+@keyframes grainFlicker {
+  0% { opacity: 0.25; }
+  50% { opacity: 0.35; }
+  100% { opacity: 0.25; }
+}
+
+/* Subtle float */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-3px); }
+}
+
+.audience-card {
+  animation: float 5s ease-in-out infinite;
 }
