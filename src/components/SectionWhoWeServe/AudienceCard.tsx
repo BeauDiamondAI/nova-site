@@ -1,57 +1,53 @@
-// components/AudienceCard.tsx
 import React from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import "./AudienceCard.css";
 
-type AudienceCardProps = {
-  id: string;
-  isActive: boolean;
-  onClick: (id: string) => void;
-  headline: string;
+interface AudienceCardProps {
+  icon: React.ReactNode;
+  title: string;
   description: string;
-  icon?: React.ReactNode;
+  index: number;
+  isActive: boolean;
+  onClick: () => void;
+}
+
+const cardVariants = {
+  hidden: { opacity: 0, y: 40 },
+  visible: (index: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: {
+      delay: index * 0.15,
+      duration: 0.6,
+      type: "spring",
+      stiffness: 70,
+    },
+  }),
 };
 
-export default function AudienceCard({
-  id,
+export const AudienceCard: React.FC<AudienceCardProps> = ({
+  icon,
+  title,
+  description,
+  index,
   isActive,
   onClick,
-  headline,
-  description,
-  icon,
-}: AudienceCardProps) {
+}) => {
   return (
     <motion.div
       className={`audience-card ${isActive ? "active" : ""}`}
-      onClick={() => onClick(id)}
-      initial={false}
-      animate={{
-        scale: isActive ? 1.05 : 1,
-        zIndex: isActive ? 2 : 1,
-        rotateX: isActive ? 0 : 4,
-        rotateY: isActive ? 0 : -4,
-      }}
-      transition={{ type: "spring", stiffness: 200, damping: 20 }}
+      custom={index}
+      initial="hidden"
+      animate="visible"
+      variants={cardVariants}
+      layout
+      onClick={onClick}
     >
-      <div className="card-glass">
-        {icon && <div className="card-icon">{icon}</div>}
-        <h3 className="card-headline">{headline}</h3>
-
-        <AnimatePresence>
-          {isActive && (
-            <motion.div
-              className="card-description"
-              key="desc"
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.4 }}
-            >
-              <p>{description}</p>
-            </motion.div>
-          )}
-        </AnimatePresence>
+      <div className="card-content">
+        <div className="card-icon">{icon}</div>
+        <div className="card-title">{title}</div>
+        {isActive && <div className="card-description">{description}</div>}
       </div>
     </motion.div>
   );
-}
+};

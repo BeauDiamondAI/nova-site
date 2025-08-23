@@ -1,92 +1,90 @@
-// components/SectionWhoWeServe/WhoWeServeSection.tsx
-
-"use client";
-
 import React, { useState } from "react";
-import AudienceCard from "./AudienceCard";
-import "./AudienceCard.css";
+import { motion } from "framer-motion";
+import { AudienceCard } from "./AudienceCard";
+import "./SectionWhoWeServe.css";
 
 const audienceData = [
   {
-    id: "founders",
     icon: "🚀",
-    headline: "Founders & Creators",
+    title: "FOUNDERS & CREATORS",
     description:
       "Operational clarity, positioning precision, and business frameworks that think with you — and execute for you.",
   },
   {
-    id: "operators",
     icon: "🧠",
-    headline: "Operators & Teams",
+    title: "OPERATORS & TEAMS",
     description:
-      "Cognitive engines for real-time execution, workflow orchestration, and cross-domain decisioning.",
+      "Streamlined decision-making, performance visibility, and hands-off systems to scale your impact.",
   },
   {
-    id: "enterprises",
     icon: "🏢",
-    headline: "Enterprises",
+    title: "ENTERPRISES",
     description:
-      "Deployable self-optimizing intelligence that integrates directly into core infrastructure — revolutionizing strategy and execution across every dimension.",
+      "Next-gen capability development, risk-managed innovation, and intelligence infrastructure.",
   },
   {
-    id: "privacy",
     icon: "🛡️",
-    headline: "Privacy-First Companies",
+    title: "PRIVACY-FIRST COMPANIES",
     description:
-      "Zero-trust compatible deployments with VPC integration — data discretion by design.",
+      "Guardrails, guarantees, and governance baked in — without sacrificing power or precision.",
   },
   {
-    id: "innovators",
-    icon: "🌌",
-    headline: "Future-Facing Innovators",
+    icon: "🪐",
+    title: "FUTURE-FACING INNOVATORS",
     description:
-      "Soon: branded intelligence + marketing systems engineered for elite precision, creative excellence, and explosive growth.",
+      "Whether you're building ahead of the curve or breaking it, we provide executional edge.",
   },
 ];
 
-export default function WhoWeServeSection() {
-  const [activeId, setActiveId] = useState<string | null>(null);
-
-  const handleCardClick = (id: string) => {
-    setActiveId((prev) => (prev === id ? null : id));
-  };
+const SectionWhoWeServe = () => {
+  const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
   return (
-    <section className="relative z-10 py-20 px-4 sm:px-8 lg:px-24 overflow-hidden">
-      {/* Background Video Layer */}
-      <video
-        autoPlay
-        muted
-        loop
-        playsInline
-        className="absolute inset-0 w-full h-full object-cover opacity-40"
-      >
-        <source src="/images/SectionWhoWeServeMedia/Network.mp4" type="video/mp4" />
-      </video>
-
-      {/* Overlay Layer */}
-      <div className="absolute inset-0 bg-black bg-opacity-60 z-0" />
-
-      {/* Content Layer */}
-      <div className="relative z-10 max-w-7xl mx-auto">
-        <h2 className="text-center text-3xl md:text-4xl font-bold text-white mb-12 font-orbitron">
+    <section
+      className="relative bg-gradient-to-br from-gray-900 via-gray-950 to-black text-white py-24 px-6 sm:px-12"
+      id="who-we-serve"
+    >
+      <div className="max-w-5xl mx-auto text-center">
+        <h2 className="text-4xl sm:text-5xl font-extrabold text-white font-orbitron">
           Who We Serve
         </h2>
+        <h3 className="text-xl mt-4 font-semibold text-gray-300 font-orbitron">
+          Deployable Intelligence for Builders, Strategists, and Scaling Teams
+        </h3>
+        <p className="mt-4 text-gray-400 max-w-3xl mx-auto text-base sm:text-lg">
+          We’re building cognitive engines powered by an entirely new class of
+          intelligence — systems operating at an altitude beyond conventional
+          AI. They bring adaptive reasoning, end-to-end automation, multi-agent
+          orchestration, and execution clarity that were simply not possible
+          until now.
+        </p>
+      </div>
 
-        <div className="flex flex-wrap justify-center gap-6">
-          {audienceData.map(({ id, icon, headline, description }) => (
+      <div className="mt-16 max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 justify-items-center">
+        <motion.div
+          initial="hidden"
+          animate="visible"
+          variants={{
+            visible: {
+              transition: {
+                staggerChildren: 0.12,
+              },
+            },
+          }}
+        >
+          {audienceData.map((audience, index) => (
             <AudienceCard
-              key={id}
-              id={id}
-              icon={icon}
-              headline={headline}
-              description={description}
-              isActive={activeId === id}
-              onClick={() => handleCardClick(id)}
+              key={index}
+              {...audience}
+              index={index}
+              isActive={activeIndex === index}
+              onClick={() => setActiveIndex(index)}
             />
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );
-}
+};
+
+export default SectionWhoWeServe;
