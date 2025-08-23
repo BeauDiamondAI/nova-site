@@ -1,0 +1,53 @@
+.section-who-we-serve {
+  position: relative;
+  overflow: hidden;
+  padding-top: 6rem;
+  padding-bottom: 6rem;
+  text-align: center;
+}
+
+.section-who-we-serve .background-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  z-index: -2;
+  opacity: 0.15;
+}
+
+.section-who-we-serve .grain-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-image: url("/images/SectionWhoWeServeMedia/Grain.mp4");
+  background-size: cover;
+  z-index: -1;
+  mix-blend-mode: overlay;
+  pointer-events: none;
+  opacity: 0.35;
+}
+
+.section-who-we-serve .section-heading {
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin-bottom: 1.25rem;
+}
+
+.section-who-we-serve .section-subheading {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  opacity: 0.85;
+}
+
+.section-who-we-serve .section-paragraph {
+  max-width: 750px;
+  margin: 0 auto 3rem auto;
+  font-size: 1.05rem;
+  line-height: 1.75;
+  opacity: 0.75;
+}
