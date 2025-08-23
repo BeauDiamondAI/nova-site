@@ -1,0 +1,41 @@
+/* components/AudienceCard.css */
+.audience-card-wrapper {
+  perspective: 1000px;
+  width: 200px;
+  height: 200px;
+}
+
+.audience-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 0.8s ease;
+}
+
+.audience-card-inner.flipped {
+  transform: rotateY(180deg);
+}
+
+.audience-card-front,
+.audience-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  border-radius: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.25rem;
+  text-align: center;
+  box-shadow: 0 0 20px rgba(0,0,0,0.3);
+}
+
+.audience-card-front {
+  z-index: 2;
+}
+
+.audience-card-back {
+  transform: rotateY(180deg);
+}
