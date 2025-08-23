@@ -1,5 +1,4 @@
-// components/SectionWhoWeServe/AudienceCard.tsx
-import React, { useState } from 'react';
+import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 type AudienceCardProps = {
@@ -11,18 +10,26 @@ type AudienceCardProps = {
   onClick: () => void;
 };
 
-const AudienceCard: React.FC<AudienceCardProps> = ({ headline, description, colorClass }) => {
-  const [isOpen, setIsOpen] = useState(false);
-
+const AudienceCard: React.FC<AudienceCardProps> = ({
+  id,
+  headline,
+  description,
+  colorClass,
+  isActive,
+  onClick,
+}) => {
   return (
-    <div
-      className={`cursor-pointer rounded-xl p-6 text-white shadow-lg transition duration-300 ease-in-out transform hover:scale-105 ${colorClass}`}
-      onClick={() => setIsOpen(!isOpen)}
+    <motion.div
+      layout
+      initial={{ borderRadius: 16 }}
+      animate={{ borderRadius: isActive ? 24 : 16 }}
+      className={`cursor-pointer rounded-xl p-6 text-white shadow-lg transition-all duration-300 ease-in-out transform hover:scale-105 ${colorClass}`}
+      onClick={onClick}
     >
       <h3 className="text-xl font-bold mb-2 text-center">{headline}</h3>
 
       <AnimatePresence>
-        {isOpen && (
+        {isActive && (
           <motion.div
             className="text-sm leading-relaxed text-center"
             initial={{ height: 0, opacity: 0 }}
@@ -34,7 +41,7 @@ const AudienceCard: React.FC<AudienceCardProps> = ({ headline, description, colo
           </motion.div>
         )}
       </AnimatePresence>
-    </div>
+    </motion.div>
   );
 };
 
