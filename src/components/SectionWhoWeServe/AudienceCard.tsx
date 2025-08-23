@@ -1,37 +1,41 @@
-// components/AudienceCard.tsx
-import React from 'react'
-import './AudienceCard.css' // For 3D flip animation
-import FrontFace from './FrontFace'
-import BackFace from './BackFace'
+// components/SectionWhoWeServe/AudienceCard.tsx
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 type AudienceCardProps = {
-  id: string
-  headline: string
-  description: string
-  isActive: boolean
-  onClick: () => void
-  colorClass: string
-}
+  id: string;
+  headline: string;
+  description: string;
+  colorClass: string;
+  isActive: boolean;
+  onClick: () => void;
+};
 
-const AudienceCard: React.FC<AudienceCardProps> = ({
-  headline,
-  description,
-  isActive,
-  onClick,
-  colorClass,
-}) => {
+const AudienceCard: React.FC<AudienceCardProps> = ({ headline, description, colorClass }) => {
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
-    <div className="audience-card-wrapper" onClick={onClick}>
-      <div className={`audience-card-inner ${isActive ? 'flipped' : ''}`}>
-        <div className={`audience-card-front ${colorClass}`}>
-          <FrontFace headline={headline} gradient={colorClass} />
-        </div>
-        <div className={`audience-card-back ${colorClass}`}>
-          <BackFace headline={headline} description={description} />
-        </div>
-      </div>
-    </div>
-  )
-}
+    <div
+      className={`cursor-pointer rounded-xl p-6 text-white shadow-lg transition duration-300 ease-in-out transform hover:scale-105 ${colorClass}`}
+      onClick={() => setIsOpen(!isOpen)}
+    >
+      <h3 className="text-xl font-bold mb-2 text-center">{headline}</h3>
 
-export default AudienceCard
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            className="text-sm leading-relaxed text-center"
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: 'auto', opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.3 }}
+          >
+            <p>{description}</p>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+};
+
+export default AudienceCard;
