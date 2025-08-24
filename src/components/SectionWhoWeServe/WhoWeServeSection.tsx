@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { audienceData, AudienceData } from "./audienceData";
+import { audienceData } from "./audienceData";
 import { AudienceCard } from "./AudienceCard";
 import "./SectionWhoWeServe.css";
 
@@ -75,7 +75,7 @@ const SectionWhoWeServe: React.FC = () => {
           Deployable Intelligence for Builders, Strategists, and Scaling Teams
         </p>
         <p className="section-description">
-          We're building cognitive engines powered by an entirely new class of
+          We&apos;re building cognitive engines powered by an entirely new class of
           intelligence — systems operating at an altitude beyond conventional
           AI. They bring adaptive reasoning, end-to-end automation, multi-agent
           orchestration, and execution clarity that were simply not possible
