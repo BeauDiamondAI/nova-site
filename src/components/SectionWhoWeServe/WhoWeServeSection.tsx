@@ -11,19 +11,17 @@ const SectionWhoWeServe: React.FC = () => {
       id="who-we-serve"
       className="relative w-full py-24 px-6 sm:px-12 overflow-hidden bg-black text-white"
     >
-      {/* Background Video */}
-      <video
-        className="absolute inset-0 w-full h-full object-cover z-0"
-        autoPlay
-        muted
-        loop
-        playsInline
-      >
-        <source
-          src="/images/SectionWhoWeServeMedia/Network.mp4"
-          type="video/mp4"
-        />
-      </video>
+      <div className="absolute inset-0 w-full h-full z-10 mix-blend-overlay opacity-20 pointer-events-none">
+        <video
+          className="w-full h-full object-cover"
+          autoPlay
+          muted
+          loop
+          playsInline
+          >
+          <source src="/images/SectionWhoServeMedia/Network.mp4" type="video/mp4" />
+        </video>
+      </div>
 
       {/* Grain Overlay */}
       <video
