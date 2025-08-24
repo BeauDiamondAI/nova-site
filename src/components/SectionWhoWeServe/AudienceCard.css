@@ -62,7 +62,7 @@
   background-image: url('/images/SectionWhoWeServeMedia/PillarGrain.png');
   background-repeat: repeat;
   background-size: 100px;
-  opacity: 0.4; /* ADJUST THIS VALUE - Try between 0.1 and 0.5 */
+  opacity: 0.2; /* ADJUST THIS VALUE - Try between 0.1 and 0.5 */
   mix-blend-mode: screen; /* You can also try: overlay, multiply, or soft-light */
   pointer-events: none;
   z-index: 1;
