@@ -47,13 +47,43 @@
 .audience-card.active {
   height: auto; /* Allow height to expand */
   min-height: 320px;
-  border-color: var(--card-accent);
+  border-color: transparent; /* Hide default border during animation */
   background: rgba(255, 255, 255, 0.08); /* Slightly more opaque when active */
   box-shadow: 
-    0 0 0 2px var(--card-accent),
     0 0 60px var(--card-glow),
     0 30px 40px -10px rgba(0, 0, 0, 0.5),
     inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  /* Smooth expansion animation */
+  animation: expandCard 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes expandCard {
+  0% {
+    min-height: 240px;
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.02);
+  }
+  100% {
+    min-height: 320px;
+    transform: scale(1);
+  }
+}
+
+/* SVG Border Animation */
+@keyframes drawBorder {
+  0% {
+    stroke-dashoffset: 1000;
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  100% {
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
 }
 
 /* Glass Shimmer Effect - Only on expanded cards */
@@ -83,12 +113,12 @@
   background: linear-gradient(
     105deg,
     transparent 40%,
-    rgba(255, 255, 255, 0.07) 45%, /* More subtle - reduced from 0.1 */
-    rgba(255, 255, 255, 0.1) 50%,  /* More subtle - reduced from 0.15 */
-    rgba(255, 255, 255, 0.07) 55%, /* More subtle - reduced from 0.1 */
+    rgba(255, 255, 255, 0.03) 45%, /* Even more subtle - reduced from 0.07 */
+    rgba(255, 255, 255, 0.05) 50%,  /* Even more subtle - reduced from 0.1 */
+    rgba(255, 255, 255, 0.03) 55%, /* Even more subtle - reduced from 0.07 */
     transparent 60%
   );
-  animation: shimmer 6s infinite; /* Slower - increased from 4s */
+  animation: shimmer 8s infinite; /* Even slower - increased from 6s */
   transform: translateX(-100%);
 }
 
@@ -99,56 +129,6 @@
   100% {
     transform: translateX(100%) translateY(100%) rotate(25deg);
   }
-}
-
-/* Animated border glow effect that travels around the frame */
-.audience-card::before {
-  content: '';
-  position: absolute;
-  inset: -2px;
-  border-radius: 20px;
-  padding: 2px;
-  background: conic-gradient(
-    from var(--angle, 0deg),
-    transparent 0deg,
-    transparent 90deg,
-    var(--card-accent) 90deg,
-    var(--card-accent) 180deg,
-    transparent 180deg
-  );
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  animation: borderRotate 1.5s linear forwards paused;
-  z-index: -1;
-}
-
-@keyframes borderRotate {
-  from {
-    --angle: 0deg;
-  }
-  to {
-    --angle: 360deg;
-  }
-}
-
-@property --angle {
-  syntax: '<angle>';
-  initial-value: 0deg;
-  inherits: false;
-}
-
-/* Activate the border animation when card is clicked */
-.audience-card.active::before {
-  opacity: 1;
-  animation-play-state: running;
-}
-
-/* After animation completes, show full border */
-.audience-card.active {
-  animation: showFullBorder 0.3s ease 1.5s forwards;
 }
 
 /* Glow Layer for Dynamic Effects */

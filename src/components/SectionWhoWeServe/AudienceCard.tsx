@@ -75,6 +75,39 @@ export const AudienceCard: React.FC<AudienceCardProps> = ({
       variants={cardVariants}
       onClick={onClick}
     >
+      {/* Animated border that travels around frame */}
+      {isActive && (
+        <svg
+          className="border-animation"
+          style={{
+            position: 'absolute',
+            inset: 0,
+            width: '100%',
+            height: '100%',
+            borderRadius: '20px',
+            pointerEvents: 'none',
+            zIndex: 2,
+          }}
+        >
+          <rect
+            x="1"
+            y="1"
+            width="calc(100% - 2)"
+            height="calc(100% - 2)"
+            rx="20"
+            ry="20"
+            fill="none"
+            stroke={color.accent}
+            strokeWidth="2"
+            strokeDasharray="1000"
+            strokeDashoffset="1000"
+            style={{
+              animation: 'drawBorder 1.5s ease-out forwards',
+            }}
+          />
+        </svg>
+      )}
+      
       {/* Glass shimmer effect */}
       <div className="glass-shimmer" />
       
