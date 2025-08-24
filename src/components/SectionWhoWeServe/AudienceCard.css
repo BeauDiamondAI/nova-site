@@ -72,7 +72,8 @@
     rgba(255, 255, 255, 0.03) 52%,
     transparent 55%
   );
-  animation: shimmerSubtle 6s infinite linear;
+  animation: shimmerSubtle 4s infinite linear;
+  animation-delay: 0.5s; /* Start sooner - was implicit 0 before */
 }
 
 @keyframes shimmerSubtle {
@@ -89,37 +90,28 @@
   position: absolute;
   inset: -2px;
   border-radius: 20px;
-  background: conic-gradient(
-    from var(--angle, 0deg),
-    transparent 0deg,
-    var(--card-accent) 10deg,
-    var(--card-glow) 30deg,
-    transparent 60deg,
-    transparent 360deg
-  );
-  animation: borderRotate 2s linear forwards;
+  padding: 2px;
+  background: linear-gradient(var(--angle, 0deg), var(--card-accent), transparent 50%);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  animation: borderSpin 2s linear forwards;
   z-index: -1;
+  opacity: 0;
 }
 
-@keyframes borderRotate {
-  from {
+@keyframes borderSpin {
+  0% {
     --angle: 0deg;
     opacity: 0;
   }
-  to {
+  10% {
+    opacity: 1;
+  }
+  100% {
     --angle: 360deg;
     opacity: 1;
   }
-}
-
-/* Create the border mask */
-.border-glow-animated::before {
-  content: '';
-  position: absolute;
-  inset: 2px;
-  border-radius: 18px;
-  background: #000;
-  z-index: 1;
 }
 
 /* CSS property for animated angle */

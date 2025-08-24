@@ -115,20 +115,18 @@ export const AudienceCard: React.FC<AudienceCardProps> = ({
           {isActive && (
             <motion.p
               className="card-description"
-              initial={{ opacity: 0, height: 0, y: -10 }}
+              initial={{ opacity: 0, height: 0 }}
               animate={{ 
                 opacity: 1, 
-                height: "auto",
-                y: 0
+                height: "auto"
               }}
               exit={{ 
                 opacity: 0, 
-                height: 0,
-                y: -10
+                height: 0
               }}
               transition={{
-                ...springConfig,
-                opacity: { duration: 0.3 }
+                duration: 0.8,
+                ease: "easeInOut"
               }}
             >
               {description}
