@@ -2,7 +2,7 @@
 
 .audience-card {
   position: relative;
-  flex: 0 0 260px;
+  flex: 0 0 250px; /* Reduced from 260px to 250px */
   height: 240px; /* Fixed height instead of min-height */
   padding: 2rem 1.5rem;
   border-radius: 20px;
@@ -55,17 +55,64 @@
     inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 
-/* Grain Texture Layer */
-.card-grain {
+/* Glass Shimmer Effect - Replaces grain */
+.glass-shimmer {
   position: absolute;
   inset: 0;
-  background-image: url('/images/SectionWhoWeServeMedia/PillarGrain.png');
-  background-repeat: repeat;
-  background-size: 100px;
-  opacity: 0.1; /* ADJUST THIS VALUE - Try between 0.1 and 0.5 */
-  mix-blend-mode: screen; /* You can also try: overlay, multiply, or soft-light */
-  pointer-events: none;
+  border-radius: 20px;
+  overflow: hidden;
   z-index: 1;
+  pointer-events: none;
+}
+
+.glass-shimmer::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    105deg,
+    transparent 40%,
+    rgba(255, 255, 255, 0.1) 45%,
+    rgba(255, 255, 255, 0.15) 50%,
+    rgba(255, 255, 255, 0.1) 55%,
+    transparent 60%
+  );
+  animation: shimmer 4s infinite;
+  transform: translateX(-100%);
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%) translateY(-100%) rotate(25deg);
+  }
+  100% {
+    transform: translateX(100%) translateY(100%) rotate(25deg);
+  }
+}
+
+/* Subtle prismatic edge effect on hover */
+.audience-card:hover .glass-shimmer::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 20px;
+  background: linear-gradient(
+    45deg,
+    transparent,
+    rgba(59, 130, 246, 0.05),
+    rgba(168, 85, 247, 0.05),
+    transparent
+  );
+  opacity: 1;
+  animation: prism 3s ease-in-out infinite;
+}
+
+@keyframes prism {
+  0%, 100% { opacity: 0; }
+  50% { opacity: 1; }
 }
 
 /* Glow Layer for Dynamic Effects */
