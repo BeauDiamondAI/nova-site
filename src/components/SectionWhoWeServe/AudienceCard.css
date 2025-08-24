@@ -37,6 +37,11 @@
   overflow: hidden;
 }
 
+/* Add extra margin to the last card to prevent cutoff */
+.audience-card:last-child {
+  margin-right: 3rem;
+}
+
 /* Active/Expanded State */
 .audience-card.active {
   height: auto; /* Allow height to expand */
