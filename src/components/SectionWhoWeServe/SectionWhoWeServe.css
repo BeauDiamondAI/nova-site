@@ -107,18 +107,16 @@
   width: 100%;
   max-width: 1400px;
   margin: 0 auto;
+  padding: 0 2rem; /* Add padding to the wrapper */
 }
 
 .pillars-container {
   display: flex;
   gap: 1.5rem;
-  padding: 2rem 2rem 2rem 1rem; /* Added right padding */
+  padding: 2rem 4rem 2rem 1rem; /* Increased right padding to 4rem */
   overflow-x: auto;
   scroll-behavior: smooth;
   scroll-snap-type: x proximity;
-  
-  /* Add padding for last card */
-  padding-right: 3rem;
   
   /* Hide scrollbar but maintain functionality */
   scrollbar-width: none;
