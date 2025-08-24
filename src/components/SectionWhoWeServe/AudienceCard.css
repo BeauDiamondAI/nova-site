@@ -28,9 +28,9 @@
   transform: translateZ(0);
   contain: layout style paint;
   
-  /* Smooth transition for height changes ONLY */
-  transition: height 0.3s cubic-bezier(0.4, 0, 0.2, 1), 
-              min-height 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  /* SLOWER transition for smooth expansion */
+  transition: height 0.8s cubic-bezier(0.4, 0, 0.2, 1), 
+              min-height 0.8s cubic-bezier(0.4, 0, 0.2, 1);
   overflow: hidden;
 }
 
@@ -47,8 +47,8 @@
   /* Border and glow will be set via inline styles for proper colors */
 }
 
-/* Glass Shimmer Effect - Replaces grain */
-.glass-shimmer {
+/* Subtle Glass Shimmer - Only on active cards */
+.glass-shimmer-subtle {
   position: absolute;
   inset: 0;
   border-radius: 20px;
@@ -57,54 +57,76 @@
   pointer-events: none;
 }
 
-.glass-shimmer::before {
+.glass-shimmer-subtle::before {
   content: '';
   position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
+  top: -100%;
+  left: -100%;
+  width: 300%;
+  height: 300%;
   background: linear-gradient(
-    105deg,
-    transparent 40%,
-    rgba(255, 255, 255, 0.1) 45%,
-    rgba(255, 255, 255, 0.15) 50%,
-    rgba(255, 255, 255, 0.1) 55%,
-    transparent 60%
+    115deg,
+    transparent 45%,
+    rgba(255, 255, 255, 0.03) 48%,
+    rgba(255, 255, 255, 0.05) 50%,
+    rgba(255, 255, 255, 0.03) 52%,
+    transparent 55%
   );
-  animation: shimmer 4s infinite;
-  transform: translateX(-100%);
+  animation: shimmerSubtle 6s infinite linear;
 }
 
-@keyframes shimmer {
+@keyframes shimmerSubtle {
   0% {
-    transform: translateX(-100%) translateY(-100%) rotate(25deg);
+    transform: translateX(-100%) translateY(-100%) rotate(30deg);
   }
   100% {
-    transform: translateX(100%) translateY(100%) rotate(25deg);
+    transform: translateX(33%) translateY(33%) rotate(30deg);
   }
 }
 
-/* Subtle prismatic edge effect on hover */
-.audience-card:hover .glass-shimmer::after {
-  content: '';
+/* Animated Border Glow - Travels around the card */
+.border-glow-animated {
   position: absolute;
-  inset: 0;
+  inset: -2px;
   border-radius: 20px;
-  background: linear-gradient(
-    45deg,
-    transparent,
-    rgba(59, 130, 246, 0.05),
-    rgba(168, 85, 247, 0.05),
-    transparent
+  background: conic-gradient(
+    from var(--angle, 0deg),
+    transparent 0deg,
+    var(--card-accent) 10deg,
+    var(--card-glow) 30deg,
+    transparent 60deg,
+    transparent 360deg
   );
-  opacity: 1;
-  animation: prism 3s ease-in-out infinite;
+  animation: borderRotate 2s linear forwards;
+  z-index: -1;
 }
 
-@keyframes prism {
-  0%, 100% { opacity: 0; }
-  50% { opacity: 1; }
+@keyframes borderRotate {
+  from {
+    --angle: 0deg;
+    opacity: 0;
+  }
+  to {
+    --angle: 360deg;
+    opacity: 1;
+  }
+}
+
+/* Create the border mask */
+.border-glow-animated::before {
+  content: '';
+  position: absolute;
+  inset: 2px;
+  border-radius: 18px;
+  background: #000;
+  z-index: 1;
+}
+
+/* CSS property for animated angle */
+@property --angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
 }
 
 /* Glow Layer for Dynamic Effects */

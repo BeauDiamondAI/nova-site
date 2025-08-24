@@ -25,12 +25,12 @@ export const AudienceCard: React.FC<AudienceCardProps> = ({
   isActive,
   onClick,
 }) => {
-  // Elite spring physics from Vercel/Rauno
+  // Elite spring physics from Vercel/Rauno - SLOWER for smooth expansion
   const springConfig = {
     type: "spring",
-    stiffness: 400,
-    damping: 25,
-    mass: 0.5
+    stiffness: 200,  // Reduced from 400 for slower expansion
+    damping: 30,      // Increased from 25 for smoother motion
+    mass: 1           // Increased from 0.5 for more weight
   };
 
   const cardVariants = {
@@ -77,8 +77,15 @@ export const AudienceCard: React.FC<AudienceCardProps> = ({
       variants={cardVariants}
       onClick={onClick}
     >
-      {/* Glass shimmer effect */}
-      <div className="glass-shimmer" />
+      {/* Glass shimmer effect - only on active cards */}
+      {isActive && (
+        <div className="glass-shimmer-subtle" />
+      )}
+      
+      {/* Animated border glow - travels around the card */}
+      {isActive && (
+        <div className="border-glow-animated" />
+      )}
       
       {/* Glow effect layer */}
       <motion.div 
