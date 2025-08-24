@@ -1,99 +1,218 @@
+/* AudienceCard.css - Elite Glassmorphic Card Implementation */
+
 .audience-card {
   position: relative;
-  width: 260px;
-  height: 240px;
-  padding: 1.5rem;
-  border-radius: 1rem;
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  background: rgba(255, 255, 255, 0.06);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  box-shadow: 0 0 16px rgba(255, 255, 255, 0.05);
-  transition: all 0.3s ease-in-out;
-  overflow: hidden;
+  flex: 0 0 260px;
+  min-height: 240px;
+  padding: 2rem 1.5rem;
+  border-radius: 20px;
   cursor: pointer;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  z-index: 0;
+  scroll-snap-align: center;
+  
+  /* Elite Glassmorphism (Linear + Apple inspired) */
+  background: linear-gradient(
+    135deg,
+    var(--card-primary, rgba(255, 255, 255, 0.08)),
+    rgba(255, 255, 255, 0.02)
+  );
+  backdrop-filter: blur(24px) saturate(150%);
+  -webkit-backdrop-filter: blur(24px) saturate(150%);
+  
+  /* Dynamic color border */
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  
+  /* Dynamic glow shadow */
+  box-shadow: 
+    0 0 0 1px rgba(255, 255, 255, 0.05),
+    0 10px 40px -10px var(--card-glow, rgba(6, 182, 212, 0.3)),
+    0 20px 25px -5px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  
+  /* Performance optimizations */
+  transform: translateZ(0);
+  will-change: transform, box-shadow;
+  contain: layout style paint;
+  
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
 }
 
-/* Active (expanded) card */
+/* Active/Expanded State */
 .audience-card.active {
-  height: 320px;
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  transform: scale(1.05);
-  z-index: 10;
+  min-height: 320px;
+  border-color: var(--card-accent);
+  background: linear-gradient(
+    135deg,
+    var(--card-primary),
+    rgba(255, 255, 255, 0.05)
+  );
+  box-shadow: 
+    0 0 0 2px var(--card-accent),
+    0 0 60px var(--card-glow),
+    0 30px 40px -10px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 
-/* Optional: fallback static grain image if video doesn't load */
-.audience-card::before {
-  content: "";
+/* Grain Texture Layer */
+.card-grain {
   position: absolute;
   inset: 0;
-  background: url("/images/SectionWhoWeServeMedia/GrainFallback.png"); /* optional */
+  background-image: url('/images/SectionWhoWeServeMedia/PillarGrain.png');
+  background-repeat: repeat;
+  background-size: 150px;
+  opacity: 0.02;
   mix-blend-mode: overlay;
-  opacity: 0.1;
   pointer-events: none;
   z-index: 1;
 }
 
-/* 🎥 Animated grain overlay video */
-.audience-card video.grain-overlay {
+/* Glow Layer for Dynamic Effects */
+.card-glow-layer {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  mix-blend-mode: overlay;
-  opacity: 0.17;
-  pointer-events: none;
-  z-index: 1;
-}
-
-.audience-card h3 {
-  font-size: 1.25rem;
-  font-weight: bold;
-  margin-bottom: 0.5rem;
-  z-index: 2;
-}
-
-.audience-card p {
-  font-size: 0.875rem;
-  color: #e0e0e0;
-  transition: opacity 0.3s ease-in-out;
-  z-index: 2;
-}
-
-/* Paragraph reveal */
-.audience-card:not(.active) p {
+  inset: -2px;
+  background: radial-gradient(
+    circle at center,
+    var(--card-glow),
+    transparent 70%
+  );
   opacity: 0;
-  height: 0;
+  z-index: -1;
+  transition: opacity 0.3s ease;
+}
+
+.audience-card:hover .card-glow-layer {
+  opacity: 0.3;
+}
+
+/* Content Container */
+.card-content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  height: 100%;
+}
+
+/* Icon Styling */
+.card-icon {
+  font-size: 2.5rem;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  margin-bottom: 0.5rem;
+}
+
+/* Title Styling */
+.card-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+
+/* Description Styling */
+.card-description {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.8);
+  margin: 0;
   overflow: hidden;
 }
 
-/* Glow by index */
-.audience-card:nth-child(1) {
-  box-shadow: 0 0 20px rgba(0, 255, 255, 0.35);
-}
-.audience-card:nth-child(2) {
-  box-shadow: 0 0 20px rgba(186, 104, 200, 0.35);
-}
-.audience-card:nth-child(3) {
-  box-shadow: 0 0 20px rgba(255, 160, 122, 0.35);
-}
-.audience-card:nth-child(4) {
-  box-shadow: 0 0 20px rgba(255, 206, 86, 0.35);
-}
-.audience-card:nth-child(5) {
-  box-shadow: 0 0 20px rgba(86, 156, 255, 0.35);
+/* Hover Beam Effect (Rauno-inspired) */
+.hover-beam {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--card-accent),
+    transparent
+  );
+  transform-origin: left;
+  z-index: 3;
 }
 
+/* Hover States */
+.audience-card:hover {
+  transform: translateY(-8px) translateZ(0);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.audience-card:hover .card-icon {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: var(--card-accent);
+}
+
+/* Firefox Fallback */
+@supports not (backdrop-filter: blur(1px)) {
+  .audience-card {
+    background: linear-gradient(
+      135deg,
+      rgba(17, 24, 39, 0.95),
+      rgba(17, 24, 39, 0.85)
+    );
+  }
+}
+
+/* Mobile Responsive */
 @media (max-width: 768px) {
   .audience-card {
-    width: 90%;
-    height: auto;
-    margin-bottom: 1rem;
+    flex: 0 0 85%;
+    max-width: 320px;
+    min-height: 220px;
+  }
+  
+  .audience-card.active {
+    min-height: 300px;
+  }
+  
+  .card-icon {
+    width: 50px;
+    height: 50px;
+    font-size: 2rem;
+  }
+  
+  .card-title {
+    font-size: 1.15rem;
+  }
+  
+  .card-description {
+    font-size: 0.9rem;
+  }
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  .audience-card {
+    transition: none;
+  }
+  
+  .hover-beam {
+    display: none;
+  }
+}
+
+/* Dark Mode Enhancement */
+@media (prefers-color-scheme: dark) {
+  .audience-card {
+    background: linear-gradient(
+      135deg,
+      var(--card-primary),
+      rgba(0, 0, 0, 0.3)
+    );
   }
 }

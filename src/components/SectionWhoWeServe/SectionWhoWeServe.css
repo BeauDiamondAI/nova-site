@@ -1,53 +1,192 @@
+/* SectionWhoWeServe.css - Elite Glassmorphic Implementation */
+
 .section-who-we-serve {
   position: relative;
+  width: 100%;
+  min-height: 100vh;
+  padding: 6rem 1.5rem;
   overflow: hidden;
-  padding-top: 6rem;
-  padding-bottom: 6rem;
-  text-align: center;
+  background: #000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.section-who-we-serve .background-video {
+/* Background Layers */
+.background-layer {
   position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
+  inset: 0;
+  z-index: 1;
+  will-change: transform;
+}
+
+.background-video {
   width: 100%;
+  height: 120%; /* Extra height for parallax */
   object-fit: cover;
-  z-index: -2;
-  opacity: 0.15;
+  opacity: 0.4;
 }
 
-.section-who-we-serve .grain-overlay {
+.background-overlay {
   position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 100%;
-  background-image: url("/images/SectionWhoWeServeMedia/Grain.mp4");
-  background-size: cover;
-  z-index: -1;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.2) 0%,
+    rgba(0, 0, 0, 0.7) 50%,
+    rgba(0, 0, 0, 0.9) 100%
+  );
+  z-index: 2;
+}
+
+/* Grain Overlay - Static PNG fallback */
+.grain-overlay {
+  position: absolute;
+  inset: 0;
+  background-image: url('/images/SectionWhoWeServeMedia/PillarGrain.png');
+  background-repeat: repeat;
+  background-size: 200px;
+  opacity: 0.03;
   mix-blend-mode: overlay;
   pointer-events: none;
-  opacity: 0.35;
+  z-index: 3;
+  animation: grain 8s steps(10) infinite;
 }
 
-.section-who-we-serve .section-heading {
-  font-size: 2.5rem;
+@keyframes grain {
+  0%, 100% { transform: translate(0, 0); }
+  10% { transform: translate(-5%, -10%); }
+  20% { transform: translate(-15%, 5%); }
+  30% { transform: translate(7%, -25%); }
+  40% { transform: translate(-5%, 25%); }
+  50% { transform: translate(-15%, 10%); }
+  60% { transform: translate(15%, 0%); }
+  70% { transform: translate(0%, 15%); }
+  80% { transform: translate(3%, 25%); }
+  90% { transform: translate(-10%, 10%); }
+}
+
+/* Header Content */
+.section-header {
+  position: relative;
+  z-index: 10;
+  text-align: center;
+  max-width: 900px;
+  margin: 0 auto 4rem;
+}
+
+.section-heading {
+  font-size: clamp(2.5rem, 5vw, 4rem);
   font-weight: 800;
   margin-bottom: 1.25rem;
+  color: #fff;
+  letter-spacing: -0.02em;
+  text-shadow: 0 0 40px rgba(6, 182, 212, 0.3);
 }
 
-.section-who-we-serve .section-subheading {
-  font-size: 1.25rem;
+.section-subheading {
+  font-size: clamp(1.1rem, 2vw, 1.5rem);
   font-weight: 600;
   margin-bottom: 1rem;
-  opacity: 0.85;
+  color: rgba(255, 255, 255, 0.9);
+  line-height: 1.4;
 }
 
-.section-who-we-serve .section-paragraph {
+.section-description {
+  font-size: clamp(0.95rem, 1.5vw, 1.1rem);
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.7);
   max-width: 750px;
-  margin: 0 auto 3rem auto;
-  font-size: 1.05rem;
-  line-height: 1.75;
-  opacity: 0.75;
+  margin: 0 auto;
+}
+
+/* Pillars Container - HORIZONTAL LAYOUT FIX */
+.pillars-wrapper {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.pillars-container {
+  display: flex;
+  gap: 1.5rem;
+  padding: 2rem 1rem;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  scroll-snap-type: x proximity;
+  
+  /* Hide scrollbar but maintain functionality */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.pillars-container::-webkit-scrollbar {
+  display: none;
+}
+
+/* Mobile Scroll Indicator */
+.mobile-scroll-indicator {
+  display: none;
+  position: relative;
+  z-index: 10;
+  text-align: center;
+  margin-top: 2rem;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.875rem;
+  animation: slideHint 2s ease-in-out infinite;
+}
+
+@keyframes slideHint {
+  0%, 100% { transform: translateX(0); opacity: 0.5; }
+  50% { transform: translateX(10px); opacity: 1; }
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .pillars-container {
+    gap: 1rem;
+    padding: 1.5rem 0.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .section-who-we-serve {
+    padding: 4rem 1rem;
+  }
+
+  .section-header {
+    margin-bottom: 3rem;
+  }
+
+  .pillars-container {
+    /* Mobile carousel mode */
+    scroll-snap-type: x mandatory;
+    padding: 1rem 2rem;
+    gap: 1rem;
+  }
+
+  .mobile-scroll-indicator {
+    display: block;
+  }
+}
+
+/* Performance Optimizations */
+@supports (backdrop-filter: blur(1px)) {
+  .pillars-container {
+    /* Only use will-change during interactions */
+    will-change: scroll-position;
+  }
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  .grain-overlay {
+    animation: none;
+  }
+  
+  .mobile-scroll-indicator {
+    animation: none;
+  }
 }

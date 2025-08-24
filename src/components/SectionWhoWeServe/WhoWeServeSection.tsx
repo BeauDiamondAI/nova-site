@@ -1,82 +1,129 @@
-import React, { useState } from "react";
-import { motion } from "framer-motion";
-import { audienceData } from "./audienceData";
+import React, { useState, useRef, useEffect } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { audienceData, AudienceData } from "./audienceData";
 import { AudienceCard } from "./AudienceCard";
+import "./SectionWhoWeServe.css";
 
 const SectionWhoWeServe: React.FC = () => {
-  const [activeIndex, setActiveIndex] = useState<number>(0);
+  const [activeIndex, setActiveIndex] = useState<number | null>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const sectionRef = useRef<HTMLElement>(null);
+  
+  // Parallax effect for background
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"]
+  });
+  
+  const backgroundY = useTransform(scrollYProgress, [0, 1], ["0%", "20%"]);
+
+  // Mobile swipe handling
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 768 && containerRef.current) {
+        // Set up mobile carousel behavior
+        const container = containerRef.current;
+        container.scrollTo({ left: 0, behavior: "smooth" });
+      }
+    };
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   return (
     <section
+      ref={sectionRef}
       id="who-we-serve"
-      className="relative w-full py-24 px-6 sm:px-12 overflow-hidden bg-black text-white"
+      className="section-who-we-serve"
     >
-      <div className="absolute inset-0 w-full h-full z-10 mix-blend-overlay opacity-20 pointer-events-none">
+      {/* Background Network Video with Parallax */}
+      <motion.div 
+        className="background-layer"
+        style={{ y: backgroundY }}
+      >
         <video
-          className="w-full h-full object-cover"
+          className="background-video"
           autoPlay
           muted
           loop
           playsInline
-          >
-          <source src="/images/SectionWhoServeMedia/Network.mp4" type="video/mp4" />
+        >
+          <source src="/images/SectionWhoWeServeMedia/Network.mp4" type="video/mp4" />
         </video>
-      </div>
+        
+        {/* Dark overlay for better text contrast */}
+        <div className="background-overlay" />
+      </motion.div>
 
-      {/* Grain Overlay */}
-      <video
-        className="absolute inset-0 w-full h-full object-cover z-10 mix-blend-overlay opacity-20 pointer-events-none"
-        autoPlay
-        muted
-        loop
-        playsInline
+      {/* Grain Texture Overlay */}
+      <div className="grain-overlay" />
+
+      {/* Header Content */}
+      <motion.div 
+        className="section-header"
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
       >
-        <source
-          src="/images/SectionWhoWeServeMedia/Grain.mp4"
-          type="video/mp4"
-        />
-      </video>
-
-      {/* Text Content */}
-      <div className="relative z-20 max-w-3xl mx-auto text-center">
-        <h2 className="text-4xl md:text-5xl font-bold text-white font-orbitron">
+        <h2 className="section-heading font-orbitron">
           Who We Serve
         </h2>
-        <p className="text-lg font-semibold text-gray-300 mt-4">
+        <p className="section-subheading">
           Deployable Intelligence for Builders, Strategists, and Scaling Teams
         </p>
-        <p className="text-md text-gray-400 mt-2">
-          We’re building cognitive engines powered by an entirely new class of
+        <p className="section-description">
+          We're building cognitive engines powered by an entirely new class of
           intelligence — systems operating at an altitude beyond conventional
           AI. They bring adaptive reasoning, end-to-end automation, multi-agent
           orchestration, and execution clarity that were simply not possible
           until now.
         </p>
-      </div>
+      </motion.div>
 
-      {/* Audience Cards */}
+      {/* Audience Cards Container */}
       <motion.div
-        className="relative z-20 flex flex-wrap justify-center gap-6 mt-12"
+        className="pillars-wrapper"
         initial="hidden"
-        animate="visible"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-100px" }}
         variants={{
-          hidden: {},
+          hidden: { opacity: 0 },
           visible: {
+            opacity: 1,
             transition: {
-              staggerChildren: 0.12,
-            },
-          },
+              staggerChildren: 0.1,
+              delayChildren: 0.2
+            }
+          }
         }}
       >
-        {audienceData.map((audience, index) => (
-          <AudienceCard
-            key={index}
-            {...audience}
-            index={index}
-            isActive={activeIndex === index}
-            onClick={() => setActiveIndex(index)}
-          />
-        ))}
+        <div 
+          ref={containerRef}
+          className="pillars-container"
+        >
+          {audienceData.map((audience, index) => (
+            <AudienceCard
+              key={index}
+              {...audience}
+              index={index}
+              isActive={activeIndex === index}
+              onClick={() => setActiveIndex(activeIndex === index ? null : index)}
+            />
+          ))}
+        </div>
+      </motion.div>
+
+      {/* Mobile Scroll Indicator */}
+      <motion.div 
+        className="mobile-scroll-indicator"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1.5 }}
+      >
+        <span>Swipe to explore →</span>
       </motion.div>
     </section>
   );

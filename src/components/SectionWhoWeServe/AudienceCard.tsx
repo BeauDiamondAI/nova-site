@@ -1,53 +1,142 @@
 import React from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import "./AudienceCard.css";
 
-interface AudienceCardProps {
-  icon: React.ReactNode;
+export interface AudienceCardProps {
+  icon: string;
   title: string;
   description: string;
+  color: {
+    primary: string;
+    glow: string;
+    accent: string;
+  };
   index: number;
   isActive: boolean;
   onClick: () => void;
 }
 
-const cardVariants = {
-  hidden: { opacity: 0, y: 40 },
-  visible: (index: number) => ({
-    opacity: 1,
-    y: 0,
-    transition: {
-      delay: index * 0.15,
-      duration: 0.6,
-      type: "spring",
-      stiffness: 70,
-    },
-  }),
-};
-
 export const AudienceCard: React.FC<AudienceCardProps> = ({
   icon,
   title,
   description,
+  color,
   index,
   isActive,
   onClick,
 }) => {
+  // Elite spring physics from Vercel/Rauno
+  const springConfig = {
+    type: "spring",
+    stiffness: 400,
+    damping: 25,
+    mass: 0.5
+  };
+
+  const cardVariants = {
+    hidden: { 
+      opacity: 0, 
+      y: 60,
+      scale: 0.9
+    },
+    visible: {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      transition: {
+        ...springConfig,
+        delay: index * 0.08
+      }
+    },
+    hover: {
+      y: -8,
+      scale: 1.02,
+      transition: springConfig
+    },
+    tap: {
+      scale: 0.98,
+      transition: { duration: 0.1 }
+    }
+  };
+
   return (
     <motion.div
       className={`audience-card ${isActive ? "active" : ""}`}
+      style={{
+        "--card-primary": color.primary,
+        "--card-glow": color.glow,
+        "--card-accent": color.accent,
+      } as React.CSSProperties}
       custom={index}
       initial="hidden"
       animate="visible"
+      whileHover="hover"
+      whileTap="tap"
       variants={cardVariants}
       layout
+      layoutId={`card-${index}`}
       onClick={onClick}
     >
+      {/* Animated grain texture */}
+      <div className="card-grain" />
+      
+      {/* Glow effect layer */}
+      <motion.div 
+        className="card-glow-layer"
+        animate={{
+          opacity: isActive ? 1 : 0.5
+        }}
+        transition={springConfig}
+      />
+
+      {/* Card Content */}
       <div className="card-content">
-        <div className="card-icon">{icon}</div>
-        <div className="card-title">{title}</div>
-        {isActive && <div className="card-description">{description}</div>}
+        <motion.div 
+          className="card-icon"
+          animate={{
+            scale: isActive ? 1.1 : 1,
+            rotate: isActive ? 5 : 0
+          }}
+          transition={springConfig}
+        >
+          {icon}
+        </motion.div>
+        
+        <h3 className="card-title">{title}</h3>
+        
+        <AnimatePresence mode="wait">
+          {isActive && (
+            <motion.p
+              className="card-description"
+              initial={{ opacity: 0, height: 0, y: -10 }}
+              animate={{ 
+                opacity: 1, 
+                height: "auto",
+                y: 0
+              }}
+              exit={{ 
+                opacity: 0, 
+                height: 0,
+                y: -10
+              }}
+              transition={{
+                ...springConfig,
+                opacity: { duration: 0.3 }
+              }}
+            >
+              {description}
+            </motion.p>
+          )}
+        </AnimatePresence>
       </div>
+
+      {/* Interactive hover beam effect */}
+      <motion.div 
+        className="hover-beam"
+        initial={{ scaleX: 0 }}
+        whileHover={{ scaleX: 1 }}
+        transition={{ duration: 0.3 }}
+      />
     </motion.div>
   );
 };
