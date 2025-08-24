@@ -65,11 +65,7 @@ export const AudienceCard: React.FC<AudienceCardProps> = ({
       style={{
         "--card-primary": color.primary,
         "--card-glow": color.glow,
-        "--card-accent": color.accent,
-        borderColor: isActive ? color.accent : undefined,
-        boxShadow: isActive 
-          ? `0 0 0 1px ${color.accent}, 0 0 40px ${color.glow}` 
-          : undefined
+        "--card-accent": color.accent
       } as React.CSSProperties}
       custom={index}
       initial="hidden"

@@ -28,9 +28,12 @@
   transform: translateZ(0);
   contain: layout style paint;
   
-  /* SLOWER transition for smooth expansion */
-  transition: height 0.8s cubic-bezier(0.4, 0, 0.2, 1), 
-              min-height 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  /* SLOWER transition for smooth expansion AND glow effects */
+  transition: 
+    height 0.8s cubic-bezier(0.4, 0, 0.2, 1), 
+    min-height 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 2s ease-out,  /* This creates the gradual glow fade */
+    border-color 0.3s ease;
   overflow: hidden;
 }
 
@@ -122,23 +125,7 @@
   inherits: false;
 }
 
-/* Glow Layer for Dynamic Effects - EXACTLY FROM OLD VERSION */
-.card-glow-layer {
-  position: absolute;
-  inset: -2px;
-  background: radial-gradient(
-    circle at center,
-    var(--card-glow),
-    transparent 70%
-  );
-  opacity: 0;
-  z-index: -1;
-  transition: opacity 0.3s ease;
-}
-
-.audience-card:hover .card-glow-layer {
-  opacity: 0.3;
-}
+/* Remove the glow layer - we don't need it, the effect comes from box-shadow */
 
 /* Content Container */
 .card-content {
