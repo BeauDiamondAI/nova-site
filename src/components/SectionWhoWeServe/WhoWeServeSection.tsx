@@ -68,7 +68,7 @@ const SectionWhoWeServe: React.FC = () => {
         viewport={{ once: true }}
         transition={{ duration: 0.8, ease: "easeOut" }}
       >
-        <h2 className="section-heading font-orbitron">
+        <h2 className="text-4xl sm:text-5xl font-bold font-headline mb-5">
           Who We Serve
         </h2>
         <p className="section-subheading">

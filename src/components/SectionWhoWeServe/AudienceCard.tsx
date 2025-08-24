@@ -73,8 +73,6 @@ export const AudienceCard: React.FC<AudienceCardProps> = ({
       whileHover="hover"
       whileTap="tap"
       variants={cardVariants}
-      layout
-      layoutId={`card-${index}`}
       onClick={onClick}
     >
       {/* Animated grain texture */}

@@ -12,8 +12,8 @@
   /* Elite Glassmorphism (Linear + Apple inspired) */
   background: linear-gradient(
     135deg,
-    var(--card-primary, rgba(255, 255, 255, 0.08)),
-    rgba(255, 255, 255, 0.02)
+    var(--card-primary, rgba(255, 255, 255, 0.12)),
+    rgba(255, 255, 255, 0.04)
   );
   backdrop-filter: blur(24px) saturate(150%);
   -webkit-backdrop-filter: blur(24px) saturate(150%);
@@ -43,8 +43,8 @@
   border-color: var(--card-accent);
   background: linear-gradient(
     135deg,
-    var(--card-primary),
-    rgba(255, 255, 255, 0.05)
+    var(--card-primary, rgba(255, 255, 255, 0.15)),
+    rgba(255, 255, 255, 0.06)
   );
   box-shadow: 
     0 0 0 2px var(--card-accent),
@@ -60,7 +60,7 @@
   background-image: url('/images/SectionWhoWeServeMedia/PillarGrain.png');
   background-repeat: repeat;
   background-size: 150px;
-  opacity: 0.02;
+  opacity: 0.08; /* Increased from 0.02 to 0.08 for better visibility */
   mix-blend-mode: overlay;
   pointer-events: none;
   z-index: 1;
