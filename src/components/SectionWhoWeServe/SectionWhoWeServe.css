@@ -73,6 +73,7 @@
   text-align: center;
   max-width: 900px;
   margin: 0 auto 4rem;
+  padding: 0 2rem; /* Add padding to header for mobile */
 }
 
 .section-heading {
@@ -107,13 +108,15 @@
   width: 100%;
   max-width: 1400px;
   margin: 0 auto;
-  padding: 0 2rem; /* Add padding to the wrapper */
+  overflow: visible; /* Ensure nothing is cut off */
 }
 
 .pillars-container {
   display: flex;
   gap: 1.5rem;
-  padding: 2rem 4rem 2rem 1rem; /* Increased right padding to 4rem */
+  padding: 2rem;
+  justify-content: center; /* Center the cards */
+  flex-wrap: nowrap; /* Keep them in one row */
   overflow-x: auto;
   scroll-behavior: smooth;
   scroll-snap-type: x proximity;
