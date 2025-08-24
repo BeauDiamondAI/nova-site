@@ -107,7 +107,10 @@ const SectionWhoWeServe: React.FC = () => {
           {audienceData.map((audience, index) => (
             <AudienceCard
               key={index}
-              {...audience}
+              icon={audience.icon}
+              title={audience.title}
+              description={audience.description}
+              color={audience.color}
               index={index}
               isActive={activeIndex === index}
               onClick={() => setActiveIndex(activeIndex === index ? null : index)}
