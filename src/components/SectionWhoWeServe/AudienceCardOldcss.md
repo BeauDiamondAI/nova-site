@@ -44,8 +44,7 @@
   height: auto;
   min-height: 320px;
   background: rgba(255, 255, 255, 0.08);
-  /* Border and box-shadow are controlled by inline styles */
-  /* The expansion animation is handled by the CSS transition */
+  /* Border and glow will be set via inline styles for proper colors */
 }
 
 /* Subtle Glass Shimmer - Only on active cards */
@@ -73,8 +72,7 @@
     rgba(255, 255, 255, 0.03) 52%,
     transparent 55%
   );
-  animation: shimmerSubtle 4s infinite linear;
-  animation-delay: 0.5s; /* Start sooner - was implicit 0 before */
+  animation: shimmerSubtle 6s infinite linear;
 }
 
 @keyframes shimmerSubtle {
@@ -91,28 +89,37 @@
   position: absolute;
   inset: -2px;
   border-radius: 20px;
-  padding: 2px;
-  background: linear-gradient(var(--angle, 0deg), var(--card-accent), transparent 50%);
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  animation: borderSpin 2s linear forwards;
+  background: conic-gradient(
+    from var(--angle, 0deg),
+    transparent 0deg,
+    var(--card-accent) 10deg,
+    var(--card-glow) 30deg,
+    transparent 60deg,
+    transparent 360deg
+  );
+  animation: borderRotate 2s linear forwards;
   z-index: -1;
-  opacity: 0;
 }
 
-@keyframes borderSpin {
-  0% {
+@keyframes borderRotate {
+  from {
     --angle: 0deg;
     opacity: 0;
   }
-  10% {
-    opacity: 1;
-  }
-  100% {
+  to {
     --angle: 360deg;
     opacity: 1;
   }
+}
+
+/* Create the border mask */
+.border-glow-animated::before {
+  content: '';
+  position: absolute;
+  inset: 2px;
+  border-radius: 18px;
+  background: #000;
+  z-index: 1;
 }
 
 /* CSS property for animated angle */
@@ -122,7 +129,7 @@
   inherits: false;
 }
 
-/* Glow Layer for Dynamic Effects - RESTORED FROM OLD VERSION */
+/* Glow Layer for Dynamic Effects */
 .card-glow-layer {
   position: absolute;
   inset: -2px;
@@ -136,19 +143,8 @@
   transition: opacity 0.3s ease;
 }
 
-/* This is the key - it activates on ACTIVE cards, not just hover */
-.audience-card.active .card-glow-layer {
+.audience-card:hover .card-glow-layer {
   opacity: 0.3;
-  animation: glowFade 2s ease-out forwards;
-}
-
-@keyframes glowFade {
-  0% {
-    opacity: 0.5;
-  }
-  100% {
-    opacity: 0.2;
-  }
 }
 
 /* Content Container */
@@ -240,14 +236,11 @@
   .audience-card {
     flex: 0 0 85%;
     max-width: 320px;
-    height: 220px; /* Fixed initial height */
+    min-height: 220px;
   }
   
   .audience-card.active {
-    height: auto; /* Allow expansion */
     min-height: 300px;
-    /* Prevent bounce with will-change */
-    will-change: height;
   }
   
   .card-icon {
