@@ -114,7 +114,7 @@
 .pillars-container {
   display: flex;
   gap: 1.5rem;
-  padding: 2rem;
+  padding: 2rem 2rem 2rem 3rem; /* Added more left padding */
   justify-content: center; /* Center the cards */
   flex-wrap: nowrap; /* Keep them in one row */
   overflow-x: auto;

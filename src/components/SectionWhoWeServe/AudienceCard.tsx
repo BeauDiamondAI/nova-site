@@ -75,8 +75,27 @@ export const AudienceCard: React.FC<AudienceCardProps> = ({
       variants={cardVariants}
       onClick={onClick}
     >
-      {/* Animated grain texture */}
-      <div className="card-grain" />
+      {/* Animated grain texture VIDEO */}
+      <video 
+        className="card-grain-video"
+        autoPlay
+        muted
+        loop
+        playsInline
+        style={{
+          position: 'absolute',
+          inset: 0,
+          width: '100%',
+          height: '100%',
+          objectFit: 'cover',
+          opacity: 0.3,
+          mixBlendMode: 'overlay',
+          pointerEvents: 'none',
+          zIndex: 1
+        }}
+      >
+        <source src="/images/SectionWhoWeServeMedia/Grain.mp4" type="video/mp4" />
+      </video>
       
       {/* Glow effect layer */}
       <motion.div 
