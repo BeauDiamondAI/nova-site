@@ -28,12 +28,13 @@
   transform: translateZ(0);
   contain: layout style paint;
   
-  /* Smooth transition for height changes */
-  transition: height 0.3s cubic-bezier(0.4, 0, 0.2, 1), 
-              min-height 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-              background 0.3s ease,
-              border-color 0.3s ease,
-              box-shadow 0.3s ease;
+  /* Smooth, slower transition for height changes */
+  transition: 
+    height 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+    min-height 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+    background 0.5s ease,
+    border-color 0.5s ease,
+    box-shadow 0.5s ease;
   overflow: hidden;
 }
 
@@ -55,7 +56,7 @@
     inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 
-/* Glass Shimmer Effect - Replaces grain */
+/* Glass Shimmer Effect - Only on expanded cards */
 .glass-shimmer {
   position: absolute;
   inset: 0;
@@ -63,6 +64,13 @@
   overflow: hidden;
   z-index: 1;
   pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+/* Only show shimmer on active/expanded cards */
+.audience-card.active .glass-shimmer {
+  opacity: 1;
 }
 
 .glass-shimmer::before {
@@ -75,12 +83,12 @@
   background: linear-gradient(
     105deg,
     transparent 40%,
-    rgba(255, 255, 255, 0.1) 45%,
-    rgba(255, 255, 255, 0.15) 50%,
-    rgba(255, 255, 255, 0.1) 55%,
+    rgba(255, 255, 255, 0.07) 45%, /* More subtle - reduced from 0.1 */
+    rgba(255, 255, 255, 0.1) 50%,  /* More subtle - reduced from 0.15 */
+    rgba(255, 255, 255, 0.07) 55%, /* More subtle - reduced from 0.1 */
     transparent 60%
   );
-  animation: shimmer 4s infinite;
+  animation: shimmer 6s infinite; /* Slower - increased from 4s */
   transform: translateX(-100%);
 }
 
@@ -93,26 +101,54 @@
   }
 }
 
-/* Subtle prismatic edge effect on hover */
-.audience-card:hover .glass-shimmer::after {
+/* Animated border glow effect that travels around the frame */
+.audience-card::before {
   content: '';
   position: absolute;
-  inset: 0;
+  inset: -2px;
   border-radius: 20px;
-  background: linear-gradient(
-    45deg,
-    transparent,
-    rgba(59, 130, 246, 0.05),
-    rgba(168, 85, 247, 0.05),
-    transparent
+  padding: 2px;
+  background: conic-gradient(
+    from var(--angle, 0deg),
+    transparent 0deg,
+    transparent 90deg,
+    var(--card-accent) 90deg,
+    var(--card-accent) 180deg,
+    transparent 180deg
   );
-  opacity: 1;
-  animation: prism 3s ease-in-out infinite;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  animation: borderRotate 1.5s linear forwards paused;
+  z-index: -1;
 }
 
-@keyframes prism {
-  0%, 100% { opacity: 0; }
-  50% { opacity: 1; }
+@keyframes borderRotate {
+  from {
+    --angle: 0deg;
+  }
+  to {
+    --angle: 360deg;
+  }
+}
+
+@property --angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+/* Activate the border animation when card is clicked */
+.audience-card.active::before {
+  opacity: 1;
+  animation-play-state: running;
+}
+
+/* After animation completes, show full border */
+.audience-card.active {
+  animation: showFullBorder 0.3s ease 1.5s forwards;
 }
 
 /* Glow Layer for Dynamic Effects */
