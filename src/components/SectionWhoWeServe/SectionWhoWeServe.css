@@ -112,10 +112,13 @@
 .pillars-container {
   display: flex;
   gap: 1.5rem;
-  padding: 2rem 1rem;
+  padding: 2rem 2rem 2rem 1rem; /* Added right padding */
   overflow-x: auto;
   scroll-behavior: smooth;
   scroll-snap-type: x proximity;
+  
+  /* Add padding for last card */
+  padding-right: 3rem;
   
   /* Hide scrollbar but maintain functionality */
   scrollbar-width: none;
