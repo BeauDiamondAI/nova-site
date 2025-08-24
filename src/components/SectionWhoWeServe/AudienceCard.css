@@ -28,13 +28,9 @@
   transform: translateZ(0);
   contain: layout style paint;
   
-  /* Smooth, slower transition for height changes */
-  transition: 
-    height 0.8s cubic-bezier(0.4, 0, 0.2, 1),
-    min-height 0.8s cubic-bezier(0.4, 0, 0.2, 1),
-    background 0.5s ease,
-    border-color 0.5s ease,
-    box-shadow 0.5s ease;
+  /* Smooth transition for height changes ONLY */
+  transition: height 0.3s cubic-bezier(0.4, 0, 0.2, 1), 
+              min-height 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   overflow: hidden;
 }
 
@@ -43,50 +39,15 @@
   margin-right: 0.5rem;
 }
 
-/* Active/Expanded State */
+/* Active/Expanded State - simplified, dynamic styles come from React */
 .audience-card.active {
-  height: auto; /* Allow height to expand */
+  height: auto;
   min-height: 320px;
-  border-color: transparent; /* Hide default border during animation */
-  background: rgba(255, 255, 255, 0.08); /* Slightly more opaque when active */
-  box-shadow: 
-    0 0 60px var(--card-glow),
-    0 30px 40px -10px rgba(0, 0, 0, 0.5),
-    inset 0 1px 0 rgba(255, 255, 255, 0.2);
-  /* Smooth expansion animation */
-  animation: expandCard 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  background: rgba(255, 255, 255, 0.08);
+  /* Border and glow will be set via inline styles for proper colors */
 }
 
-@keyframes expandCard {
-  0% {
-    min-height: 240px;
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.02);
-  }
-  100% {
-    min-height: 320px;
-    transform: scale(1);
-  }
-}
-
-/* SVG Border Animation */
-@keyframes drawBorder {
-  0% {
-    stroke-dashoffset: 1000;
-    opacity: 0;
-  }
-  10% {
-    opacity: 1;
-  }
-  100% {
-    stroke-dashoffset: 0;
-    opacity: 1;
-  }
-}
-
-/* Glass Shimmer Effect - Only on expanded cards */
+/* Glass Shimmer Effect - Replaces grain */
 .glass-shimmer {
   position: absolute;
   inset: 0;
@@ -94,13 +55,6 @@
   overflow: hidden;
   z-index: 1;
   pointer-events: none;
-  opacity: 0;
-  transition: opacity 0.5s ease;
-}
-
-/* Only show shimmer on active/expanded cards */
-.audience-card.active .glass-shimmer {
-  opacity: 1;
 }
 
 .glass-shimmer::before {
@@ -113,12 +67,12 @@
   background: linear-gradient(
     105deg,
     transparent 40%,
-    rgba(255, 255, 255, 0.03) 45%, /* Even more subtle - reduced from 0.07 */
-    rgba(255, 255, 255, 0.05) 50%,  /* Even more subtle - reduced from 0.1 */
-    rgba(255, 255, 255, 0.03) 55%, /* Even more subtle - reduced from 0.07 */
+    rgba(255, 255, 255, 0.1) 45%,
+    rgba(255, 255, 255, 0.15) 50%,
+    rgba(255, 255, 255, 0.1) 55%,
     transparent 60%
   );
-  animation: shimmer 8s infinite; /* Even slower - increased from 6s */
+  animation: shimmer 4s infinite;
   transform: translateX(-100%);
 }
 
@@ -129,6 +83,28 @@
   100% {
     transform: translateX(100%) translateY(100%) rotate(25deg);
   }
+}
+
+/* Subtle prismatic edge effect on hover */
+.audience-card:hover .glass-shimmer::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 20px;
+  background: linear-gradient(
+    45deg,
+    transparent,
+    rgba(59, 130, 246, 0.05),
+    rgba(168, 85, 247, 0.05),
+    transparent
+  );
+  opacity: 1;
+  animation: prism 3s ease-in-out infinite;
+}
+
+@keyframes prism {
+  0%, 100% { opacity: 0; }
+  50% { opacity: 1; }
 }
 
 /* Glow Layer for Dynamic Effects */
