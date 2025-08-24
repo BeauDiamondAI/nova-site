@@ -125,7 +125,23 @@
   inherits: false;
 }
 
-/* Remove the glow layer - we don't need it, the effect comes from box-shadow */
+/* Glow Layer for Dynamic Effects - EXACTLY FROM OLD VERSION */
+.card-glow-layer {
+  position: absolute;
+  inset: -2px;
+  background: radial-gradient(
+    circle at center,
+    var(--card-glow),
+    transparent 70%
+  );
+  opacity: 0;
+  z-index: -1;
+  transition: opacity 0.3s ease;
+}
+
+.audience-card:hover .card-glow-layer {
+  opacity: 0.3;
+}
 
 /* Content Container */
 .card-content {
