@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import "./AudienceCard.css";
 
@@ -25,13 +25,30 @@ export const AudienceCard: React.FC<AudienceCardProps> = ({
   isActive,
   onClick,
 }) => {
-  // Elite spring physics from Vercel/Rauno - SLOWER for smooth expansion
+  // Track glow dimming state
+  const [showIntenseGlow, setShowIntenseGlow] = useState(false);
+
+  // Elite spring physics from CBF v1.0 - Rauno's patterns
   const springConfig = {
     type: "spring",
-    stiffness: 200,  // Reduced from 400 for slower expansion
-    damping: 30,      // Increased from 25 for smoother motion
-    mass: 1           // Increased from 0.5 for more weight
+    stiffness: 300,  // CBF: Vercel's standard
+    damping: 25,     // CBF: Balanced motion
+    mass: 1.2        // CBF: Slightly heavier for premium feel
   };
+
+  // Handle glow timing - intense glow on click, then gradual dim
+  useEffect(() => {
+    if (isActive) {
+      setShowIntenseGlow(true);
+      // Dim the glow after 1.2 seconds (CBF: Linear's timing)
+      const timer = setTimeout(() => {
+        setShowIntenseGlow(false);
+      }, 1200);
+      return () => clearTimeout(timer);
+    } else {
+      setShowIntenseGlow(false);
+    }
+  }, [isActive]);
 
   const cardVariants = {
     hidden: { 
@@ -61,7 +78,7 @@ export const AudienceCard: React.FC<AudienceCardProps> = ({
 
   return (
     <motion.div
-      className={`audience-card ${isActive ? "active" : ""}`}
+      className={`audience-card ${isActive ? "active" : ""} ${showIntenseGlow ? "intense-glow" : ""}`}
       style={{
         "--card-primary": color.primary,
         "--card-glow": color.glow,
@@ -75,27 +92,31 @@ export const AudienceCard: React.FC<AudienceCardProps> = ({
       variants={cardVariants}
       onClick={onClick}
     >
-      {/* Glass shimmer effect - only on active cards */}
+      {/* Diagonal shimmer effect - only on active cards */}
       {isActive && (
         <div className="glass-shimmer-subtle" />
       )}
       
-      {/* Animated border glow - travels around the card */}
-      {isActive && (
-        <div className="border-glow-animated" />
-      )}
-      
-      {/* Glow effect layer */}
+      {/* Glow effect layer with dynamic intensity */}
       <motion.div 
         className="card-glow-layer"
         animate={{
-          opacity: isActive ? 1 : 0.5
+          opacity: isActive ? (showIntenseGlow ? 1 : 0.4) : 0
         }}
-        transition={springConfig}
+        transition={{
+          duration: showIntenseGlow ? 0.3 : 1.5, // Quick appear, slow fade
+          ease: "easeOut"
+        }}
       />
 
-      {/* Card Content */}
-      <div className="card-content">
+      {/* Card Content Container with synchronized expansion */}
+      <motion.div 
+        className="card-content"
+        animate={{
+          height: isActive ? "auto" : "auto"
+        }}
+        transition={springConfig}
+      >
         <motion.div 
           className="card-icon"
           animate={{
@@ -109,31 +130,39 @@ export const AudienceCard: React.FC<AudienceCardProps> = ({
         
         <h3 className="card-title">{title}</h3>
         
+        {/* Text reveal with synchronized timing */}
         <AnimatePresence mode="wait">
           {isActive && (
             <motion.p
               className="card-description"
-              initial={{ opacity: 0, height: 0 }}
+              initial={{ 
+                opacity: 0, 
+                height: 0,
+                marginTop: 0
+              }}
               animate={{ 
                 opacity: 1, 
-                height: "auto"
+                height: "auto",
+                marginTop: "1rem"
               }}
               exit={{ 
                 opacity: 0, 
-                height: 0
+                height: 0,
+                marginTop: 0
               }}
               transition={{
-                duration: 0.8,
-                ease: "easeInOut"
+                duration: 0.6,
+                ease: "easeOut",
+                delay: 0.1 // Slight delay for better sync
               }}
             >
               {description}
             </motion.p>
           )}
         </AnimatePresence>
-      </div>
+      </motion.div>
 
-      {/* Interactive hover beam effect */}
+      {/* Interactive hover beam effect - Rauno's pattern */}
       <motion.div 
         className="hover-beam"
         initial={{ scaleX: 0 }}
