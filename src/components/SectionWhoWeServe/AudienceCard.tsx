@@ -25,9 +25,8 @@ export const AudienceCard: React.FC<AudienceCardProps> = ({
   isActive,
   onClick,
 }) => {
-  // Track glow dimming state with mobile flicker prevention
+  // Track glow dimming state
   const [showIntenseGlow, setShowIntenseGlow] = useState(false);
-  const [glowStable, setGlowStable] = useState(false); // FIXED: Prevent flicker state
 
   // Elite spring physics from CBF v1.0 - Rauno's patterns
   const springConfig = {
@@ -40,16 +39,22 @@ export const AudienceCard: React.FC<AudienceCardProps> = ({
   // Handle glow timing - intense glow on click, then gradual 4-second dim
   useEffect(() => {
     if (isActive) {
-      setShowIntenseGlow(true);
-      setGlowStable(true); // FIXED: Stabilize glow immediately
-      // FIXED: Gradual dim after 4 seconds instead of abrupt
-      const timer = setTimeout(() => {
+      // FIXED: Small delay to prevent mobile flicker on state change
+      const stabilizeTimer = setTimeout(() => {
+        setShowIntenseGlow(true);
+      }, 50); // Very short delay to let mobile rendering stabilize
+      
+      // FIXED: Gradual dim after 4 seconds
+      const dimTimer = setTimeout(() => {
         setShowIntenseGlow(false);
-      }, 4000); // Extended to 4 seconds for gradual experience
-      return () => clearTimeout(timer);
+      }, 4000);
+      
+      return () => {
+        clearTimeout(stabilizeTimer);
+        clearTimeout(dimTimer);
+      };
     } else {
       setShowIntenseGlow(false);
-      setGlowStable(false); // FIXED: Reset stable state
     }
   }, [isActive]);
 
@@ -100,14 +105,14 @@ export const AudienceCard: React.FC<AudienceCardProps> = ({
         <div className="glass-shimmer-subtle" />
       )}
       
-      {/* Glow effect layer with anti-flicker stabilization */}
+      {/* Glow effect layer with mobile-optimized timing */}
       <motion.div 
         className="card-glow-layer"
         animate={{
-          opacity: isActive && glowStable ? (showIntenseGlow ? 1 : 0.4) : 0
+          opacity: isActive ? (showIntenseGlow ? 1 : 0.4) : 0
         }}
         transition={{
-          duration: showIntenseGlow ? 0.2 : 4.0, // FIXED: Faster initial appear
+          duration: showIntenseGlow ? 0.3 : 4.0,
           ease: "easeOut"
         }}
       />

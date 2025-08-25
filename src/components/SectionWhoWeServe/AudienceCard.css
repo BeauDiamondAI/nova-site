@@ -111,7 +111,7 @@
 
 /* REMOVED: Problematic border-glow-animated that caused white diagonal glow */
 
-/* CBF: Glow Layer (Vercel's radial approach) */
+/* CBF: Glow Layer (Vercel's radial approach) - Mobile optimized */
 .card-glow-layer {
   position: absolute;
   inset: -4px; /* Slightly larger for better effect */
@@ -124,6 +124,13 @@
   opacity: 0;
   z-index: -1;
   transition: opacity 0.3s ease;
+  
+  /* FIXED: Prevent mobile artifacts and "Saturn ring" effects */
+  will-change: opacity;
+  transform: translateZ(0);
+  /* Ensure clean boundaries */
+  overflow: hidden;
+  isolation: isolate;
 }
 
 /* Hover glow (separate from active glow) */
@@ -283,16 +290,5 @@
   
   .card-description {
     color: rgba(255, 255, 255, 0.95);
-  }
-}
-
-/* CBF: Mobile optimizations - ADD THIS TO AudienceCard.css */
-@media (max-width: 768px) {
-  .audience-card:first-child {
-    margin-left: 3rem; /* Center first card */
-  }
-  
-  .audience-card:last-child {
-    margin-right: 3rem; /* Center last card */
   }
 }
