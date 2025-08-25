@@ -194,3 +194,30 @@
     animation: none;
   }
 }
+
+/* Mobile CSS Addition - Add this to your SectionWhoWeServe.css */
+
+@media (max-width: 768px) {
+  .section-who-we-serve {
+    padding: 4rem 0; /* FIXED: Remove horizontal padding on mobile */
+  }
+
+  .section-header {
+    margin-bottom: 3rem;
+    padding: 0 1rem; /* Keep header padding */
+  }
+
+  .pillars-container {
+    /* FIXED: Mobile carousel positioning */
+    scroll-snap-type: x mandatory;
+    padding: 1rem 0; /* FIXED: Remove left/right padding that was causing centering */
+    padding-left: 0; /* FIXED: Start from left edge */
+    gap: 1rem;
+    justify-content: flex-start; /* FIXED: Align to start instead of center */
+  }
+
+  .mobile-scroll-indicator {
+    display: block;
+    padding: 0 2rem; /* Add padding to indicator text only */
+  }
+}
