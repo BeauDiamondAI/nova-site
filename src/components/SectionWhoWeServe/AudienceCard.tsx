@@ -25,8 +25,8 @@ export const AudienceCard: React.FC<AudienceCardProps> = ({
   isActive,
   onClick,
 }) => {
-  // Track glow dimming state
-  const [showIntenseGlow, setShowIntenseGlow] = useState(false);
+  // SIMPLIFIED: Remove complex glow state management
+  // const [showIntenseGlow, setShowIntenseGlow] = useState(false);
 
   // Elite spring physics from CBF v1.0 - Rauno's patterns
   const springConfig = {
@@ -36,27 +36,7 @@ export const AudienceCard: React.FC<AudienceCardProps> = ({
     mass: 1.2        // CBF: Slightly heavier for premium feel
   };
 
-  // Handle glow timing - intense glow on click, then gradual 4-second dim
-  useEffect(() => {
-    if (isActive) {
-      // FIXED: Small delay to prevent mobile flicker on state change
-      const stabilizeTimer = setTimeout(() => {
-        setShowIntenseGlow(true);
-      }, 50); // Very short delay to let mobile rendering stabilize
-      
-      // FIXED: Gradual dim after 4 seconds
-      const dimTimer = setTimeout(() => {
-        setShowIntenseGlow(false);
-      }, 4000);
-      
-      return () => {
-        clearTimeout(stabilizeTimer);
-        clearTimeout(dimTimer);
-      };
-    } else {
-      setShowIntenseGlow(false);
-    }
-  }, [isActive]);
+  // REMOVED: Complex useEffect glow timing that was causing flickers
 
   const cardVariants = {
     hidden: { 
@@ -86,7 +66,7 @@ export const AudienceCard: React.FC<AudienceCardProps> = ({
 
   return (
     <motion.div
-      className={`audience-card ${isActive ? "active" : ""} ${showIntenseGlow ? "intense-glow" : ""}`}
+      className={`audience-card ${isActive ? "active" : ""}`}
       style={{
         "--card-primary": color.primary,
         "--card-glow": color.glow,
@@ -105,17 +85,8 @@ export const AudienceCard: React.FC<AudienceCardProps> = ({
         <div className="glass-shimmer-subtle" />
       )}
       
-      {/* Glow effect layer with mobile-optimized timing */}
-      <motion.div 
-        className="card-glow-layer"
-        animate={{
-          opacity: isActive ? (showIntenseGlow ? 1 : 0.4) : 0
-        }}
-        transition={{
-          duration: showIntenseGlow ? 0.3 : 4.0,
-          ease: "easeOut"
-        }}
-      />
+      {/* SIMPLIFIED: Single glow layer managed by CSS only */}
+      <div className="card-glow-layer" />
 
       {/* Card Content Container with synchronized expansion */}
       <motion.div 

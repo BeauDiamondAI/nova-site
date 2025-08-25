@@ -39,21 +39,21 @@
   overflow: hidden;
 }
 
-/* CBF: Active state with smooth expansion (Linear + Vercel technique) */
+/* CBF: Active state with simplified glow (no complex transitions) */
 .audience-card.active {
-  max-height: 420px; /* FIXED: Use max-height for smooth expansion */
+  max-height: 420px;
   min-height: 340px;
   background: rgba(255, 255, 255, 0.08);
   
-  /* FIXED: Restore neon border from old version */
+  /* Neon border */
   border-color: var(--card-accent);
   
-  /* FIXED: Enhanced shadow without overwhelming glow */
+  /* SIMPLIFIED: Static shadow - no complex glow timing */
   box-shadow: 
-    0 0 0 2px var(--card-accent), /* Neon border effect */
-    0 0 40px var(--card-glow), /* Main glow */
-    0 30px 40px -10px rgba(0, 0, 0, 0.5), /* Depth shadow */
-    inset 0 1px 0 rgba(255, 255, 255, 0.2); /* Inner highlight */
+    0 0 0 2px var(--card-accent),
+    0 0 40px var(--card-glow),
+    0 30px 40px -10px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 
 /* FIXED: Intense glow state with smoother transition */
@@ -111,32 +111,39 @@
 
 /* REMOVED: Problematic border-glow-animated that caused white diagonal glow */
 
-/* CBF: Glow Layer (Vercel's radial approach) - Mobile optimized */
+/* SIMPLIFIED: Single glow layer with CSS-only transitions */
 .card-glow-layer {
   position: absolute;
-  inset: -4px; /* Slightly larger for better effect */
+  inset: -4px;
   background: radial-gradient(
     circle at center,
     var(--card-glow),
-    transparent 60% /* Tighter falloff */
+    transparent 60%
   );
-  border-radius: 24px; /* Match card radius + inset */
+  border-radius: 24px;
   opacity: 0;
   z-index: -1;
-  transition: opacity 0.3s ease;
   
-  /* FIXED: Prevent mobile artifacts and "Saturn ring" effects */
+  /* SIMPLIFIED: Pure CSS transitions - no JS conflicts */
+  transition: opacity 0.5s ease-out;
+  
+  /* Performance optimizations */
   will-change: opacity;
   transform: translateZ(0);
-  /* Ensure clean boundaries */
   overflow: hidden;
   isolation: isolate;
 }
 
-/* Hover glow (separate from active glow) */
+/* SIMPLIFIED: CSS-only glow states */
 .audience-card:hover .card-glow-layer {
   opacity: 0.25;
 }
+
+.audience-card.active .card-glow-layer {
+  opacity: 0.6; /* SIMPLIFIED: Single intensity, no complex dimming */
+}
+
+/* REMOVED: Complex intense-glow class that was causing flickers */
 
 /* Content Container - CBF: Flexible height management */
 .card-content {
