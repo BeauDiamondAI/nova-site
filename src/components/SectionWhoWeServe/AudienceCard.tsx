@@ -103,29 +103,9 @@ export const AudienceCard: React.FC<AudienceCardProps> = ({
       variants={cardVariants}
       onClick={onClick}
     >
-      {/* NEW SHIMMER METHOD: SVG-based instead of CSS gradient */}
+      {/* NEW SHIMMER METHOD: CSS Mask-based (top-to-bottom) */}
       {isActive && (
-        <div className="shimmer-svg-container">
-          <svg className="shimmer-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-              <linearGradient id="shimmer-gradient" gradientUnits="userSpaceOnUse">
-                <stop offset="0%" stopColor="rgba(255,255,255,0)" />
-                <stop offset="45%" stopColor="rgba(255,255,255,0)" />
-                <stop offset="50%" stopColor="rgba(255,255,255,0.03)" />
-                <stop offset="55%" stopColor="rgba(255,255,255,0)" />
-                <stop offset="100%" stopColor="rgba(255,255,255,0)" />
-                <animateTransform
-                  attributeName="gradientTransform"
-                  type="translate"
-                  values="-20 -20; 120 120"
-                  dur="4s"
-                  repeatCount="indefinite"
-                />
-              </linearGradient>
-            </defs>
-            <rect width="100" height="100" fill="url(#shimmer-gradient)" />
-          </svg>
-        </div>
+        <div className="shimmer-mask-container" />
       )}
       
       {/* SIMPLIFIED glow - try CSS-only approach on mobile */}
