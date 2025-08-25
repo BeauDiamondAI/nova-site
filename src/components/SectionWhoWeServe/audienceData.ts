@@ -13,13 +13,13 @@ export interface AudienceData {
 
 export const audienceData: AudienceData[] = [
   {
-  icon: "🚀",
-  title: "Founders & Creators",
+  icon: "💡👑", // This will be replaced by SVG
+  title: "Founders & Creators", 
   description: "Operational clarity and frameworks that think with you — but execute for you, turning vision into autonomous action.",
   color: {
-    primary: "rgba(6, 182, 212, 0.15)",    // CHANGED: Cyan instead of blue
-    glow: "rgba(6, 182, 212, 0.4)",        // CHANGED: Cyan glow
-    accent: "#06B6D4"                       // CHANGED: Cyan accent (Tailwind cyan-500)
+    primary: "rgba(15, 23, 42, 0.15)",     // Much deeper blue-gray
+    glow: "rgba(30, 64, 175, 0.5)",        // Rich cobalt glow  
+    accent: "#1d4ed8"                       // True cobalt blue (Tailwind blue-700)
   }
 },
   {

@@ -302,12 +302,11 @@
   width: 100%;
   height: 100%;
   object-fit: contain;
-  filter: brightness(0) invert(1); /* Make it white */
+  /* REMOVED: filter that was making it white */
   transition: all 0.3s ease;
 }
 
-/* Optional: Color the SVG with the card's accent color when active */
+/* Optional: Add subtle glow when active */
 .audience-card.active .card-icon-svg {
-  filter: brightness(0) invert(1);
-  /* You could also try: filter: drop-shadow(0 0 8px var(--card-accent)); */
+  filter: drop-shadow(0 0 4px var(--card-accent));
 }
