@@ -103,10 +103,7 @@ export const AudienceCard: React.FC<AudienceCardProps> = ({
       variants={cardVariants}
       onClick={onClick}
     >
-      {/* NEW SHIMMER METHOD: CSS Mask-based (top-to-bottom) */}
-      {isActive && (
-        <div className="shimmer-mask-container" />
-      )}
+      {/* Shimmer removed for now - will revisit later */}
       
       {/* SIMPLIFIED glow - try CSS-only approach on mobile */}
       {!isMobile ? (
@@ -135,7 +132,16 @@ export const AudienceCard: React.FC<AudienceCardProps> = ({
           }}
           transition={springConfig}
         >
-          {icon}
+          {/* Use custom SVG for first card, fallback to emoji for others */}
+          {index === 0 ? (
+            <img 
+              src="/images/SectionWhoWeServeMedia/Card1.svg" 
+              alt="Founders & Creators"
+              className="card-icon-svg"
+            />
+          ) : (
+            icon
+          )}
         </motion.div>
         
         <h3 className="card-title">{title}</h3>

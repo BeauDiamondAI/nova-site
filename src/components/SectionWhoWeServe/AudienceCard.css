@@ -297,92 +297,17 @@
   }
 }
 
-/* NEW SHIMMER METHOD: CSS Mask-based (replace previous shimmer CSS) */
-.shimmer-mask-container {
-  position: absolute;
-  inset: 0;
-  border-radius: 20px;
-  overflow: hidden;
-  z-index: 1;
-  pointer-events: none;
-  
-  /* Base shimmer layer */
-  background: linear-gradient(
-    135deg,
-    transparent 40%,
-    rgba(255, 255, 255, 0.03) 50%,
-    transparent 60%
-  );
-  
-  /* Use CSS mask for the animation instead of transform */
-  -webkit-mask: linear-gradient(
-    135deg,
-    transparent 30%,
-    black 50%,
-    transparent 70%
-  );
-  mask: linear-gradient(
-    135deg, 
-    transparent 30%,
-    black 50%,
-    transparent 70%
-  );
-  
-  /* Animate the mask position */
-  -webkit-mask-position: -100% -100%;
-  mask-position: -100% -100%;
-  
-  animation: shimmerMask 4s ease-in-out infinite;
-  animation-delay: 0.5s;
+/* Custom SVG Icon Styling - Add this to AudienceCard.css */
+.card-icon-svg {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: brightness(0) invert(1); /* Make it white */
+  transition: all 0.3s ease;
 }
 
-@keyframes shimmerMask {
-  0% {
-    -webkit-mask-position: -100% -100%;
-    mask-position: -100% -100%;
-  }
-  100% {
-    -webkit-mask-position: 100% 100%;
-    mask-position: 100% 100%;
-  }
-}
-
-/* Mobile-specific shimmer - simpler approach */
-@media (max-width: 768px) {
-  .shimmer-mask-container {
-    /* Simpler vertical shimmer on mobile */
-    background: linear-gradient(
-      180deg, /* Vertical instead of diagonal */
-      transparent 40%,
-      rgba(255, 255, 255, 0.04) 50%,
-      transparent 60%
-    );
-    
-    -webkit-mask: linear-gradient(
-      180deg, /* Vertical mask */
-      transparent 20%,
-      black 50%,
-      transparent 80%
-    );
-    mask: linear-gradient(
-      180deg,
-      transparent 20%,
-      black 50%,
-      transparent 80%
-    );
-    
-    animation: shimmerMaskMobile 3s ease-in-out infinite;
-    animation-delay: 0.3s;
-  }
-}
-
-@keyframes shimmerMaskMobile {
-  0% {
-    -webkit-mask-position: 0 -100%;
-    mask-position: 0 -100%;
-  }
-  100% {
-    -webkit-mask-position: 0 100%;
-    mask-position: 0 100%;
-  }
+/* Optional: Color the SVG with the card's accent color when active */
+.audience-card.active .card-icon-svg {
+  filter: brightness(0) invert(1);
+  /* You could also try: filter: drop-shadow(0 0 8px var(--card-accent)); */
 }
