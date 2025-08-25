@@ -112,10 +112,7 @@ export const AudienceCard: React.FC<AudienceCardProps> = ({
       {/* Card Content Container with synchronized expansion */}
       <motion.div 
         className="card-content"
-        animate={{
-          height: isActive ? "auto" : "auto"
-        }}
-        transition={springConfig}
+        // REMOVED: No need for height animation here - CSS handles it now
       >
         <motion.div 
           className="card-icon"
@@ -153,7 +150,7 @@ export const AudienceCard: React.FC<AudienceCardProps> = ({
               transition={{
                 duration: 0.6,
                 ease: "easeOut",
-                delay: 0.1 // Slight delay for better sync
+                delay: 0.2 // FIXED: Slightly longer delay to sync with card expansion
               }}
             >
               {description}
