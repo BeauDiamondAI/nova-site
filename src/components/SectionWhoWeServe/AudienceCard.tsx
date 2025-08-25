@@ -135,7 +135,7 @@ export const AudienceCard: React.FC<AudienceCardProps> = ({
           {/* Use custom SVG for first card, fallback to emoji for others */}
           {index === 0 ? (
             <img 
-              src="/images/SectionWhoWeServeMedia/Card1.svg" 
+              src="/images/SectionWhoWeServeMedia/Card1.png" 
               alt="Founders & Creators"
               className="card-icon-svg"
             />
