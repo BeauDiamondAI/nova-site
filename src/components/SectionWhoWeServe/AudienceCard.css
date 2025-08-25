@@ -71,25 +71,28 @@
   overflow: hidden;
   z-index: 1;
   pointer-events: none;
+  /* FIXED: Add mask to prevent overflow artifacts */
+  -webkit-mask: linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0);
 }
 
 .glass-shimmer-subtle::before {
   content: '';
   position: absolute;
-  top: -100%;
-  left: -100%;
-  width: 300%;
-  height: 300%;
+  top: -50%; /* FIXED: Reduced from -100% to prevent edge artifacts */
+  left: -50%; /* FIXED: Reduced from -100% */
+  width: 200%; /* FIXED: Reduced from 300% */
+  height: 200%; /* FIXED: Reduced from 300% */
   background: linear-gradient(
-    135deg, /* CBF: Optimal angle for diagonal flow */
-    transparent 45%,
-    rgba(255, 255, 255, 0.03) 48%,
-    rgba(255, 255, 255, 0.06) 50%, /* Slightly more visible */
-    rgba(255, 255, 255, 0.03) 52%,
-    transparent 55%
+    135deg,
+    transparent 40%,
+    rgba(255, 255, 255, 0.02) 48%, /* FIXED: Reduced opacity */
+    rgba(255, 255, 255, 0.04) 50%, /* FIXED: Reduced opacity */
+    rgba(255, 255, 255, 0.02) 52%, /* FIXED: Reduced opacity */
+    transparent 60%
   );
-  animation: shimmerDiagonal 4s infinite linear;
-  animation-delay: 0.8s; /* Delay for better UX timing */
+  animation: shimmerDiagonal 6s infinite linear; /* FIXED: Slower animation */
+  animation-delay: 1.2s; /* FIXED: Longer delay */
 }
 
 @keyframes shimmerDiagonal {
