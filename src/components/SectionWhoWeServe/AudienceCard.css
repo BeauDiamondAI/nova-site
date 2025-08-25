@@ -296,3 +296,24 @@
     margin-right: 3rem; /* Center last card */
   }
 }
+
+/* NEW SHIMMER METHOD: SVG-based (add this to AudienceCard.css) */
+.shimmer-svg-container {
+  position: absolute;
+  inset: 0;
+  border-radius: 20px;
+  overflow: hidden;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+.shimmer-svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  /* Ensure it doesn't interfere with glow layers */
+  mix-blend-mode: screen;
+}
