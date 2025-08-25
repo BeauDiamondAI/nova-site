@@ -25,8 +25,9 @@ export const AudienceCard: React.FC<AudienceCardProps> = ({
   isActive,
   onClick,
 }) => {
-  // Track glow dimming state
+  // Track glow dimming state with mobile flicker prevention
   const [showIntenseGlow, setShowIntenseGlow] = useState(false);
+  const [glowStable, setGlowStable] = useState(false); // FIXED: Prevent flicker state
 
   // Elite spring physics from CBF v1.0 - Rauno's patterns
   const springConfig = {
@@ -40,13 +41,15 @@ export const AudienceCard: React.FC<AudienceCardProps> = ({
   useEffect(() => {
     if (isActive) {
       setShowIntenseGlow(true);
-      // FIXED: Gradual dim after 4 seconds instead of abrupt at 1.2s
+      setGlowStable(true); // FIXED: Stabilize glow immediately
+      // FIXED: Gradual dim after 4 seconds instead of abrupt
       const timer = setTimeout(() => {
         setShowIntenseGlow(false);
       }, 4000); // Extended to 4 seconds for gradual experience
       return () => clearTimeout(timer);
     } else {
       setShowIntenseGlow(false);
+      setGlowStable(false); // FIXED: Reset stable state
     }
   }, [isActive]);
 
@@ -97,14 +100,14 @@ export const AudienceCard: React.FC<AudienceCardProps> = ({
         <div className="glass-shimmer-subtle" />
       )}
       
-      {/* Glow effect layer with gradual dimming */}
+      {/* Glow effect layer with anti-flicker stabilization */}
       <motion.div 
         className="card-glow-layer"
         animate={{
-          opacity: isActive ? (showIntenseGlow ? 1 : 0.4) : 0
+          opacity: isActive && glowStable ? (showIntenseGlow ? 1 : 0.4) : 0
         }}
         transition={{
-          duration: showIntenseGlow ? 0.3 : 4.0, // FIXED: 4 second gradual fade
+          duration: showIntenseGlow ? 0.2 : 4.0, // FIXED: Faster initial appear
           ease: "easeOut"
         }}
       />

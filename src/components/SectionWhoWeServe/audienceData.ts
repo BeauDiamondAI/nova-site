@@ -13,15 +13,15 @@ export interface AudienceData {
 
 export const audienceData: AudienceData[] = [
   {
-    icon: "🚀",
-    title: "Founders & Creators",
-    description: "Operational clarity and frameworks that think with you — but execute for you, turning vision into autonomous action.",
-    color: {
-      primary: "rgba(59, 130, 246, 0.15)",  // Blue
-      glow: "rgba(59, 130, 246, 0.4)",
-      accent: "#3B82F6"
-    }
-  },
+  icon: "🚀",
+  title: "Founders & Creators",
+  description: "Operational clarity and frameworks that think with you — but execute for you, turning vision into autonomous action.",
+  color: {
+    primary: "rgba(6, 182, 212, 0.15)",    // CHANGED: Cyan instead of blue
+    glow: "rgba(6, 182, 212, 0.4)",        // CHANGED: Cyan glow
+    accent: "#06B6D4"                       // CHANGED: Cyan accent (Tailwind cyan-500)
+  }
+},
   {
     icon: "🎯",
     title: "Operators & Teams",
