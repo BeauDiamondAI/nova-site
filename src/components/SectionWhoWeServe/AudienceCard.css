@@ -56,13 +56,16 @@
     inset 0 1px 0 rgba(255, 255, 255, 0.2); /* Inner highlight */
 }
 
-/* FIXED: Intense glow state (dims after 1.2s) */
+/* FIXED: Intense glow state with smoother transition */
 .audience-card.intense-glow {
   box-shadow: 
     0 0 0 2px var(--card-accent),
     0 0 80px var(--card-glow), /* Intense glow for brief moment */
     0 30px 40px -10px rgba(0, 0, 0, 0.5),
     inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  
+  /* FIXED: Smooth CSS transition for outer glow */
+  transition: box-shadow 4s ease-out; /* 4 second gradual dim */
 }
 
 /* Diagonal Shimmer - Replaces grain texture */
@@ -94,7 +97,7 @@
     transparent 60%
   );
   animation: shimmerDiagonal 6s infinite linear; /* FIXED: Slower animation */
-  animation-delay: 1.2s; /* FIXED: Longer delay */
+  animation-delay: 0.3s; /* FIXED: Much shorter delay - appears quickly */
 }
 
 @keyframes shimmerDiagonal {

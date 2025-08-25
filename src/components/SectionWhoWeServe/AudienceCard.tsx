@@ -36,14 +36,14 @@ export const AudienceCard: React.FC<AudienceCardProps> = ({
     mass: 1.2        // CBF: Slightly heavier for premium feel
   };
 
-  // Handle glow timing - intense glow on click, then gradual dim
+  // Handle glow timing - intense glow on click, then gradual 4-second dim
   useEffect(() => {
     if (isActive) {
       setShowIntenseGlow(true);
-      // Dim the glow after 1.2 seconds (CBF: Linear's timing)
+      // FIXED: Gradual dim after 4 seconds instead of abrupt at 1.2s
       const timer = setTimeout(() => {
         setShowIntenseGlow(false);
-      }, 1200);
+      }, 4000); // Extended to 4 seconds for gradual experience
       return () => clearTimeout(timer);
     } else {
       setShowIntenseGlow(false);
@@ -97,14 +97,14 @@ export const AudienceCard: React.FC<AudienceCardProps> = ({
         <div className="glass-shimmer-subtle" />
       )}
       
-      {/* Glow effect layer with dynamic intensity */}
+      {/* Glow effect layer with gradual dimming */}
       <motion.div 
         className="card-glow-layer"
         animate={{
           opacity: isActive ? (showIntenseGlow ? 1 : 0.4) : 0
         }}
         transition={{
-          duration: showIntenseGlow ? 0.3 : 1.5, // Quick appear, slow fade
+          duration: showIntenseGlow ? 0.3 : 4.0, // FIXED: 4 second gradual fade
           ease: "easeOut"
         }}
       />
