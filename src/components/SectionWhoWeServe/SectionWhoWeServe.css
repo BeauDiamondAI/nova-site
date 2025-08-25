@@ -212,6 +212,7 @@
     scroll-snap-type: x mandatory;
     padding: 1rem 0; /* FIXED: Remove left/right padding that was causing centering */
     padding-left: 0; /* FIXED: Start from left edge */
+    padding-right: 3rem;
     gap: 1rem;
     justify-content: flex-start; /* FIXED: Align to start instead of center */
   }
