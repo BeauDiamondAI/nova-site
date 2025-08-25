@@ -28,7 +28,7 @@ export const AudienceCard: React.FC<AudienceCardProps> = ({
   // Track glow dimming state
   const [showIntenseGlow, setShowIntenseGlow] = useState(false);
   
-  // SURGICAL FIX: Detect mobile to handle differently
+  // Detect mobile
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
@@ -38,50 +38,28 @@ export const AudienceCard: React.FC<AudienceCardProps> = ({
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
-  // Elite spring physics from CBF v1.0 - Rauno's patterns
+  // Elite spring physics
   const springConfig = {
     type: "spring",
-    stiffness: 300,  // CBF: Vercel's standard
-    damping: 25,     // CBF: Balanced motion
-    mass: 1.2        // CBF: Slightly heavier for premium feel
+    stiffness: 300,
+    damping: 25,
+    mass: 1.2
   };
 
-  // Handle glow timing - keep perfect desktop timing, gentle mobile handling
+  // SIMPLIFIED glow timing - let's see if this stops the flicker
   useEffect(() => {
     if (isActive) {
-      if (isMobile) {
-        // SURGICAL: No delay on mobile, but use requestAnimationFrame for smooth timing
-        const raf = requestAnimationFrame(() => {
-          setShowIntenseGlow(true);
-        });
-        
-        const dimTimer = setTimeout(() => {
-          setShowIntenseGlow(false);
-        }, 4000);
-        
-        return () => {
-          cancelAnimationFrame(raf);
-          clearTimeout(dimTimer);
-        };
-      } else {
-        // KEEP PERFECT DESKTOP BEHAVIOR
-        const stabilizeTimer = setTimeout(() => {
-          setShowIntenseGlow(true);
-        }, 50);
-        
-        const dimTimer = setTimeout(() => {
-          setShowIntenseGlow(false);
-        }, 4000);
-        
-        return () => {
-          clearTimeout(stabilizeTimer);
-          clearTimeout(dimTimer);
-        };
-      }
+      setShowIntenseGlow(true);
+      
+      const dimTimer = setTimeout(() => {
+        setShowIntenseGlow(false);
+      }, 4000);
+      
+      return () => clearTimeout(dimTimer);
     } else {
       setShowIntenseGlow(false);
     }
-  }, [isActive, isMobile]);
+  }, [isActive]);
 
   const cardVariants = {
     hidden: { 
@@ -125,27 +103,30 @@ export const AudienceCard: React.FC<AudienceCardProps> = ({
       variants={cardVariants}
       onClick={onClick}
     >
-      {/* Diagonal shimmer effect - only on active cards */}
-      {isActive && (
+      {/* TEMPORARILY DISABLE SHIMMER to test if it's causing the flash */}
+      {/* {isActive && (
         <div className="glass-shimmer-subtle" />
-      )}
+      )} */}
       
-      {/* Glow effect layer with mobile-optimized timing - SURGICAL FIX */}
-      <motion.div 
-        className="card-glow-layer"
-        animate={{
-          opacity: isActive ? (showIntenseGlow ? 1 : 0.4) : 0
-        }}
-        transition={{
-          duration: showIntenseGlow ? (isMobile ? 0.1 : 0.3) : 4.0, // SURGICAL: Faster appear on mobile
-          ease: "easeOut"
-        }}
-      />
+      {/* SIMPLIFIED glow - try CSS-only approach on mobile */}
+      {!isMobile ? (
+        <motion.div 
+          className="card-glow-layer"
+          animate={{
+            opacity: isActive ? (showIntenseGlow ? 1 : 0.4) : 0
+          }}
+          transition={{
+            duration: showIntenseGlow ? 0.3 : 4.0,
+            ease: "easeOut"
+          }}
+        />
+      ) : (
+        // Mobile: Pure CSS glow to prevent flicker
+        <div className="card-glow-layer" />
+      )}
 
-      {/* Card Content Container - KEEP PERFECT TIMING */}
-      <motion.div 
-        className="card-content"
-      >
+      {/* Card Content */}
+      <motion.div className="card-content">
         <motion.div 
           className="card-icon"
           animate={{
@@ -159,7 +140,6 @@ export const AudienceCard: React.FC<AudienceCardProps> = ({
         
         <h3 className="card-title">{title}</h3>
         
-        {/* Text reveal with synchronized timing - KEEP PERFECT */}
         <AnimatePresence mode="wait">
           {isActive && (
             <motion.p
@@ -191,7 +171,7 @@ export const AudienceCard: React.FC<AudienceCardProps> = ({
         </AnimatePresence>
       </motion.div>
 
-      {/* Interactive hover beam effect - KEEP PERFECT */}
+      {/* Hover beam */}
       <motion.div 
         className="hover-beam"
         initial={{ scaleX: 0 }}
