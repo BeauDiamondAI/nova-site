@@ -132,7 +132,7 @@ export const AudienceCard: React.FC<AudienceCardProps> = ({
           }}
           transition={springConfig}
         >
-          {/* Use custom PNG for first two cards, fallback to emoji for others */}
+          {/* Use custom PNG icons for all cards */}
           {index === 0 ? (
             <img 
               src="/images/SectionWhoWeServeMedia/Card1.png" 
@@ -143,6 +143,24 @@ export const AudienceCard: React.FC<AudienceCardProps> = ({
             <img 
               src="/images/SectionWhoWeServeMedia/Card2.png" 
               alt="Operators & Teams"
+              className="card-icon-svg"
+            />
+          ) : index === 2 ? (
+            <img 
+              src="/images/SectionWhoWeServeMedia/Card3.png" 
+              alt="Tech & Data Teams"
+              className="card-icon-svg"
+            />
+          ) : index === 3 ? (
+            <img 
+              src="/images/SectionWhoWeServeMedia/Card4.png" 
+              alt="Enterprises"
+              className="card-icon-svg"
+            />
+          ) : index === 4 ? (
+            <img 
+              src="/images/SectionWhoWeServeMedia/Card5.png" 
+              alt="Scaling Organizations"
               className="card-icon-svg"
             />
           ) : (
