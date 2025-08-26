@@ -113,12 +113,7 @@ const WhatsNextSection: React.FC = () => {
   };
 
   const handleExpandIntroText = () => {
-    setIntroComplete(false); // Reset to show full text without gradient
-    setShowIntroText(true);
-  };
-
-  const handleCollapseIntroText = () => {
-    setIntroComplete(true); // Apply gradient overlay
+    setIntroComplete(false); // Remove gradient overlay
   };
 
   // Clean intro text content with proper characters
@@ -249,37 +244,7 @@ const WhatsNextSection: React.FC = () => {
         )}
       </AnimatePresence>
 
-      {/* Expanded intro text overlay */}
-      <AnimatePresence>
-        {showIntroText && introComplete && (
-          <motion.div
-            className="intro-overlay"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={handleCollapseIntroText}
-          >
-            <motion.div
-              className="intro-expanded-content"
-              initial={{ scale: 0.8, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.8, opacity: 0 }}
-              onClick={(e) => e.stopPropagation()}
-            >
-              <button className="close-intro" onClick={handleCollapseIntroText}>
-                ×
-              </button>
-              <div className="intro-text-full">
-                {introLines.map((line, index) => (
-                  <p key={index} className="intro-line-static">
-                    {line}
-                  </p>
-                ))}
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {/* Remove this entire block - no more popup overlay */}
 
       {/* Product Orbs - Only show after intro is complete */}
       <AnimatePresence>
