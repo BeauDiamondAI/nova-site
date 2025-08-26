@@ -26,16 +26,27 @@ const WhatsNextSection: React.FC = () => {
     return () => observer.disconnect();
   }, [showContent]);
 
-  // Clean orbital positioning - simple horizontal arc
+  // Orbital arc positioning - curved like satellite constellation
   const getOrbPosition = (index: number) => {
     const totalOrbs = productsData.length;
-    const containerWidth = typeof window !== 'undefined' ? Math.min(window.innerWidth * 0.9, 1200) : 1200;
-    const startX = (typeof window !== 'undefined' ? window.innerWidth : 1200) / 2 - containerWidth / 2;
+    const screenWidth = typeof window !== 'undefined' ? window.innerWidth : 1200;
+    const screenHeight = typeof window !== 'undefined' ? window.innerHeight : 800;
     
-    const spacing = containerWidth / (totalOrbs - 1);
-    const x = startX + (index * spacing);
-    const y = 480; // Fixed Y position - no complex curves
-
+    const centerX = screenWidth / 2;
+    const centerY = screenHeight / 2;
+    
+    // Create an arc that curves upward at the edges
+    const arcWidth = Math.min(screenWidth * 0.85, 1400);
+    const arcHeight = 120; // How much the arc curves upward
+    const baseY = centerY + 50; // Base position below center
+    
+    const progress = index / (totalOrbs - 1); // 0 to 1
+    const x = centerX - arcWidth / 2 + progress * arcWidth;
+    
+    // Create upward parabolic curve (U-shaped)
+    const normalizedProgress = (progress - 0.5) * 2; // -1 to 1 from center
+    const y = baseY - arcHeight * (1 - normalizedProgress * normalizedProgress);
+    
     return { x, y };
   };
 
@@ -102,7 +113,7 @@ const WhatsNextSection: React.FC = () => {
         transition={{ duration: 0.8 }}
         style={{
           position: 'absolute',
-          top: '80px',
+          top: '60px',
           left: '50%',
           transform: 'translateX(-50%)',
           zIndex: 10,
@@ -113,7 +124,7 @@ const WhatsNextSection: React.FC = () => {
           fontSize: 'clamp(2.5rem, 5vw, 4rem)',
           fontWeight: 800,
           color: '#ffffff',
-          margin: 0,
+          margin: '0 0 1.5rem 0',
           background: 'linear-gradient(135deg, #ffffff 0%, rgba(6, 182, 212, 0.9) 50%, #ffffff 100%)',
           backgroundClip: 'text',
           WebkitBackgroundClip: 'text',
@@ -123,6 +134,37 @@ const WhatsNextSection: React.FC = () => {
         }}>
           What&apos;s Next at NovaThink
         </h2>
+        
+        {/* Intro text */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={showContent ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8, delay: 0.3 }}
+          style={{
+            maxWidth: '800px',
+            margin: '0 auto',
+            padding: '0 2rem'
+          }}
+        >
+          <p style={{
+            fontSize: 'clamp(1rem, 2vw, 1.2rem)',
+            color: 'rgba(255, 255, 255, 0.85)',
+            lineHeight: 1.6,
+            margin: '0 0 1rem 0',
+            fontWeight: 400
+          }}>
+            The future of AI isn&apos;t more apps. It&apos;s the emergence of a cognitive operating system - a new layer of intelligence that makes strategy, execution, and adaptation seamless across every domain.
+          </p>
+          <p style={{
+            fontSize: 'clamp(0.95rem, 1.8vw, 1.1rem)',
+            color: 'rgba(255, 255, 255, 0.75)',
+            lineHeight: 1.6,
+            margin: 0,
+            fontWeight: 400
+          }}>
+            That&apos;s what NovaThink is building. Not tools, but the scaffolding for an entirely new relationship between human and synthetic intelligence.
+          </p>
+        </motion.div>
       </motion.div>
 
       {/* Product Orbs - Simple, clean positioning */}
@@ -161,8 +203,8 @@ const WhatsNextSection: React.FC = () => {
             style={{
               position: 'fixed',
               inset: 0,
-              background: 'rgba(0, 0, 0, 0.6)',
-              backdropFilter: 'blur(8px)',
+              background: 'rgba(0, 0, 0, 0.3)', // Much lighter backdrop
+              backdropFilter: 'blur(4px)', // Less aggressive blur
               zIndex: 40
             }}
             onClick={() => setExpandedProductId(null)}
