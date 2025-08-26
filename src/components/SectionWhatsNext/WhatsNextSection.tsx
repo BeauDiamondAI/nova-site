@@ -84,7 +84,7 @@ const WhatsNextSection: React.FC = () => {
   // Updated intro text content broken into lines for typing animation
   const introLines = [
     "The future of AI isn't more apps.",
-    "It's the emergence of a cognitive operating system — a new layer of intelligence",
+    "It's the emergence of a cognitive operating system - a new layer of intelligence",
     "that makes strategy, execution, and adaptation seamless across every domain.",
     "",
     "That's what NovaThink is building. Not tools, but the scaffolding for an entirely",
@@ -92,8 +92,8 @@ const WhatsNextSection: React.FC = () => {
     "",
     "Our next phase is about scale:",
     "• Expanding the architectures that let AI sustain memory, logic, and autonomy over time.",
-    "• Deploying stateful intelligence engines inside secure enterprise environments.",  
-    "• Evolving frameworks where AI doesn't just assist — it collaborates, learns, and builds alongside you.",
+    "• Deploying stateful intelligence engines inside secure enterprise environments.",
+    "• Evolving frameworks where AI doesn't just assist - it collaborates, learns, and builds alongside you.",
     "",
     "The horizon is clear: an era where cognition itself becomes deployable infrastructure.",
     "And NovaThink is already laying its foundation."
