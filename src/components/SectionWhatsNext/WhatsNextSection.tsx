@@ -137,7 +137,7 @@ const WhatsNextSection: React.FC = () => {
         viewport={{ once: true }}
         transition={{ duration: 0.8, ease: "easeOut" }}
       >
-        <h2 className="section-title">What's Next at NovaThink</h2>
+        <h2 className="section-title">{`What's Next at NovaThink`}</h2>
       </motion.div>
 
       {/* Typing Animation Intro Text */}
