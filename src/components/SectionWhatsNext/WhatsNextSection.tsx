@@ -97,7 +97,7 @@ const WhatsNextSection: React.FC = () => {
     "",
     "The horizon is clear: an era where cognition itself becomes deployable infrastructure.",
     "And NovaThink is already laying its foundation."
-  ];
+];
 
   return (
     <section

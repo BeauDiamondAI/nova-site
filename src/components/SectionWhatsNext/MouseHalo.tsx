@@ -7,5 +7,9 @@ interface MouseHaloProps {
 
 export const MouseHalo: React.FC<MouseHaloProps> = ({ targetElements, isActive }) => {
   // Placeholder component - will implement advanced cursor tracking later
+  // Suppress unused variable warnings temporarily
+  void targetElements;
+  void isActive;
+  
   return null;
 };
