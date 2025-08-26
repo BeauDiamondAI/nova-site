@@ -81,7 +81,7 @@ const WhatsNextSection: React.FC = () => {
     setIntroTextExpanded(false);
   };
 
-  // Updated intro text content broken into lines for typing animation
+  // Clean intro text content with proper characters
   const introLines = [
     "The future of AI isn't more apps.",
     "It's the emergence of a cognitive operating system - a new layer of intelligence",
@@ -97,7 +97,7 @@ const WhatsNextSection: React.FC = () => {
     "",
     "The horizon is clear: an era where cognition itself becomes deployable infrastructure.",
     "And NovaThink is already laying its foundation."
-];
+  ];
 
   return (
     <section
