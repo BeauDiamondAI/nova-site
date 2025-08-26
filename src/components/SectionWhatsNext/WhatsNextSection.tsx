@@ -8,8 +8,8 @@ import "./WhatsNextSection.css";
 const WhatsNextSection: React.FC = () => {
   const [expandedProductId, setExpandedProductId] = useState<string | null>(null);
   const [showIntroText, setShowIntroText] = useState(false);
-  const [introTextExpanded, setIntroTextExpanded] = useState(false);
   const [introComplete, setIntroComplete] = useState(false);
+  const [showIntroPreview, setShowIntroPreview] = useState(false);
   const [showOrbs, setShowOrbs] = useState(false);
   const [mouseHaloActive, setMouseHaloActive] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
@@ -17,33 +17,29 @@ const WhatsNextSection: React.FC = () => {
 
   // Walker Delta orbital positioning calculation
   const calculateOrbitalPositions = () => {
-    const centerX = typeof window !== 'undefined' ? window.innerWidth / 2 : 400;
-    const centerY = typeof window !== 'undefined' ? window.innerHeight / 2 : 300;
+    const centerX = typeof window !== 'undefined' ? window.innerWidth / 2 : 800;
+    const centerY = typeof window !== 'undefined' ? window.innerHeight / 2 : 400;
     const totalOrbs = productsData.length;
     const positions: Array<{x: number, y: number, ring: number}> = [];
 
-    // Create orbital rings with varying radii
-    const rings = [
-      { radius: 200, orbs: 3 },
-      { radius: 320, orbs: 3 },
-      { radius: 440, orbs: 2 }
-    ];
-
-    let orbIndex = 0;
-    rings.forEach((ring, ringIndex) => {
-      for (let i = 0; i < ring.orbs && orbIndex < totalOrbs; i++) {
-        const angle = (360 / ring.orbs) * i + (ringIndex * 60); // Phase offset per ring
-        const x = Math.cos((angle * Math.PI) / 180) * ring.radius;
-        const y = Math.sin((angle * Math.PI) / 180) * ring.radius;
-        
-        positions.push({
-          x: centerX + x,
-          y: centerY + y,
-          ring: ringIndex
-        });
-        orbIndex++;
-      }
-    });
+    // Create a wide arc across the screen width
+    const screenWidth = typeof window !== 'undefined' ? window.innerWidth : 1600;
+    const arcWidth = Math.min(screenWidth * 0.8, 1200); // 80% of screen width, max 1200px
+    const arcHeight = 100; // Subtle upward curve
+    
+    for (let i = 0; i < totalOrbs; i++) {
+      const progress = i / (totalOrbs - 1); // 0 to 1
+      const x = centerX - arcWidth / 2 + progress * arcWidth;
+      // Create upward arc using parabolic curve
+      const normalizedProgress = (progress - 0.5) * 2; // -1 to 1
+      const y = centerY - arcHeight * (1 - normalizedProgress * normalizedProgress);
+      
+      positions.push({
+        x,
+        y,
+        ring: 0 // Single arc, no rings
+      });
+    }
 
     return positions;
   };
@@ -93,10 +89,15 @@ const WhatsNextSection: React.FC = () => {
         setIntroComplete(true);
         setShowIntroText(false);
         
-        // Show orbs after intro text retracts
+        // Show preview after brief delay
+        setTimeout(() => {
+          setShowIntroPreview(true);
+        }, 500);
+        
+        // Show orbs after intro preview appears
         setTimeout(() => {
           setShowOrbs(true);
-        }, 800); // Delay for text retraction animation
+        }, 1000);
       }, typingDuration);
 
       return () => clearTimeout(timer);
@@ -107,22 +108,27 @@ const WhatsNextSection: React.FC = () => {
     // Close currently expanded orb if clicking a different one
     if (expandedProductId && expandedProductId !== productId) {
       setExpandedProductId(null);
-      // Brief delay before opening new orb
+      // Brief delay before opening new orb to ensure complete retraction
       setTimeout(() => {
         setExpandedProductId(productId);
-      }, 300);
+      }, 600);
     } else {
       setExpandedProductId(expandedProductId === productId ? null : productId);
     }
-    setMouseHaloActive(expandedProductId !== productId);
+    setMouseHaloActive(!expandedProductId);
   };
 
   const handleExpandIntroText = () => {
-    setIntroTextExpanded(true);
+    setShowIntroPreview(false);
+    setShowIntroText(true);
+    setIntroComplete(false); // Reset to show full text
   };
 
-  const handleCloseIntroText = () => {
-    setIntroTextExpanded(false);
+  const handleCollapseIntroText = () => {
+    setShowIntroText(false);
+    setTimeout(() => {
+      setShowIntroPreview(true);
+    }, 500);
   };
 
   // Clean intro text content with proper characters
@@ -237,7 +243,7 @@ const WhatsNextSection: React.FC = () => {
 
       {/* Compact intro text expander - Show after intro is complete and orbs are visible */}
       <AnimatePresence>
-        {introComplete && showOrbs && !introTextExpanded && (
+        {introComplete && showOrbs && !showIntroText && (
           <motion.button
             className="intro-expander"
             initial={{ opacity: 0, scale: 0.8 }}
@@ -255,13 +261,13 @@ const WhatsNextSection: React.FC = () => {
 
       {/* Expanded intro text overlay */}
       <AnimatePresence>
-        {introTextExpanded && (
+        {showIntroText && introComplete && (
           <motion.div
             className="intro-overlay"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            onClick={handleCloseIntroText}
+            onClick={handleCollapseIntroText}
           >
             <motion.div
               className="intro-expanded-content"
@@ -270,7 +276,7 @@ const WhatsNextSection: React.FC = () => {
               exit={{ scale: 0.8, opacity: 0 }}
               onClick={(e) => e.stopPropagation()}
             >
-              <button className="close-intro" onClick={handleCloseIntroText}>
+              <button className="close-intro" onClick={handleCollapseIntroText}>
                 ×
               </button>
               <div className="intro-text-full">

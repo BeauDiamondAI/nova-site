@@ -125,6 +125,7 @@
   z-index: 10;
   text-align: center;
   width: 100%;
+  max-width: none;
 }
 
 .section-title {
@@ -133,6 +134,7 @@
   color: #ffffff;
   text-align: center;
   margin: 0;
+  white-space: nowrap;
   
   /* Typography enhancement */
   background: linear-gradient(
