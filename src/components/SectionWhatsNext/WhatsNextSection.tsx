@@ -1,149 +1,82 @@
 import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ProductOrb } from "./ProductOrb";
-import { MouseHalo } from "./MouseHalo";
 import { productsData } from "./productsData";
-import "./WhatsNextSection.css";
 
 const WhatsNextSection: React.FC = () => {
   const [expandedProductId, setExpandedProductId] = useState<string | null>(null);
-  const [showIntroText, setShowIntroText] = useState(false);
-  const [introComplete, setIntroComplete] = useState(false);
-  const [showOrbs, setShowOrbs] = useState(false);
-  const [mouseHaloActive, setMouseHaloActive] = useState(false);
+  const [showContent, setShowContent] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
-  const orbRefs = useRef<(HTMLDivElement | null)[]>([]);
 
-  // Walker Delta orbital positioning calculation
-  const calculateOrbitalPositions = () => {
-    const centerX = typeof window !== 'undefined' ? window.innerWidth / 2 : 800;
-    const centerY = typeof window !== 'undefined' ? window.innerHeight / 2 : 400;
-    const totalOrbs = productsData.length;
-    const positions: Array<{x: number, y: number, ring: number}> = [];
-
-    // Create a wide arc across the screen width
-    const screenWidth = typeof window !== 'undefined' ? window.innerWidth : 1600;
-    const arcWidth = Math.min(screenWidth * 0.8, 1200); // 80% of screen width, max 1200px
-    const arcHeight = 80; // Subtle upward curve
-    
-    for (let i = 0; i < totalOrbs; i++) {
-      const progress = i / (totalOrbs - 1); // 0 to 1
-      const x = centerX - arcWidth / 2 + progress * arcWidth;
-      // Create upward arc using inverted parabolic curve
-      const normalizedProgress = (progress - 0.5) * 2; // -1 to 1
-      const y = centerY - 100 + arcHeight * (1 - normalizedProgress * normalizedProgress); // Moved up by 100px
-      
-      positions.push({
-        x,
-        y,
-        ring: 0 // Single arc, no rings
-      });
-    }
-
-    return positions;
-  };
-
-  const [orbitalPositions, setOrbitalPositions] = useState(calculateOrbitalPositions());
-
-  // Responsive orbital positioning
-  useEffect(() => {
-    const handleResize = () => {
-      setOrbitalPositions(calculateOrbitalPositions());
-    };
-
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
-  // Intersection Observer to trigger intro text when section comes into view
+  // Simple intersection observer to trigger content
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting && !showIntroText && !introComplete) {
-          setShowIntroText(true);
+        if (entry.isIntersecting && !showContent) {
+          setShowContent(true);
         }
       },
       { threshold: 0.3 }
     );
 
-    const currentSection = sectionRef.current;
-    if (currentSection) {
-      observer.observe(currentSection);
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
     }
 
-    return () => {
-      if (currentSection) {
-        observer.unobserve(currentSection);
-      }
-    };
-  }, [showIntroText, introComplete]);
+    return () => observer.disconnect();
+  }, [showContent]);
 
-  // Handle intro text completion sequence
-  useEffect(() => {
-    if (showIntroText && !introComplete) {
-      // Calculate total typing duration
-      const totalLines = introLines.length;
-      const typingDuration = totalLines * 1.5 * 1000 + 4000; // Updated timing calculation
+  // Clean orbital positioning - simple horizontal arc
+  const getOrbPosition = (index: number) => {
+    const totalOrbs = productsData.length;
+    const containerWidth = typeof window !== 'undefined' ? Math.min(window.innerWidth * 0.9, 1200) : 1200;
+    const startX = (typeof window !== 'undefined' ? window.innerWidth : 1200) / 2 - containerWidth / 2;
+    
+    const spacing = containerWidth / (totalOrbs - 1);
+    const x = startX + (index * spacing);
+    const y = 480; // Fixed Y position - no complex curves
 
-      const timer = setTimeout(() => {
-        setIntroComplete(true);
-        // Don't hide intro text, just set it as complete
-        // Show orbs after intro completes
-        setTimeout(() => {
-          setShowOrbs(true);
-        }, 800);
-      }, typingDuration);
-
-      return () => clearTimeout(timer);
-    }
-  }, [showIntroText, introComplete]);
+    return { x, y };
+  };
 
   const handleOrbClick = (productId: string) => {
-    // Close currently expanded orb if clicking a different one
-    if (expandedProductId && expandedProductId !== productId) {
-      setExpandedProductId(null);
-      // Brief delay before opening new orb to ensure complete retraction
-      setTimeout(() => {
-        setExpandedProductId(productId);
-      }, 600);
-    } else {
-      setExpandedProductId(expandedProductId === productId ? null : productId);
-    }
-    setMouseHaloActive(!expandedProductId);
+    setExpandedProductId(expandedProductId === productId ? null : productId);
   };
-
-  const handleExpandIntroText = () => {
-    setIntroComplete(false); // Remove gradient overlay
-  };
-
-  // Clean intro text content with proper characters
-  const introLines = [
-    "The future of AI isn't more apps.",
-    "It's the emergence of a cognitive operating system - a new layer of intelligence",
-    "that makes strategy, execution, and adaptation seamless across every domain.",
-    "",
-    "That's what NovaThink is building. Not tools, but the scaffolding for an entirely",
-    "new relationship between human and synthetic intelligence.",
-    "",
-    "Our next phase is about scale:",
-    "• Expanding the architectures that let AI sustain memory, logic, and autonomy over time.",
-    "• Deploying stateful intelligence engines inside secure enterprise environments.",
-    "• Evolving frameworks where AI doesn't just assist - it collaborates, learns, and builds alongside you.",
-    "",
-    "The horizon is clear: an era where cognition itself becomes deployable infrastructure.",
-    "And NovaThink is already laying its foundation."
-  ];
 
   return (
     <section
       ref={sectionRef}
-      id="whats-next"
       className="whats-next-section"
+      style={{
+        position: 'relative',
+        width: '100vw',
+        height: '100vh',
+        overflow: 'hidden',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        isolation: 'isolate', // Prevent layout bleeding
+        zIndex: 1 // Lower than previous sections
+      }}
     >
       {/* Earth Background Video */}
-      <div className="earth-background">
+      <div style={{
+        position: 'absolute',
+        inset: 0,
+        zIndex: 1
+      }}>
         <video
-          className="earth-video"
+          style={{
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            minWidth: '100%',
+            minHeight: '100%',
+            transform: 'translate(-50%, -50%)',
+            objectFit: 'cover',
+            willChange: 'auto'
+          }}
           autoPlay
           muted
           loop
@@ -154,131 +87,88 @@ const WhatsNextSection: React.FC = () => {
         </video>
       </div>
 
-      {/* Background overlay for better contrast */}
-      <div className="background-overlay" />
+      {/* Background overlay */}
+      <div style={{
+        position: 'absolute',
+        inset: 0,
+        background: 'linear-gradient(135deg, rgba(0, 0, 0, 0.4) 0%, rgba(15, 23, 42, 0.6) 50%, rgba(0, 0, 0, 0.5) 100%)',
+        zIndex: 2
+      }} />
 
-      {/* Orbital rings visualization - only show when orbs are visible */}
-      <AnimatePresence>
-        {showOrbs && (
-          <motion.div
-            className="orbital-rings"
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1, ease: "easeOut" }}
-          >
-            <div className="orbital-ring ring-1" />
-            <div className="orbital-ring ring-2" />
-            <div className="orbital-ring ring-3" />
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* Section Header */}
+      {/* Section Title */}
       <motion.div
-        className="section-header"
         initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
+        animate={showContent ? { opacity: 1, y: 0 } : {}}
+        transition={{ duration: 0.8 }}
+        style={{
+          position: 'absolute',
+          top: '80px',
+          left: '50%',
+          transform: 'translateX(-50%)',
+          zIndex: 10,
+          textAlign: 'center'
+        }}
       >
-        <h2 className="section-title text-4xl sm:text-5xl font-bold font-headline">{`What's Next at NovaThink`}</h2>
+        <h2 style={{
+          fontSize: 'clamp(2.5rem, 5vw, 4rem)',
+          fontWeight: 800,
+          color: '#ffffff',
+          margin: 0,
+          background: 'linear-gradient(135deg, #ffffff 0%, rgba(6, 182, 212, 0.9) 50%, #ffffff 100%)',
+          backgroundClip: 'text',
+          WebkitBackgroundClip: 'text',
+          WebkitTextFillColor: 'transparent',
+          textShadow: '0 0 30px rgba(6, 182, 212, 0.3)',
+          letterSpacing: '-0.02em'
+        }}>
+          What's Next at NovaThink
+        </h2>
       </motion.div>
 
-      {/* Typing Animation Intro Text - Only show during typing phase */}
+      {/* Product Orbs - Simple, clean positioning */}
       <AnimatePresence>
-        {showIntroText && !introComplete && (
+        {showContent && (
+          <div style={{
+            position: 'relative',
+            width: '100%',
+            height: '100%',
+            zIndex: 10
+          }}>
+            {productsData.map((product, index) => {
+              const position = getOrbPosition(index);
+              return (
+                <ProductOrb
+                  key={product.id}
+                  product={product}
+                  position={position}
+                  isExpanded={expandedProductId === product.id}
+                  onClick={() => handleOrbClick(product.id)}
+                  index={index}
+                />
+              );
+            })}
+          </div>
+        )}
+      </AnimatePresence>
+
+      {/* Background blur when card is expanded */}
+      <AnimatePresence>
+        {expandedProductId && (
           <motion.div
-            className="intro-text-container"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            exit={{ opacity: 0, y: -50 }}
-            transition={{ duration: 0.5 }}
-          >
-            <div className="intro-text">
-              {introLines.map((line, index) => (
-                <motion.div
-                  key={index}
-                  className="intro-line"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{
-                    delay: index * 1.5, // Increased delay between lines
-                    duration: 0.3
-                  }}
-                >
-                  {line.split('').map((char, charIndex) => (
-                    <motion.span
-                      key={charIndex}
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      transition={{
-                        delay: index * 1.5 + charIndex * 0.02, // Slower character typing within each line
-                        duration: 0.1
-                      }}
-                    >
-                      {char}
-                    </motion.span>
-                  ))}
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
+            exit={{ opacity: 0 }}
+            style={{
+              position: 'fixed',
+              inset: 0,
+              background: 'rgba(0, 0, 0, 0.6)',
+              backdropFilter: 'blur(8px)',
+              zIndex: 40
+            }}
+            onClick={() => setExpandedProductId(null)}
+          />
         )}
       </AnimatePresence>
-
-      {/* Compact intro text expander - Show after intro is complete and orbs are visible */}
-      <AnimatePresence>
-        {introComplete && showOrbs && (
-          <motion.button
-            className="intro-expander"
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.8 }}
-            onClick={handleExpandIntroText}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            <span className="expander-text">View Introduction</span>
-            <span className="expander-icon">↓</span>
-          </motion.button>
-        )}
-      </AnimatePresence>
-
-      {/* Remove this entire block - no more popup overlay */}
-
-      {/* Product Orbs - Only show after intro is complete */}
-      <AnimatePresence>
-        {showOrbs && (
-          <motion.div
-            className="orbital-constellation"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.5 }}
-          >
-            {productsData.map((product, index) => (
-              <ProductOrb
-                key={product.id}
-                ref={(el: HTMLDivElement | null) => {
-                  orbRefs.current[index] = el;
-                }}
-                product={product}
-                position={orbitalPositions[index] || { x: 0, y: 0, ring: 0 }}
-                isExpanded={expandedProductId === product.id}
-                onClick={() => handleOrbClick(product.id)}
-                index={index}
-              />
-            ))}
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* Mouse Halo Effect - Only active when orbs are visible */}
-      {showOrbs && (
-        <MouseHalo
-          targetElements={orbRefs.current.filter(Boolean)}
-          isActive={mouseHaloActive && !expandedProductId}
-        />
-      )}
     </section>
   );
 };

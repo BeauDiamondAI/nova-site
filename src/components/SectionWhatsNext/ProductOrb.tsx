@@ -1,239 +1,296 @@
-import React, { forwardRef } from "react";
+import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ProductData } from "./productsData";
-import "./ProductOrb.css";
 
 interface ProductOrbProps {
   product: ProductData;
-  position: { x: number; y: number; ring: number };
+  position: { x: number; y: number };
   isExpanded: boolean;
   onClick: () => void;
   index: number;
 }
 
-export const ProductOrb = forwardRef<HTMLDivElement, ProductOrbProps>(
-  ({ product, position, isExpanded, onClick, index }, ref) => {
-    // CBF v1.1 spring physics configuration
-    const springConfig = {
-      type: "spring" as const,
-      stiffness: 300,
-      damping: 25,
-      duration: 0.5
-    };
+export const ProductOrb: React.FC<ProductOrbProps> = ({
+  product,
+  position,
+  isExpanded,
+  onClick,
+  index
+}) => {
+  // Clean spring physics from CBF v1.1
+  const springConfig = {
+    type: "spring" as const,
+    stiffness: 300,
+    damping: 25,
+    duration: 0.5
+  };
 
-    const expansionSpringConfig = {
-      type: "spring" as const,
-      stiffness: 200,
-      damping: 20,
-      duration: 0.6
-    };
+  return (
+    <>
+      {/* Main morphing container */}
+      <motion.div
+        layoutId={`product-${product.id}`}
+        onClick={onClick}
+        style={{
+          position: "absolute",
+          left: isExpanded ? "50%" : position.x - 40,
+          top: isExpanded ? "50%" : position.y - 40,
+          transform: isExpanded ? "translate(-50%, -50%)" : "translate(0, 0)",
+          cursor: "pointer",
+          zIndex: isExpanded ? 50 : 10
+        }}
+        initial={{ opacity: 0, scale: 0 }}
+        animate={{ 
+          opacity: 1, 
+          scale: 1,
+          transition: { 
+            delay: index * 0.1,
+            ...springConfig
+          }
+        }}
+        whileHover={!isExpanded ? { scale: 1.1, y: -8 } : {}}
+        whileTap={{ scale: 0.95 }}
+      >
+        {/* Orb State */}
+        {!isExpanded && (
+          <motion.div
+            style={{
+              width: 80,
+              height: 80,
+              borderRadius: "50%",
+              background: `radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.4), ${product.color} 40%, #1f2937 85%, #0f172a 100%)`,
+              boxShadow: `
+                inset 0 1px 3px rgba(255, 255, 255, 0.6),
+                inset 0 -1px 3px rgba(0, 0, 0, 0.4),
+                0 0 20px rgba(${product.colorRgb}, 0.5),
+                0 8px 20px rgba(0, 0, 0, 0.3),
+                0 0 2px rgba(255, 255, 255, 0.2)
+              `,
+              position: 'relative'
+            }}
+            animate={{
+              y: [0, -4, 0],
+              transition: {
+                duration: 3 + index * 0.3,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }
+            }}
+          >
+            {/* Inner highlight */}
+            <div style={{
+              position: 'absolute',
+              top: '15%',
+              left: '25%',
+              width: '30%',
+              height: '30%',
+              borderRadius: '50%',
+              background: 'radial-gradient(circle, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0.2) 50%, transparent 70%)'
+            }} />
+          </motion.div>
+        )}
 
-    // Morphing animation variants
-    const morphingVariants = {
-      orb: {
-        width: 160,
-        height: 160,
-        borderRadius: "50%",
-        scale: 1,
-        zIndex: 10,
-        transition: springConfig
-      },
-      card: {
-        width: 400,
-        height: 320,
-        borderRadius: 16,
-        scale: 1,
-        zIndex: 100,
-        transition: expansionSpringConfig
-      }
-    };
-
-    // Staggered entrance animation
-    const entranceVariants = {
-      hidden: {
-        opacity: 0,
-        scale: 0,
-        rotate: -180
-      },
-      visible: {
-        opacity: 1,
-        scale: 1,
-        rotate: 0,
-        transition: {
-          delay: index * 0.15,
-          ...springConfig
-        }
-      }
-    };
-
-    // Floating animation for orbs only
-    const floatingVariants = {
-      floating: {
-        y: [0, -8, 0],
-        rotate: [0, 2, 0, -2, 0],
-        transition: {
-          duration: 4 + (index * 0.5),
-          repeat: Infinity,
-          ease: "easeInOut"
-        }
-      }
-    };
-
-    const handleClick = (e: React.MouseEvent) => {
-      e.stopPropagation();
-      onClick();
-    };
-
-    return (
-      <>
-        {/* Floating tagline label - only visible when not expanded */}
+        {/* Expanded Card State */}
         <AnimatePresence>
-          {!isExpanded && (
+          {isExpanded && (
             <motion.div
-              className="product-tagline"
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.8 }}
-              transition={{ delay: 0.8 + (index * 0.15) }}
+              initial={{ 
+                width: 80, 
+                height: 80, 
+                borderRadius: "50%" 
+              }}
+              animate={{ 
+                width: 400, 
+                height: 320, 
+                borderRadius: 16 
+              }}
+              exit={{ 
+                width: 80, 
+                height: 80, 
+                borderRadius: "50%" 
+              }}
+              transition={springConfig}
               style={{
-                position: "absolute",
-                left: position.x - 40,
-                top: position.y - 120,
-                zIndex: 5
+                background: 'linear-gradient(135deg, rgba(17, 24, 39, 0.95) 0%, rgba(30, 41, 59, 0.9) 100%)',
+                backdropFilter: 'blur(40px) saturate(180%)',
+                border: `1px solid ${product.accentColor}`,
+                boxShadow: `
+                  0 0 0 1px rgba(255, 255, 255, 0.05),
+                  0 0 60px rgba(${product.colorRgb}, 0.4),
+                  0 20px 40px rgba(0, 0, 0, 0.5),
+                  inset 0 1px 0 rgba(255, 255, 255, 0.15)
+                `,
+                padding: '2rem',
+                display: 'flex',
+                flexDirection: 'column' as const,
+                position: 'relative',
+                overflow: 'hidden'
               }}
             >
-              <div className="tagline-content">
-                {product.title}
-              </div>
+              {/* Card Header */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2 }}
+                style={{ marginBottom: '1.5rem' }}
+              >
+                <h3 style={{
+                  fontSize: '1.5rem',
+                  fontWeight: 800,
+                  color: '#fff',
+                  margin: '0 0 0.5rem 0',
+                  lineHeight: 1.2
+                }}>
+                  {product.title}
+                </h3>
+                <p style={{
+                  fontSize: '1rem',
+                  fontWeight: 600,
+                  color: product.accentColor,
+                  margin: 0,
+                  opacity: 0.9
+                }}>
+                  {product.tagline}
+                </p>
+              </motion.div>
+
+              {/* Card Content */}
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.3 }}
+                style={{
+                  flex: 1,
+                  overflowY: 'auto' as const
+                }}
+              >
+                <div
+                  style={{
+                    fontSize: '0.95rem',
+                    lineHeight: 1.6,
+                    color: 'rgba(255, 255, 255, 0.85)'
+                  }}
+                  dangerouslySetInnerHTML={{
+                    __html: product.description.replace(/\*\*(.*?)\*\*/g, '<strong style="color: rgba(255, 255, 255, 0.95); font-weight: 700;">$1</strong>')
+                  }}
+                />
+              </motion.div>
+
+              {/* Close Button */}
+              <motion.button
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.4 }}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onClick();
+                }}
+                style={{
+                  position: 'absolute',
+                  top: '1rem',
+                  right: '1rem',
+                  width: 32,
+                  height: 32,
+                  borderRadius: '50%',
+                  border: 'none',
+                  background: 'rgba(255, 255, 255, 0.1)',
+                  backdropFilter: 'blur(10px)',
+                  color: 'rgba(255, 255, 255, 0.8)',
+                  fontSize: '1.5rem',
+                  fontWeight: 300,
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  transition: 'all 0.2s ease'
+                }}
+                whileHover={{
+                  background: 'rgba(255, 255, 255, 0.2)',
+                  color: '#fff',
+                  rotate: 90
+                }}
+                whileTap={{ scale: 0.9 }}
+              >
+                ×
+              </motion.button>
+
+              {/* Featured Badge */}
+              {product.featured && (
+                <motion.div
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.5 }}
+                  style={{
+                    position: 'absolute',
+                    top: '-8px',
+                    left: '1rem',
+                    background: `linear-gradient(135deg, ${product.accentColor}, rgba(${product.colorRgb}, 0.8))`,
+                    color: 'white',
+                    fontSize: '0.75rem',
+                    fontWeight: 700,
+                    padding: '0.25rem 0.75rem',
+                    borderRadius: 12,
+                    textTransform: 'uppercase' as const,
+                    letterSpacing: '0.05em',
+                    boxShadow: `0 4px 12px rgba(${product.colorRgb}, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2)`
+                  }}
+                >
+                  Flagship
+                </motion.div>
+              )}
             </motion.div>
           )}
         </AnimatePresence>
+      </motion.div>
 
-        {/* Main orb/card morphing container */}
-        <motion.div
-          ref={ref}
-          layoutId={`product-${product.id}`}
-          className={`product-orb ${isExpanded ? 'expanded' : ''}`}
-          style={{
-            position: "absolute",
-            left: isExpanded ? "50%" : position.x - 80,
-            top: isExpanded ? "50%" : position.y - 80,
-            transform: isExpanded ? "translate(-50%, -50%)" : "translate(0, 0)",
-            "--orb-color": product.color,
-            "--orb-color-rgb": product.colorRgb,
-            "--orb-accent": product.accentColor
-          } as React.CSSProperties}
-          initial="hidden"
-          animate="visible"
-          variants={entranceVariants}
-          onClick={handleClick}
-        >
-          {/* Orb state */}
-          {!isExpanded && (
-            <motion.div
-              className="orb-container"
-              variants={floatingVariants}
-              animate="floating"
-              whileHover={{
-                scale: 1.05,
-                y: -12,
-                transition: springConfig
-              }}
-              whileTap={{
-                scale: 0.95,
-                transition: { duration: 0.1 }
-              }}
-            >
-              <div className="orb-inner">
-                <div className="orb-highlight" />
-              </div>
-            </motion.div>
-          )}
+      {/* Floating Label - Only show when not expanded */}
+      <AnimatePresence>
+        {!isExpanded && (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.8 }}
+            transition={{ delay: 0.6 + index * 0.1 }}
+            style={{
+              position: "absolute",
+              left: position.x - 60,
+              top: position.y - 120,
+              zIndex: 5,
+              pointerEvents: 'none' as const
+            }}
+          >
+            <div style={{
+              background: 'rgba(17, 24, 39, 0.9)',
+              backdropFilter: 'blur(12px)',
+              border: '1px solid rgba(255, 255, 255, 0.1)',
+              borderRadius: 8,
+              padding: '0.5rem 1rem',
+              fontSize: '0.875rem',
+              fontWeight: 600,
+              color: 'rgba(255, 255, 255, 0.9)',
+              textAlign: 'center' as const,
+              whiteSpace: 'nowrap' as const,
+              boxShadow: `0 4px 12px rgba(0, 0, 0, 0.3), 0 0 20px rgba(${product.colorRgb}, 0.2)`,
+              position: 'relative'
+            }}>
+              {product.title}
+              {/* Connecting line */}
+              <div style={{
+                content: '""',
+                position: 'absolute',
+                top: '100%',
+                left: '50%',
+                transform: 'translateX(-50%)',
+                width: 2,
+                height: 20,
+                background: `linear-gradient(to bottom, rgba(${product.colorRgb}, 0.6), transparent)`
+              }} />
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
+  );
+};
 
-          {/* Expanded card state */}
-          <AnimatePresence>
-            {isExpanded && (
-              <motion.div
-                className="expanded-card"
-                initial="orb"
-                animate="card"
-                exit="orb"
-                variants={morphingVariants}
-              >
-                {/* Card header */}
-                <motion.div
-                  className="card-header"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.3, duration: 0.4 }}
-                >
-                  <h3 className="card-title">{product.title}</h3>
-                  <p className="card-tagline">{product.tagline}</p>
-                </motion.div>
-
-                {/* Card content */}
-                <motion.div
-                  className="card-content"
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.4, duration: 0.5 }}
-                >
-                  <div 
-                    className="card-description"
-                    dangerouslySetInnerHTML={{ 
-                      __html: product.description.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') 
-                    }}
-                  />
-                </motion.div>
-
-                {/* Close button */}
-                <motion.button
-                  className="close-button"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    onClick();
-                  }}
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: 0.5 }}
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.9 }}
-                >
-                  <span>×</span>
-                </motion.button>
-
-                {/* Featured badge for flagship products */}
-                {product.featured && (
-                  <motion.div
-                    className="featured-badge"
-                    initial={{ opacity: 0, x: 20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.6 }}
-                  >
-                    Flagship
-                  </motion.div>
-                )}
-              </motion.div>
-            )}
-          </AnimatePresence>
-
-          {/* Background blur overlay when expanded */}
-          <AnimatePresence>
-            {isExpanded && (
-              <motion.div
-                className="card-backdrop"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.3 }}
-                onClick={handleClick}
-              />
-            )}
-          </AnimatePresence>
-        </motion.div>
-      </>
-    );
-  }
-);
-
-ProductOrb.displayName = "ProductOrb";
+export default ProductOrb;
