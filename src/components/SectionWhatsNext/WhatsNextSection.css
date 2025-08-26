@@ -118,10 +118,13 @@
 
 /* Section Header */
 .section-header {
-  position: relative;
+  position: absolute;
+  top: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
   z-index: 10;
   text-align: center;
-  margin-bottom: 3rem;
+  width: 100%;
 }
 
 .section-title {
@@ -152,10 +155,12 @@
 
 /* Intro Text Animation System */
 .intro-text-container {
-  position: relative;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   z-index: 15;
   max-width: 800px;
-  margin: 0 auto 4rem;
   padding: 0 2rem;
 }
 
@@ -314,6 +319,25 @@
   height: 100%;
   z-index: 10;
 }
+
+/* Orbital drift animation for natural movement */
+@keyframes orbitalDrift {
+  0% { transform: translateX(0) translateY(0) rotate(0deg); }
+  25% { transform: translateX(20px) translateY(-15px) rotate(90deg); }
+  50% { transform: translateX(0) translateY(-30px) rotate(180deg); }
+  75% { transform: translateX(-20px) translateY(-15px) rotate(270deg); }
+  100% { transform: translateX(0) translateY(0) rotate(360deg); }
+}
+
+/* Apply different drift animations to different orbs */
+.product-orb:nth-child(1) { animation: orbitalDrift 120s linear infinite; }
+.product-orb:nth-child(2) { animation: orbitalDrift 140s linear infinite reverse; }
+.product-orb:nth-child(3) { animation: orbitalDrift 160s linear infinite; }
+.product-orb:nth-child(4) { animation: orbitalDrift 180s linear infinite reverse; }
+.product-orb:nth-child(5) { animation: orbitalDrift 200s linear infinite; }
+.product-orb:nth-child(6) { animation: orbitalDrift 220s linear infinite reverse; }
+.product-orb:nth-child(7) { animation: orbitalDrift 240s linear infinite; }
+.product-orb:nth-child(8) { animation: orbitalDrift 260s linear infinite reverse; }
 
 /* Responsive Design */
 @media (max-width: 1024px) {

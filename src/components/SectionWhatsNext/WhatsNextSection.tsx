@@ -24,9 +24,9 @@ const WhatsNextSection: React.FC = () => {
 
     // Create orbital rings with varying radii
     const rings = [
-      { radius: 180, orbs: 3 },
-      { radius: 280, orbs: 3 },
-      { radius: 380, orbs: Math.max(1, totalOrbs - 6) }
+      { radius: 200, orbs: 3 },
+      { radius: 320, orbs: 3 },
+      { radius: 440, orbs: 2 }
     ];
 
     let orbIndex = 0;
@@ -87,7 +87,7 @@ const WhatsNextSection: React.FC = () => {
     if (showIntroText && !introComplete) {
       // Calculate total typing duration
       const totalLines = introLines.length;
-      const typingDuration = totalLines * 0.8 * 1000 + 3000; // Lines * delay + buffer
+      const typingDuration = totalLines * 1.5 * 1000 + 4000; // Updated timing calculation
 
       const timer = setTimeout(() => {
         setIntroComplete(true);
@@ -190,7 +190,7 @@ const WhatsNextSection: React.FC = () => {
         viewport={{ once: true }}
         transition={{ duration: 0.8, ease: "easeOut" }}
       >
-        <h2 className="section-title">{`What's Next at NovaThink`}</h2>
+        <h2 className="section-title text-4xl sm:text-5xl font-bold font-headline">{`What's Next at NovaThink`}</h2>
       </motion.div>
 
       {/* Typing Animation Intro Text - Only show during typing phase */}
@@ -211,8 +211,8 @@ const WhatsNextSection: React.FC = () => {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{
-                    delay: index * 0.8,
-                    duration: 0.1
+                    delay: index * 1.5, // Increased delay between lines
+                    duration: 0.3
                   }}
                 >
                   {line.split('').map((char, charIndex) => (
@@ -221,7 +221,7 @@ const WhatsNextSection: React.FC = () => {
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       transition={{
-                        delay: index * 0.8 + charIndex * 0.05,
+                        delay: index * 1.5 + charIndex * 0.02, // Slower character typing within each line
                         duration: 0.1
                       }}
                     >

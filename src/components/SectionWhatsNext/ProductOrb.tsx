@@ -31,8 +31,8 @@ export const ProductOrb = forwardRef<HTMLDivElement, ProductOrbProps>(
     // Morphing animation variants
     const morphingVariants = {
       orb: {
-        width: 80,
-        height: 80,
+        width: 160,
+        height: 160,
         borderRadius: "50%",
         scale: 1,
         zIndex: 10,
@@ -43,7 +43,7 @@ export const ProductOrb = forwardRef<HTMLDivElement, ProductOrbProps>(
         height: 320,
         borderRadius: 16,
         scale: 1,
-        zIndex: 50,
+        zIndex: 100,
         transition: expansionSpringConfig
       }
     };
@@ -116,8 +116,8 @@ export const ProductOrb = forwardRef<HTMLDivElement, ProductOrbProps>(
           className={`product-orb ${isExpanded ? 'expanded' : ''}`}
           style={{
             position: "absolute",
-            left: isExpanded ? "50%" : position.x - 40,
-            top: isExpanded ? "50%" : position.y - 40,
+            left: isExpanded ? "50%" : position.x - 80,
+            top: isExpanded ? "50%" : position.y - 80,
             transform: isExpanded ? "translate(-50%, -50%)" : "translate(0, 0)",
             "--orb-color": product.color,
             "--orb-color-rgb": product.colorRgb,
