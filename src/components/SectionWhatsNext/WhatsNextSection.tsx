@@ -43,7 +43,17 @@ const WhatsNextSection: React.FC = () => {
     return positions;
   };
 
-  const [staticPositions] = useState(calculateOrbitalPositions());
+  const [orbitalPositions, setOrbitalPositions] = useState(calculateOrbitalPositions());
+
+  // Responsive orbital positioning
+  useEffect(() => {
+    const handleResize = () => {
+      setOrbitalPositions(calculateOrbitalPositions());
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   // Intersection Observer to trigger intro text when section comes into view
   useEffect(() => {
@@ -252,7 +262,7 @@ const WhatsNextSection: React.FC = () => {
                   orbRefs.current[index] = el;
                 }}
                 product={product}
-                position={staticPositions[index] || { x: 50, y: 60 }}
+                position={orbitalPositions[index] || { x: 0, y: 0, ring: 0 }}
                 isExpanded={expandedProductId === product.id}
                 onClick={() => handleOrbClick(product.id)}
                 index={index}
