@@ -243,7 +243,7 @@ export const ProductOrb: React.FC<ProductOrbProps> = ({
         </AnimatePresence>
       </motion.div>
 
-      {/* Floating Label - Only show when not expanded */}
+      {/* Floating Label - Only show when not expanded and no other orb is expanded */}
       <AnimatePresence>
         {!isExpanded && (
           <motion.div

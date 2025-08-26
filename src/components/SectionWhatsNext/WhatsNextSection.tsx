@@ -26,7 +26,7 @@ const WhatsNextSection: React.FC = () => {
     return () => observer.disconnect();
   }, [showContent]);
 
-  // Orbital arc positioning - curved like satellite constellation
+  // Orbital arc positioning - downward curve like a satellite constellation
   const getOrbPosition = (index: number) => {
     const totalOrbs = productsData.length;
     const screenWidth = typeof window !== 'undefined' ? window.innerWidth : 1200;
@@ -35,17 +35,17 @@ const WhatsNextSection: React.FC = () => {
     const centerX = screenWidth / 2;
     const centerY = screenHeight / 2;
     
-    // Create an arc that curves upward at the edges
+    // Create an arc that curves downward at the edges
     const arcWidth = Math.min(screenWidth * 0.85, 1400);
-    const arcHeight = 120; // How much the arc curves upward
-    const baseY = centerY + 50; // Base position below center
+    const arcHeight = 80; // How much the arc curves downward
+    const baseY = centerY - 20; // Base position above center
     
     const progress = index / (totalOrbs - 1); // 0 to 1
     const x = centerX - arcWidth / 2 + progress * arcWidth;
     
-    // Create upward parabolic curve (U-shaped)
+    // Create downward parabolic curve (upside-down U)
     const normalizedProgress = (progress - 0.5) * 2; // -1 to 1 from center
-    const y = baseY - arcHeight * (1 - normalizedProgress * normalizedProgress);
+    const y = baseY + arcHeight * (normalizedProgress * normalizedProgress);
     
     return { x, y };
   };
@@ -114,10 +114,11 @@ const WhatsNextSection: React.FC = () => {
         style={{
           position: 'absolute',
           top: '60px',
-          left: '50%',
-          transform: 'translateX(-50%)',
+          left: 0,
+          right: 0,
           zIndex: 10,
-          textAlign: 'center'
+          textAlign: 'center',
+          width: '100%'
         }}
       >
         <h2 style={{
@@ -190,25 +191,6 @@ const WhatsNextSection: React.FC = () => {
               );
             })}
           </div>
-        )}
-      </AnimatePresence>
-
-      {/* Background blur when card is expanded */}
-      <AnimatePresence>
-        {expandedProductId && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            style={{
-              position: 'fixed',
-              inset: 0,
-              background: 'rgba(0, 0, 0, 0.3)', // Much lighter backdrop
-              backdropFilter: 'blur(4px)', // Less aggressive blur
-              zIndex: 40
-            }}
-            onClick={() => setExpandedProductId(null)}
-          />
         )}
       </AnimatePresence>
     </section>
