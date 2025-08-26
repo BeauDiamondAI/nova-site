@@ -9,7 +9,6 @@ const WhatsNextSection: React.FC = () => {
   const [expandedProductId, setExpandedProductId] = useState<string | null>(null);
   const [showIntroText, setShowIntroText] = useState(false);
   const [introComplete, setIntroComplete] = useState(false);
-  const [showIntroPreview, setShowIntroPreview] = useState(false);
   const [showOrbs, setShowOrbs] = useState(false);
   const [mouseHaloActive, setMouseHaloActive] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
@@ -25,14 +24,14 @@ const WhatsNextSection: React.FC = () => {
     // Create a wide arc across the screen width
     const screenWidth = typeof window !== 'undefined' ? window.innerWidth : 1600;
     const arcWidth = Math.min(screenWidth * 0.8, 1200); // 80% of screen width, max 1200px
-    const arcHeight = 100; // Subtle upward curve
+    const arcHeight = 80; // Subtle upward curve
     
     for (let i = 0; i < totalOrbs; i++) {
       const progress = i / (totalOrbs - 1); // 0 to 1
       const x = centerX - arcWidth / 2 + progress * arcWidth;
       // Create upward arc using inverted parabolic curve
       const normalizedProgress = (progress - 0.5) * 2; // -1 to 1
-      const y = centerY + arcHeight * (1 - normalizedProgress * normalizedProgress); // Changed to + for upward arc
+      const y = centerY - 100 + arcHeight * (1 - normalizedProgress * normalizedProgress); // Moved up by 100px
       
       positions.push({
         x,
@@ -114,16 +113,12 @@ const WhatsNextSection: React.FC = () => {
   };
 
   const handleExpandIntroText = () => {
-    setShowIntroPreview(false);
+    setIntroComplete(false); // Reset to show full text without gradient
     setShowIntroText(true);
-    setIntroComplete(false); // Reset to show full text
   };
 
   const handleCollapseIntroText = () => {
-    setShowIntroText(false);
-    setTimeout(() => {
-      setShowIntroPreview(true);
-    }, 500);
+    setIntroComplete(true); // Apply gradient overlay
   };
 
   // Clean intro text content with proper characters
@@ -238,7 +233,7 @@ const WhatsNextSection: React.FC = () => {
 
       {/* Compact intro text expander - Show after intro is complete and orbs are visible */}
       <AnimatePresence>
-        {introComplete && showOrbs && showIntroPreview && (
+        {introComplete && showOrbs && (
           <motion.button
             className="intro-expander"
             initial={{ opacity: 0, scale: 0.8 }}

@@ -10,6 +10,11 @@
   align-items: center;
   justify-content: center;
   
+  /* Prevent layout interference with previous sections */
+  margin-top: 0;
+  padding-top: 0;
+  clear: both;
+  
   /* Performance optimizations from CBF v1.1 */
   transform: translateZ(0);
   backface-visibility: hidden;
