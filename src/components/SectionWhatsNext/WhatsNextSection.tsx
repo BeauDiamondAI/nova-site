@@ -7,8 +7,10 @@ import "./WhatsNextSection.css";
 
 const WhatsNextSection: React.FC = () => {
   const [expandedProductId, setExpandedProductId] = useState<string | null>(null);
-  const [showIntroText, setShowIntroText] = useState(true);
+  const [showIntroText, setShowIntroText] = useState(false);
   const [introTextExpanded, setIntroTextExpanded] = useState(false);
+  const [introComplete, setIntroComplete] = useState(false);
+  const [showOrbs, setShowOrbs] = useState(false);
   const [mouseHaloActive, setMouseHaloActive] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
   const orbRefs = useRef<(HTMLDivElement | null)[]>([]);
@@ -58,18 +60,60 @@ const WhatsNextSection: React.FC = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // Auto-retract intro text after typing animation completes
+  // Intersection Observer to trigger intro text when section comes into view
   useEffect(() => {
-    if (showIntroText) {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !showIntroText && !introComplete) {
+          setShowIntroText(true);
+        }
+      },
+      { threshold: 0.3 }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => {
+      if (sectionRef.current) {
+        observer.unobserve(sectionRef.current);
+      }
+    };
+  }, [showIntroText, introComplete]);
+
+  // Handle intro text completion sequence
+  useEffect(() => {
+    if (showIntroText && !introComplete) {
+      // Calculate total typing duration
+      const totalLines = introLines.length;
+      const typingDuration = totalLines * 0.8 * 1000 + 3000; // Lines * delay + buffer
+
       const timer = setTimeout(() => {
+        setIntroComplete(true);
         setShowIntroText(false);
-      }, 6000); // Adjust based on typing animation duration
+        
+        // Show orbs after intro text retracts
+        setTimeout(() => {
+          setShowOrbs(true);
+        }, 800); // Delay for text retraction animation
+      }, typingDuration);
+
       return () => clearTimeout(timer);
     }
-  }, [showIntroText]);
+  }, [showIntroText, introComplete]);
 
   const handleOrbClick = (productId: string) => {
-    setExpandedProductId(expandedProductId === productId ? null : productId);
+    // Close currently expanded orb if clicking a different one
+    if (expandedProductId && expandedProductId !== productId) {
+      setExpandedProductId(null);
+      // Brief delay before opening new orb
+      setTimeout(() => {
+        setExpandedProductId(productId);
+      }, 300);
+    } else {
+      setExpandedProductId(expandedProductId === productId ? null : productId);
+    }
     setMouseHaloActive(expandedProductId !== productId);
   };
 
@@ -115,19 +159,28 @@ const WhatsNextSection: React.FC = () => {
           playsInline
           preload="metadata"
         >
-          <source src="/images/SectionWhatsNext/WhatsNext.mp4" type="video/mp4" />
+          <source src="/images/SectionWhatsNextMedia/WhatsNext.mp4" type="video/mp4" />
         </video>
       </div>
 
       {/* Background overlay for better contrast */}
       <div className="background-overlay" />
 
-      {/* Orbital rings visualization */}
-      <div className="orbital-rings">
-        <div className="orbital-ring ring-1" />
-        <div className="orbital-ring ring-2" />
-        <div className="orbital-ring ring-3" />
-      </div>
+      {/* Orbital rings visualization - only show when orbs are visible */}
+      <AnimatePresence>
+        {showOrbs && (
+          <motion.div
+            className="orbital-rings"
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1, ease: "easeOut" }}
+          >
+            <div className="orbital-ring ring-1" />
+            <div className="orbital-ring ring-2" />
+            <div className="orbital-ring ring-3" />
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Section Header */}
       <motion.div
@@ -140,9 +193,9 @@ const WhatsNextSection: React.FC = () => {
         <h2 className="section-title">{`What's Next at NovaThink`}</h2>
       </motion.div>
 
-      {/* Typing Animation Intro Text */}
+      {/* Typing Animation Intro Text - Only show during typing phase */}
       <AnimatePresence>
-        {showIntroText && (
+        {showIntroText && !introComplete && (
           <motion.div
             className="intro-text-container"
             initial={{ opacity: 0 }}
@@ -182,9 +235,9 @@ const WhatsNextSection: React.FC = () => {
         )}
       </AnimatePresence>
 
-      {/* Compact intro text expander */}
+      {/* Compact intro text expander - Show after intro is complete and orbs are visible */}
       <AnimatePresence>
-        {!showIntroText && !introTextExpanded && (
+        {introComplete && showOrbs && !introTextExpanded && (
           <motion.button
             className="intro-expander"
             initial={{ opacity: 0, scale: 0.8 }}
@@ -232,28 +285,39 @@ const WhatsNextSection: React.FC = () => {
         )}
       </AnimatePresence>
 
-      {/* Product Orbs */}
-      <div className="orbital-constellation">
-        {productsData.map((product, index) => (
-          <ProductOrb
-            key={product.id}
-            ref={(el: HTMLDivElement | null) => {
-              orbRefs.current[index] = el;
-            }}
-            product={product}
-            position={orbitalPositions[index] || { x: 0, y: 0, ring: 0 }}
-            isExpanded={expandedProductId === product.id}
-            onClick={() => handleOrbClick(product.id)}
-            index={index}
-          />
-        ))}
-      </div>
+      {/* Product Orbs - Only show after intro is complete */}
+      <AnimatePresence>
+        {showOrbs && (
+          <motion.div
+            className="orbital-constellation"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8, delay: 0.5 }}
+          >
+            {productsData.map((product, index) => (
+              <ProductOrb
+                key={product.id}
+                ref={(el: HTMLDivElement | null) => {
+                  orbRefs.current[index] = el;
+                }}
+                product={product}
+                position={orbitalPositions[index] || { x: 0, y: 0, ring: 0 }}
+                isExpanded={expandedProductId === product.id}
+                onClick={() => handleOrbClick(product.id)}
+                index={index}
+              />
+            ))}
+          </motion.div>
+        )}
+      </AnimatePresence>
 
-      {/* Mouse Halo Effect */}
-      <MouseHalo
-        targetElements={orbRefs.current.filter(Boolean)}
-        isActive={mouseHaloActive && !expandedProductId}
-      />
+      {/* Mouse Halo Effect - Only active when orbs are visible */}
+      {showOrbs && (
+        <MouseHalo
+          targetElements={orbRefs.current.filter(Boolean)}
+          isActive={mouseHaloActive && !expandedProductId}
+        />
+      )}
     </section>
   );
 };
