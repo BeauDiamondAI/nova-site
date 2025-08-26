@@ -30,9 +30,9 @@ const WhatsNextSection: React.FC = () => {
     for (let i = 0; i < totalOrbs; i++) {
       const progress = i / (totalOrbs - 1); // 0 to 1
       const x = centerX - arcWidth / 2 + progress * arcWidth;
-      // Create upward arc using parabolic curve
+      // Create upward arc using inverted parabolic curve
       const normalizedProgress = (progress - 0.5) * 2; // -1 to 1
-      const y = centerY - arcHeight * (1 - normalizedProgress * normalizedProgress);
+      const y = centerY + arcHeight * (1 - normalizedProgress * normalizedProgress); // Changed to + for upward arc
       
       positions.push({
         x,
@@ -88,17 +88,11 @@ const WhatsNextSection: React.FC = () => {
 
       const timer = setTimeout(() => {
         setIntroComplete(true);
-        setShowIntroText(false);
-        
-        // Show preview after brief delay
-        setTimeout(() => {
-          setShowIntroPreview(true);
-        }, 500);
-        
-        // Show orbs after intro preview appears
+        // Don't hide intro text, just set it as complete
+        // Show orbs after intro completes
         setTimeout(() => {
           setShowOrbs(true);
-        }, 1000);
+        }, 800);
       }, typingDuration);
 
       return () => clearTimeout(timer);
