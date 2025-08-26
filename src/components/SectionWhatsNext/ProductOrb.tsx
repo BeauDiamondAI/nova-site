@@ -116,12 +116,13 @@ export const ProductOrb = forwardRef<HTMLDivElement, ProductOrbProps>(
           className={`product-orb ${isExpanded ? 'expanded' : ''}`}
           style={{
             position: "absolute",
-            left: isExpanded ? "50%" : position.x - 80,
-            top: isExpanded ? "50%" : position.y - 80,
-            transform: isExpanded ? "translate(-50%, -50%)" : "translate(0, 0)",
+            left: isExpanded ? "50%" : `${position.x}%`,
+            top: isExpanded ? "50%" : `${position.y}%`,
+            transform: isExpanded ? "translate(-50%, -50%)" : "translate(-50%, -50%)",
             "--orb-color": product.color,
             "--orb-color-rgb": product.colorRgb,
-            "--orb-accent": product.accentColor
+            "--orb-accent": product.accentColor,
+            zIndex: isExpanded ? 1000 : 10
           } as React.CSSProperties}
           initial="hidden"
           animate="visible"

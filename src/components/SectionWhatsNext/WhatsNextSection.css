@@ -2,23 +2,20 @@
 
 .whats-next-section {
   position: relative;
-  width: 100vw;
+  width: 100%;
   min-height: 100vh;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  display: block;
+  padding: 4rem 0;
   
-  /* Prevent layout interference with previous sections */
-  margin-top: 0;
-  padding-top: 0;
+  /* Remove positioning conflicts */
+  margin: 0;
   clear: both;
+  overflow: visible;
   
-  /* Performance optimizations from CBF v1.1 */
+  /* Performance optimizations */
   transform: translateZ(0);
   backface-visibility: hidden;
-  contain: layout style paint;
+  contain: layout;
 }
 
 /* Earth Background Video System */
