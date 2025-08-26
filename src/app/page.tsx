@@ -6,7 +6,7 @@ import SectionAbout from '@/components/SectionAbout';
 import SectionCorePillars from '@/components/SectionCorePillars';
 import SectionNovaThinkLabs from '@/components/SectionNovaThinkLabs';
 import WhoWeServeSection from '@/components/SectionWhoWeServe/WhoWeServeSection';
-import SectionWhatsNext from '@/components/SectionWhatsNext';
+import WhatsNextSection from '@/components/SectionWhatsNext/WhatsNextSection';
 import SectionInMotion from '@/components/SectionInMotion';
 import FooterMinimal from '@/components/FooterMinimal';
 
@@ -20,7 +20,7 @@ export default function Home() {
       <SectionCorePillars />
       <SectionNovaThinkLabs />
       <WhoWeServeSection />
-      <SectionWhatsNext />
+      <WhatsNextSection />
       <SectionInMotion />
       <FooterMinimal />
     </main>
