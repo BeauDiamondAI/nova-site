@@ -16,13 +16,20 @@ export const MouseHalo: React.FC<MouseHaloProps> = ({
   const haloRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!isActive) return;
+    if (!isActive) {
+      setIsHovering(false);
+      return;
+    }
 
     const handleMouseMove = (e: MouseEvent) => {
+      // Filter out null elements
+      const validElements = targetElements.filter(element => element !== null);
+      
+      if (validElements.length === 0) return;
+
       // Check if we're hovering over any target elements
-      const isOverTarget = targetElements.some(element => {
-        if (!element) return false;
-        const rect = element.getBoundingClientRect();
+      const isOverTarget = validElements.some(element => {
+        const rect = element!.getBoundingClientRect();
         return (
           e.clientX >= rect.left &&
           e.clientX <= rect.right &&
@@ -32,7 +39,13 @@ export const MouseHalo: React.FC<MouseHaloProps> = ({
       });
 
       if (isOverTarget) {
-        setMousePosition({ x: e.clientX, y: e.clientY });
+        // Get relative position within the first valid element
+        const element = validElements[0]!;
+        const rect = element.getBoundingClientRect();
+        setMousePosition({ 
+          x: e.clientX - rect.left, 
+          y: e.clientY - rect.top 
+        });
         setIsHovering(true);
       } else {
         setIsHovering(false);
@@ -43,43 +56,49 @@ export const MouseHalo: React.FC<MouseHaloProps> = ({
       setIsHovering(false);
     };
 
-    // Add event listeners to target elements
+    // Add event listeners to document for better capture
+    document.addEventListener('mousemove', handleMouseMove);
+    
+    // Add leave listeners to target elements
     targetElements.forEach(element => {
       if (element) {
-        element.addEventListener('mousemove', handleMouseMove);
         element.addEventListener('mouseleave', handleMouseLeave);
       }
     });
 
     return () => {
+      document.removeEventListener('mousemove', handleMouseMove);
       targetElements.forEach(element => {
         if (element) {
-          element.removeEventListener('mousemove', handleMouseMove);
           element.removeEventListener('mouseleave', handleMouseLeave);
         }
       });
     };
   }, [targetElements, isActive]);
 
-  if (!isActive || !isHovering) return null;
+  // Don't render if not active or no valid target elements
+  const validElements = targetElements.filter(element => element !== null);
+  if (!isActive || !isHovering || validElements.length === 0) return null;
+
+  const element = validElements[0]!;
+  const rect = element.getBoundingClientRect();
 
   return (
     <div
       ref={haloRef}
       style={{
-        position: 'fixed',
+        position: 'absolute', // Changed from 'fixed' to 'absolute'
         left: mousePosition.x - 75,
         top: mousePosition.y - 75,
         width: '150px',
         height: '150px',
         borderRadius: '50%',
-        background: `radial-gradient(circle, rgba(${colorRgb}, 0.15) 0%, rgba(${colorRgb}, 0.08) 40%, rgba(${colorRgb}, 0.02) 70%, transparent 100%)`,
+        background: `radial-gradient(circle, rgba(${colorRgb}, 0.25) 0%, rgba(${colorRgb}, 0.15) 40%, rgba(${colorRgb}, 0.05) 70%, transparent 100%)`,
         pointerEvents: 'none',
-        zIndex: 1000,
-        transition: 'opacity 0.2s ease',
-        opacity: isHovering ? 1 : 0,
-        mixBlendMode: 'screen',
-        filter: 'blur(1px)'
+        zIndex: 1001, // Higher than card zIndex
+        transition: 'all 0.1s ease',
+        opacity: 1,
+        mixBlendMode: 'screen'
       }}
     />
   );
