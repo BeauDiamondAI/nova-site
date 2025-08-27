@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ProductData } from "./productsData";
 import { MouseHalo } from "./MouseHalo";
@@ -31,18 +31,10 @@ export const ProductOrb: React.FC<ProductOrbProps> = ({
   // Increased orb size - 30% larger than original 80px
   const orbSize = 104;
   const orbOffset = orbSize / 2; // 52px offset for centering
-  
-  // Ref for the expanded card to track mouse halo
-  const expandedCardRef = useRef<HTMLDivElement>(null);
 
   return (
     <>
-      {/* Mouse Halo Effect */}
-      <MouseHalo
-        targetElements={[expandedCardRef.current]}
-        isActive={isExpanded}
-        colorRgb={product.colorRgb}
-      />
+  
       {/* Simple Floating Label - Only show when no cards are expanded */}
       <AnimatePresence>
         {!hasExpandedCard && (
@@ -157,7 +149,6 @@ export const ProductOrb: React.FC<ProductOrbProps> = ({
       <AnimatePresence>
         {isExpanded && (
           <motion.div
-            ref={expandedCardRef}
             initial={{ 
               width: 120,
               height: 120,
@@ -217,7 +208,6 @@ export const ProductOrb: React.FC<ProductOrbProps> = ({
           >
             {/* Mouse Halo Effect - Now inside the card */}
             <MouseHalo
-              targetElements={[expandedCardRef.current]}
               isActive={true}
               colorRgb={product.colorRgb}
             />
