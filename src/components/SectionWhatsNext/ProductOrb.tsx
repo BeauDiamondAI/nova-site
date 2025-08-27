@@ -160,7 +160,7 @@ export const ProductOrb: React.FC<ProductOrbProps> = ({
               height: 320,
               borderRadius: 16,
               left: '50%',
-              top: '45%', // Positioned relative to the section, not viewport
+              top: '52%', // Moved down from 45% to avoid text button overlap
               x: '-50%',
               y: '-50%',
               opacity: 1
@@ -183,14 +183,19 @@ export const ProductOrb: React.FC<ProductOrbProps> = ({
             }}
             style={{
               position: "absolute", // Changed from "fixed" to "absolute"
-              background: 'linear-gradient(135deg, rgba(17, 24, 39, 0.95) 0%, rgba(30, 41, 59, 0.9) 100%)',
-              backdropFilter: 'blur(40px) saturate(180%)',
-              border: `1px solid ${product.accentColor}`,
+              background: 'linear-gradient(135deg, rgba(17, 24, 39, 0.3) 0%, rgba(30, 41, 59, 0.25) 50%, rgba(15, 23, 42, 0.3) 100%)', // More transparent
+              backdropFilter: 'blur(25px) saturate(200%) brightness(1.1)', // Enhanced blur and effects
+              WebkitBackdropFilter: 'blur(25px) saturate(200%) brightness(1.1)', // Safari support
+              border: `1px solid rgba(255, 255, 255, 0.2)`, // More visible glass border
+              borderTop: `1px solid rgba(255, 255, 255, 0.3)`, // Brighter top edge
+              borderLeft: `1px solid rgba(255, 255, 255, 0.15)`, // Subtle left highlight
               boxShadow: `
-                0 0 0 1px rgba(255, 255, 255, 0.05),
-                0 0 60px rgba(${product.colorRgb}, 0.4),
-                0 20px 40px rgba(0, 0, 0, 0.5),
-                inset 0 1px 0 rgba(255, 255, 255, 0.15)
+                0 0 0 1px rgba(255, 255, 255, 0.1),
+                0 8px 32px rgba(0, 0, 0, 0.3),
+                0 16px 64px rgba(0, 0, 0, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.25),
+                inset 0 -1px 0 rgba(0, 0, 0, 0.1),
+                0 0 40px rgba(${product.colorRgb}, 0.2)
               `,
               padding: '2rem',
               display: 'flex',
