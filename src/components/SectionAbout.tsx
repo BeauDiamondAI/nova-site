@@ -41,7 +41,7 @@ export default function SectionAbout() {
 
       {/* Background Image Layer */}
       <div
-        className="pointer-events-none absolute inset-0 w-full h-full z-0"
+        className="pointer-events-none absolute inset-0 w-full h-full z-10"
         style={{
           backgroundImage: `url('/images/SectionAboutBlueWave.webp')`,
           backgroundSize: 'cover',
@@ -51,15 +51,12 @@ export default function SectionAbout() {
         }}
       ></div>
   
-      {/* Dark Background Overlayw */}
-      <div className="absolute inset-0 bg-black opacity-30 z-50 pointer-events-none" />  
+      {/* Dark Background Overlay - moved to lower z-index and reduced opacity */}
+      <div className="absolute inset-0 bg-black opacity-20 z-20 pointer-events-none" />  
 
-      {/* Divider Glow */}
-       
-
-      {/* Content */}
+      {/* Content - now at highest z-index */}
       <motion.div
-        className="relative z-30 max-w-4xl px-4"
+        className="relative z-50 max-w-4xl px-4"
         style={{ y, opacity, lineHeight }}
       >
         <h2 className="text-4xl sm:text-5xl font-bold font-headline mb-5">
@@ -71,38 +68,38 @@ export default function SectionAbout() {
         </p>
 
         <p className="mb-6 text-base" style={{ lineHeight: `${lineHeight}px` }}>
-          NovaThink is a U.S.-based AI infrastructure company engineering secure,
-          enterprise-grade systems for reasoning, analysis, and strategic intelligence.
+          NovaThink is building the <strong>cognitive operating system</strong> for the AI era.
         </p>
 
         <p className="mb-6 text-base" style={{ lineHeight: `${lineHeight}px` }}>
-          We’re building advanced cognitive architectures that blend multi-step logic
-          frameworks with large language models — primarily OpenAI GPT models via API —
-          unlocking advanced systems for real-time decision intelligence and autonomous
-          execution—purpose-built for operators, analysts, researchers, and executives
-          alike.
+          Where today's large language models offer raw capacity, NovaThink provides the <em>meta-layer</em> that unlocks their full potential — transforming reactive tools into <strong>adaptive, persistent intelligences</strong> capable of reasoning, remembering, and orchestrating action at scale.
         </p>
 
         <p className="mb-6 text-base" style={{ lineHeight: `${lineHeight}px` }}>
-          To ensure resilience and continuity, NovaThink’s systems are also designed to
-          interface with select open-source models, enabling multi-model redundancy across
-          critical operations.
+          Today's LLMs are not bottlenecked by training data or compute. They are bottlenecked by lack of structure — missing the <strong>multi-step reasoning frameworks</strong> and <strong>cognitive persistence</strong> required to sustain real-world complexity in domains like strategy, research, policy, defense, and executive operations.
         </p>
 
         <p className="mb-6 text-base" style={{ lineHeight: `${lineHeight}px` }}>
-          All AI interactions are executed securely inside a fully isolated, encrypted
-          Virtual Private Cloud (VPC), ensuring end-to-end privacy, compliance, and
-          control.
+          NovaThink closes this gap. We embed recursive logic frameworks, cognitive memory patterns, and domain-specific reasoning protocols — creating stateful AI systems that <strong>think beyond the prompt window</strong> and carry objectives forward with continuity, depth, and adaptive learning over time.
         </p>
 
         <p className="mb-6 text-base" style={{ lineHeight: `${lineHeight}px` }}>
-          Our infrastructure is built from the ground up to meet SOC 2 and ISO 27001
-          compliance standards — and beyond.
+          All of this is delivered through <strong>enterprise-grade infrastructure</strong>:
+        </p>
+
+        <ul className="mb-6 text-base text-left max-w-3xl mx-auto space-y-3" style={{ lineHeight: `${lineHeight}px` }}>
+          <li>• Fully isolated, encrypted VPC deployments for uncompromising data security</li>
+          <li>• Multi-model backends (OpenAI, Anthropic, open-source) for continuity and resilience</li>
+          <li>• Compliance engineered from the ground up — SOC 2, ISO 27001, and beyond</li>
+        </ul>
+
+        <p className="mb-6 text-base" style={{ lineHeight: `${lineHeight}px` }}>
+          We're not another AI product. We're building the <strong>cognitive OS</strong> — the intelligence amplification layer that will define how humans and AI collaborate across the next decade.
         </p>
       </motion.div>
 
       {/* Cyan Accent Line */}
-      <div className="h-[3px] mx-auto mt-12 bg-cyan-400 rounded-full shadow-[0_0_20px_5px_rgba(34,211,238,0.5)] w-1/4 z-50" />
+      <div className="h-[3px] mx-auto mt-12 bg-cyan-400 rounded-full shadow-[0_0_20px_5px_rgba(34,211,238,0.5)] w-1/4 z-60" />
     </section>
   );
 }
