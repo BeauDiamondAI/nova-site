@@ -42,10 +42,6 @@ const WhatsNextSection: React.FC = () => {
     const streamText = () => {
       if (currentParagraph >= paragraphs.length) {
         setIsTextComplete(true);
-        // Auto-collapse after 3 seconds
-        setTimeout(() => {
-          setIsTextCollapsed(true);
-        }, 3000);
         return;
       }
 
@@ -223,7 +219,23 @@ const WhatsNextSection: React.FC = () => {
   };
 
   return (
-    <>
+    <section
+      ref={sectionRef}
+      className="whats-next-section"
+      style={{
+        position: 'relative',
+        width: '100vw',
+        height: '100vh',
+        overflow: 'hidden',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        isolation: 'isolate',
+        zIndex: 1
+      }}
+    >
+      {/* Scoped keyframes just for this section */}
       <style jsx>{`
         @keyframes blink {
           0%, 50% { opacity: 1; }
@@ -236,130 +248,113 @@ const WhatsNextSection: React.FC = () => {
         }
       `}</style>
       
-      <section
-        ref={sectionRef}
-        className="whats-next-section"
-        style={{
-          position: 'relative',
-          width: '100vw',
-          height: '100vh',
-          overflow: 'hidden',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
-          isolation: 'isolate', // Prevent layout bleeding
-          zIndex: 1 // Lower than previous sections
-        }}
-      >
-        {/* Earth Background Video */}
-        <div style={{
-          position: 'absolute',
-          inset: 0,
-          zIndex: 1
-        }}>
-          <video
-            style={{
-              position: 'absolute',
-              top: '50%',
-              left: '50%',
-              minWidth: '100%',
-              minHeight: '100%',
-              transform: 'translate(-50%, -50%)',
-              objectFit: 'cover',
-              willChange: 'auto'
-            }}
-            autoPlay
-            muted
-            loop
-            playsInline
-            preload="metadata"
-          >
-            <source src="/images/SectionWhatsNextMedia/WhatsNext.mp4" type="video/mp4" />
-          </video>
-        </div>
-
-        {/* Background overlay */}
-        <div style={{
-          position: 'absolute',
-          inset: 0,
-          background: 'linear-gradient(135deg, rgba(0, 0, 0, 0.4) 0%, rgba(15, 23, 42, 0.6) 50%, rgba(0, 0, 0, 0.5) 100%)',
-          zIndex: 2
-        }} />
-
-        {/* Section Title */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={showContent ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8 }}
+      {/* Earth Background Video */}
+      <div style={{
+        position: 'absolute',
+        inset: 0,
+        zIndex: 1
+      }}>
+        <video
           style={{
             position: 'absolute',
-            top: '60px',
-            left: 0,
-            right: 0,
-            zIndex: 10,
-            textAlign: 'center',
-            width: '100%'
+            top: '50%',
+            left: '50%',
+            minWidth: '100%',
+            minHeight: '100%',
+            transform: 'translate(-50%, -50%)',
+            objectFit: 'cover',
+            willChange: 'auto'
+          }}
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="metadata"
+        >
+          <source src="/images/SectionWhatsNextMedia/WhatsNext.mp4" type="video/mp4" />
+        </video>
+      </div>
+
+      {/* Background overlay */}
+      <div style={{
+        position: 'absolute',
+        inset: 0,
+        background: 'linear-gradient(135deg, rgba(0, 0, 0, 0.4) 0%, rgba(15, 23, 42, 0.6) 50%, rgba(0, 0, 0, 0.5) 100%)',
+        zIndex: 2
+      }} />
+
+      {/* Section Title */}
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        animate={showContent ? { opacity: 1, y: 0 } : {}}
+        transition={{ duration: 0.8 }}
+        style={{
+          position: 'absolute',
+          top: '60px',
+          left: 0,
+          right: 0,
+          zIndex: 10,
+          textAlign: 'center',
+          width: '100%'
+        }}
+      >
+        <h2 className="text-4xl sm:text-5xl font-bold font-headline mb-5" style={{
+          fontSize: 'clamp(2.5rem, 5vw, 4rem)',
+          fontWeight: 800,
+          color: '#ffffff',
+          margin: '0 0 1.5rem 0',
+          background: 'linear-gradient(135deg, #ffffff 0%, rgba(6, 182, 212, 0.9) 50%, #ffffff 100%)',
+          backgroundClip: 'text',
+          WebkitBackgroundClip: 'text',
+          WebkitTextFillColor: 'transparent',
+          textShadow: '0 0 30px rgba(6, 182, 212, 0.3)',
+          letterSpacing: '-0.02em'
+        }}>
+          What&apos;s Next at NovaThink
+        </h2>
+        
+        {/* Streaming intro text */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={showContent ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8, delay: 0.3 }}
+          style={{
+            maxWidth: '800px',
+            margin: '0 auto',
+            padding: '0 2rem'
           }}
         >
-          <h2 className="text-4xl sm:text-5xl font-bold font-headline mb-5" style={{
-            fontSize: 'clamp(2.5rem, 5vw, 4rem)',
-            fontWeight: 800,
-            color: '#ffffff',
-            margin: '0 0 1.5rem 0',
-            background: 'linear-gradient(135deg, #ffffff 0%, rgba(6, 182, 212, 0.9) 50%, #ffffff 100%)',
-            backgroundClip: 'text',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
-            textShadow: '0 0 30px rgba(6, 182, 212, 0.3)',
-            letterSpacing: '-0.02em'
-          }}>
-            What&apos;s Next at NovaThink
-          </h2>
-          
-          {/* Streaming intro text */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={showContent ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.8, delay: 0.3 }}
-            style={{
-              maxWidth: '800px',
-              margin: '0 auto',
-              padding: '0 2rem'
-            }}
-          >
-            {renderStreamingText()}
-          </motion.div>
+          {renderStreamingText()}
         </motion.div>
+      </motion.div>
 
-        {/* Product Orbs - Show only after text is complete */}
-        <AnimatePresence>
-          {showContent && isTextComplete && (
-            <div style={{
-              position: 'relative',
-              width: '100%',
-              height: '100%',
-              zIndex: 10
-            }}>
-              {productsData.map((product, index) => {
-                const position = getOrbPosition(index);
-                return (
-                  <ProductOrb
-                    key={product.id}
-                    product={product}
-                    position={position}
-                    isExpanded={expandedProductId === product.id}
-                    hasExpandedCard={expandedProductId !== null}
-                    onClick={() => handleOrbClick(product.id)}
-                    index={index}
-                  />
-                );
-              })}
-            </div>
-          )}
-        </AnimatePresence>
-      </section>
-    </>
+      {/* Product Orbs - Show only after text is complete */}
+      <AnimatePresence>
+        {showContent && isTextComplete && (
+          <div style={{
+            position: 'relative',
+            width: '100%',
+            height: '100%',
+            zIndex: 10
+          }}>
+            {productsData.map((product, index) => {
+              const position = getOrbPosition(index);
+              return (
+                <ProductOrb
+                  key={product.id}
+                  product={product}
+                  position={position}
+                  isExpanded={expandedProductId === product.id}
+                  hasExpandedCard={expandedProductId !== null}
+                  onClick={() => handleOrbClick(product.id)}
+                  index={index}
+                />
+              );
+            })}
+          </div>
+        )}
+      </AnimatePresence>
+    </section>
   );
 };
 

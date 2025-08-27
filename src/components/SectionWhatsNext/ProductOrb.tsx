@@ -27,6 +27,10 @@ export const ProductOrb: React.FC<ProductOrbProps> = ({
     duration: 0.5
   };
 
+  // Increased orb size - 30% larger than original 80px
+  const orbSize = 104;
+  const orbOffset = orbSize / 2; // 52px offset for centering
+
   return (
     <>
       {/* Simple Floating Label - Only show when no cards are expanded */}
@@ -76,7 +80,7 @@ export const ProductOrb: React.FC<ProductOrbProps> = ({
         )}
       </AnimatePresence>
 
-      {/* Orb - Only show when not expanded */}
+      {/* Orb - Only show when not expanded - Now using larger size */}
       <AnimatePresence>
         {!isExpanded && (
           <motion.div
@@ -95,10 +99,10 @@ export const ProductOrb: React.FC<ProductOrbProps> = ({
             whileTap={{ scale: 0.95 }}
             style={{
               position: "absolute",
-              left: position.x - 40,
-              top: position.y - 40,
-              width: 80,
-              height: 80,
+              left: position.x - orbOffset,
+              top: position.y - orbOffset,
+              width: orbSize,
+              height: orbSize,
               borderRadius: "50%",
               background: `radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.4), ${product.color} 40%, #1f2937 85%, #0f172a 100%)`,
               boxShadow: `
