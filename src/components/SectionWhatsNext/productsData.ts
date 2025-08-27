@@ -40,15 +40,6 @@ export const productsData: ProductData[] = [
     accentColor: "#22C55E"
   },
   {
-    id: "website-builder",
-    title: "Conversational Website Builder",
-    tagline: "From concept to launch",
-    description: "Fully conversational website development from onboarding to mockup to launch. No freelancers. No guesswork. Just guided precision.",
-    color: "rgba(251, 146, 60, 0.4)",
-    colorRgb: "251, 146, 60",
-    accentColor: "#FB923C"
-  },
-  {
     id: "campaign-engine",
     title: "Cognitive Copy & Campaign Engine",
     tagline: "AI-native marketing systems",
