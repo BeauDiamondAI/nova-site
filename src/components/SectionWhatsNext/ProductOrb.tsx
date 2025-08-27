@@ -160,7 +160,7 @@ export const ProductOrb: React.FC<ProductOrbProps> = ({
               height: 320,
               borderRadius: 16,
               left: '50%',
-              top: '50%',
+              top: '45%', // Positioned relative to the section, not viewport
               x: '-50%',
               y: '-50%',
               opacity: 1
@@ -182,7 +182,7 @@ export const ProductOrb: React.FC<ProductOrbProps> = ({
               duration: 0.6
             }}
             style={{
-              position: "fixed",
+              position: "absolute", // Changed from "fixed" to "absolute"
               background: 'linear-gradient(135deg, rgba(17, 24, 39, 0.95) 0%, rgba(30, 41, 59, 0.9) 100%)',
               backdropFilter: 'blur(40px) saturate(180%)',
               border: `1px solid ${product.accentColor}`,
