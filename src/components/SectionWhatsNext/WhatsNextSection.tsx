@@ -38,7 +38,7 @@ const WhatsNextSection: React.FC = () => {
     // Create a V-shape that curves upward from center
     const arcWidth = Math.min(screenWidth * 0.8, 1300);
     const arcHeight = 100; // How much the ends lift up
-    const baseY = centerY + 80; // Start lower to make room for text above
+    const baseY = centerY + 160; // Moved down by about one orb length (80px more)
     
     const progress = index / (totalOrbs - 1); // 0 to 1
     const x = centerX - arcWidth / 2 + progress * arcWidth;

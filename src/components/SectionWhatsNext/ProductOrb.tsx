@@ -245,14 +245,17 @@ export const ProductOrb: React.FC<ProductOrbProps> = ({
         </AnimatePresence>
       </motion.div>
 
-      {/* Floating Label - Hide when any card is expanded */}
-      <AnimatePresence>
+      {/* Floating Label - Only show when this orb is not expanded AND no other card is open */}
+      <AnimatePresence mode="wait">
         {!isExpanded && !hasExpandedCard && (
           <motion.div
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.8 }}
-            transition={{ delay: 0.6 + index * 0.1 }}
+            transition={{ 
+              delay: 0.6 + index * 0.1,
+              duration: 0.2 
+            }}
             style={{
               position: "absolute",
               left: position.x - 60,
