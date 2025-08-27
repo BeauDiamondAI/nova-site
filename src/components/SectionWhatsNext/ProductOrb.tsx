@@ -29,7 +29,7 @@ export const ProductOrb: React.FC<ProductOrbProps> = ({
           exit={{ opacity: 0, scale: 0.8 }}
           transition={{ delay: 0.6 + index * 0.1, duration: 0.2 }}
           style={{
-            position: "fixed",
+            position: "absolute",
             left: position.x - 60,
             top: position.y - 120,
             zIndex: 5,
@@ -76,7 +76,7 @@ export const ProductOrb: React.FC<ProductOrbProps> = ({
           whileHover={{ scale: 1.1, y: -8 }}
           whileTap={{ scale: 0.95 }}
           style={{
-            position: "fixed",
+            position: "absolute",
             left: position.x - 40,
             top: position.y - 40,
             width: 80,
@@ -115,27 +115,21 @@ export const ProductOrb: React.FC<ProductOrbProps> = ({
         <motion.div
           initial={{ 
             opacity: 0,
-            scale: 0.1,
-            x: position.x - 200,
-            y: position.y - 160
+            scale: 0.8
           }}
           animate={{ 
             opacity: 1,
-            scale: 1,
-            x: (typeof window !== 'undefined' ? window.innerWidth : 1200) / 2 - 200,
-            y: (typeof window !== 'undefined' ? window.innerHeight : 800) / 2 - 160
+            scale: 1
           }}
           exit={{ 
             opacity: 0,
-            scale: 0.1,
-            x: position.x - 200,
-            y: position.y - 160
+            scale: 0.8
           }}
           transition={{
             type: "spring",
             stiffness: 300,
             damping: 25,
-            duration: 0.5
+            duration: 0.4
           }}
           style={{
             position: "fixed",
@@ -155,7 +149,10 @@ export const ProductOrb: React.FC<ProductOrbProps> = ({
             display: 'flex',
             flexDirection: 'column',
             overflow: 'hidden',
-            zIndex: 50
+            zIndex: 50,
+            left: '50%',
+            top: '50%',
+            transform: 'translate(-50%, -50%)'
           }}
         >
           {/* Card Header */}
