@@ -359,7 +359,7 @@ const WhatsNextSection: React.FC = () => {
             textShadow: '0 0 30px rgba(6, 182, 212, 0.3)',
             letterSpacing: '-0.02em'
           }}>
-            What's Next at NovaThink
+            What&apos;s Next at NovaThink
           </h2>
           
           {/* Streaming intro text */}
