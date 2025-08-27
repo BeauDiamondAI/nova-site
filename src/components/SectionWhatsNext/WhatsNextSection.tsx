@@ -10,6 +10,7 @@ const WhatsNextSection: React.FC = () => {
   const [currentParagraph, setCurrentParagraph] = useState(0);
   const [isTextComplete, setIsTextComplete] = useState(false);
   const [isTextCollapsed, setIsTextCollapsed] = useState(false);
+  const [hasAutoCollapsed, setHasAutoCollapsed] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
 
   const paragraphs = [
@@ -46,10 +47,13 @@ const WhatsNextSection: React.FC = () => {
     const streamText = () => {
       if (currentParagraph >= paragraphs.length) {
         setIsTextComplete(true);
-        // Auto-collapse after 7 seconds
-        setTimeout(() => {
-          setIsTextCollapsed(true);
-        }, 7000);
+        // Auto-collapse after 7 seconds, but only on the initial completion
+        if (!hasAutoCollapsed) {
+          setTimeout(() => {
+            setIsTextCollapsed(true);
+            setHasAutoCollapsed(true);
+          }, 7000);
+        }
         return;
       }
 

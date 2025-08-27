@@ -43,7 +43,7 @@ export const ProductOrb: React.FC<ProductOrbProps> = ({
             transition={{ delay: 0.6 + index * 0.1, duration: 0.2 }}
             style={{
               position: "absolute",
-              left: position.x - 80, // Adjusted to center better above orb
+              left: position.x - (product.title.length * 4), // Dynamic positioning based on text length
               top: position.y - 120,
               zIndex: 5,
               pointerEvents: 'none'
