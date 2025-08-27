@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ProductOrb } from "./ProductOrb";
 import { productsData } from "./productsData";
-import { CometTrail } from "./CometTrail";
 
 const WhatsNextSection: React.FC = () => {
   const [expandedProductId, setExpandedProductId] = useState<string | null>(null);
@@ -15,11 +14,11 @@ const WhatsNextSection: React.FC = () => {
   const sectionRef = useRef<HTMLElement>(null);
 
   const paragraphs = [
-    "The future of AI isn&apos;t more apps. It&apos;s the rise of a cognitive operating system — a new layer of intelligence that makes strategy, execution, and adaptation seamless across every domain.",
+    "The future of AI isn't more apps. It's the rise of a cognitive operating system — a new layer of intelligence that makes strategy, execution, and adaptation seamless across every domain.",
     "NovaThink is building this foundation:",
     "• Architectures that sustain memory, logic, and autonomy over time.",
     "• Stateful intelligence engines deployed inside secure enterprise environments.", 
-    "• Frameworks where AI doesn&apos;t just assist — it collaborates, learns, and builds alongside you.",
+    "• Frameworks where AI doesn't just assist — it collaborates, learns, and builds alongside you.",
     "The horizon is clear: cognition itself as deployable infrastructure. And NovaThink is already laying the groundwork."
   ];
 
@@ -333,9 +332,6 @@ const WhatsNextSection: React.FC = () => {
           zIndex: 2
         }} />
 
-        {/* Add Comet Trail Effect */}
-        <CometTrail isActive={showContent} />
-
         {/* Section Title */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -363,7 +359,7 @@ const WhatsNextSection: React.FC = () => {
             textShadow: '0 0 30px rgba(6, 182, 212, 0.3)',
             letterSpacing: '-0.02em'
           }}>
-            What&apos;s Next at NovaThink
+            What's Next at NovaThink
           </h2>
           
           {/* Streaming intro text */}
