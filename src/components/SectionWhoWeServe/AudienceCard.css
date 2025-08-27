@@ -354,10 +354,15 @@
 
 /* Add colored glow to icon background when card is active */
 .audience-card.active .card-icon {
-  background: var(--card-glow) !important;
+  background: radial-gradient(
+    circle at center,
+    var(--card-glow) 0%,
+    rgba(var(--card-rgb), 0.3) 40%,
+    rgba(255, 255, 255, 0.05) 100%
+  ) !important;
   box-shadow: 
-    0 0 20px var(--card-glow),
-    0 0 40px rgba(var(--card-rgb), 0.4),
+    0 0 15px var(--card-glow),
+    0 0 30px rgba(var(--card-rgb), 0.2),
     inset 0 1px 0 rgba(255, 255, 255, 0.2);
   border-color: var(--card-accent);
   transform: scale(1.05);
