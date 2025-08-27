@@ -80,9 +80,6 @@ export const MouseHalo: React.FC<MouseHaloProps> = ({
   const validElements = targetElements.filter(element => element !== null);
   if (!isActive || !isHovering || validElements.length === 0) return null;
 
-  const element = validElements[0]!;
-  const rect = element.getBoundingClientRect();
-
   return (
     <div
       ref={haloRef}
