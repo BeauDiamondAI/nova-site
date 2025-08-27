@@ -1,3 +1,302 @@
+/* AudienceCard.css - Elite CBF v1.0 Implementation */
+
+.audience-card {
+  position: relative;
+  flex: 0 0 250px;
+  height: 240px;
+  max-height: 240px; /* FIXED: Set initial max-height for smooth expansion */
+  padding: 2rem 1.5rem;
+  border-radius: 20px;
+  cursor: pointer;
+  scroll-snap-align: center;
+  
+  /* CBF: Linear's Elite Glassmorphism */
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(24px) saturate(150%); /* CBF: Enhanced from Linear */
+  -webkit-backdrop-filter: blur(24px) saturate(150%);
+  
+  /* Dynamic border - starts subtle */
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  
+  /* CBF: Multi-layer shadow system (Apple + Linear technique) */
+  box-shadow: 
+    0 0 0 1px rgba(255, 255, 255, 0.05),
+    0 10px 40px -10px var(--card-glow, rgba(6, 182, 212, 0.2)),
+    0 20px 25px -5px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  
+  /* CBF: Performance optimizations (Stripe's approach) */
+  transform: translateZ(0);
+  contain: layout style paint;
+  will-change: transform; /* Only when needed */
+  
+  /* FIXED: Smooth transitions for expansion */
+  transition: 
+    max-height 0.7s cubic-bezier(0.4, 0, 0.2, 1), /* Smooth expansion */
+    border-color 0.3s ease,
+    background 0.3s ease,
+    box-shadow 0.3s ease;
+  overflow: hidden;
+}
+
+/* CBF: Active state with smooth expansion (Linear + Vercel technique) */
+.audience-card.active {
+  max-height: 420px; /* FIXED: Use max-height for smooth expansion */
+  min-height: 340px;
+  background: rgba(255, 255, 255, 0.08);
+  
+  /* FIXED: Restore neon border from old version */
+  border-color: var(--card-accent);
+  
+  /* FIXED: Enhanced shadow without overwhelming glow */
+  box-shadow: 
+    0 0 0 2px var(--card-accent), /* Neon border effect */
+    0 0 40px var(--card-glow), /* Main glow */
+    0 30px 40px -10px rgba(0, 0, 0, 0.5), /* Depth shadow */
+    inset 0 1px 0 rgba(255, 255, 255, 0.2); /* Inner highlight */
+}
+
+/* FIXED: Intense glow state with smoother transition */
+.audience-card.intense-glow {
+  box-shadow: 
+    0 0 0 2px var(--card-accent),
+    0 0 80px var(--card-glow), /* Intense glow for brief moment */
+    0 30px 40px -10px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  
+  /* FIXED: Smooth CSS transition for outer glow */
+  transition: box-shadow 4s ease-out; /* 4 second gradual dim */
+}
+
+/* Diagonal Shimmer - Replaces grain texture */
+.glass-shimmer-subtle {
+  position: absolute;
+  inset: 0;
+  border-radius: 20px;
+  overflow: hidden;
+  z-index: 1;
+  pointer-events: none;
+  /* FIXED: Add mask to prevent overflow artifacts */
+  -webkit-mask: linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0);
+}
+
+.glass-shimmer-subtle::before {
+  content: '';
+  position: absolute;
+  top: -50%; /* FIXED: Reduced from -100% to prevent edge artifacts */
+  left: -50%; /* FIXED: Reduced from -100% */
+  width: 200%; /* FIXED: Reduced from 300% */
+  height: 200%; /* FIXED: Reduced from 300% */
+  background: linear-gradient(
+    135deg,
+    transparent 40%,
+    rgba(255, 255, 255, 0.02) 48%, /* FIXED: Reduced opacity */
+    rgba(255, 255, 255, 0.04) 50%, /* FIXED: Reduced opacity */
+    rgba(255, 255, 255, 0.02) 52%, /* FIXED: Reduced opacity */
+    transparent 60%
+  );
+  animation: shimmerDiagonal 6s infinite linear; /* FIXED: Slower animation */
+  animation-delay: 0.3s; /* FIXED: Much shorter delay - appears quickly */
+}
+
+@keyframes shimmerDiagonal {
+  0% {
+    transform: translateX(-100%) translateY(-100%) rotate(45deg);
+  }
+  100% {
+    transform: translateX(100%) translateY(100%) rotate(45deg);
+  }
+}
+
+/* REMOVED: Problematic border-glow-animated that caused white diagonal glow */
+
+/* CBF: Glow Layer (Vercel's radial approach) */
+.card-glow-layer {
+  position: absolute;
+  inset: -4px; /* Slightly larger for better effect */
+  background: radial-gradient(
+    circle at center,
+    var(--card-glow),
+    transparent 60% /* Tighter falloff */
+  );
+  border-radius: 24px; /* Match card radius + inset */
+  opacity: 0;
+  z-index: -1;
+  transition: opacity 0.3s ease;
+}
+
+/* Hover glow (separate from active glow) */
+.audience-card:hover .card-glow-layer {
+  opacity: 0.25;
+}
+
+/* Content Container - CBF: Flexible height management */
+.card-content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  height: 100%;
+  min-height: 160px; /* Ensure consistent base height */
+}
+
+/* CBF: Icon with micro-interaction (Apple's approach) */
+.card-icon {
+  font-size: 2.5rem;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+}
+
+/* CBF: Title with optimized typography (Stripe's approach) */
+.card-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+  margin: 0;
+  text-shadow: 0 0 20px rgba(0, 0, 0, 0.5); /* CBF: Text clarity */
+}
+
+/* CBF: Description with smooth reveal */
+.card-description {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.85);
+  margin: 0;
+  overflow: hidden;
+  text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+/* CBF: Hover beam (Rauno's signature effect) */
+.hover-beam {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--card-accent),
+    transparent
+  );
+  transform-origin: left;
+  z-index: 3;
+  border-radius: 0 0 20px 20px;
+}
+
+/* CBF: Elite hover states (Linear + Vercel combined) */
+.audience-card:hover {
+  transform: translateY(-8px) translateZ(0);
+  border-color: rgba(255, 255, 255, 0.15);
+  will-change: transform; /* Performance hint */
+}
+
+.audience-card:hover .card-icon {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: var(--card-accent);
+  transform: scale(1.05);
+}
+
+/* CBF: Browser fallbacks (Stripe's approach) */
+@supports not (backdrop-filter: blur(1px)) {
+  .audience-card {
+    background: linear-gradient(
+      135deg,
+      rgba(17, 24, 39, 0.95),
+      rgba(17, 24, 39, 0.85)
+    );
+  }
+}
+
+/* CBF: Mobile optimizations */
+@media (max-width: 768px) {
+  .audience-card {
+    flex: 0 0 85%;
+    max-width: 320px;
+    height: 220px;
+    padding: 1.5rem;
+  }
+  
+  .audience-card.active {
+    min-height: 300px;
+    will-change: height; /* Mobile performance */
+  }
+  
+  .card-icon {
+    width: 50px;
+    height: 50px;
+    font-size: 2rem;
+  }
+  
+  .card-title {
+    font-size: 1.15rem;
+  }
+  
+  .card-description {
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+  
+  /* Reduce shimmer intensity on mobile for performance */
+  .glass-shimmer-subtle::before {
+    opacity: 0.7;
+  }
+}
+
+/* CBF: Accessibility (Microsoft Fluent approach) */
+@media (prefers-reduced-motion: reduce) {
+  .audience-card {
+    transition: none;
+  }
+  
+  .hover-beam,
+  .glass-shimmer-subtle {
+    display: none;
+  }
+}
+
+/* CBF: Performance mode for older devices */
+@media (max-resolution: 1.5dppx) {
+  .audience-card {
+    backdrop-filter: blur(12px); /* Reduced blur for performance */
+  }
+}
+
+/* CBF: High contrast mode support */
+@media (prefers-contrast: high) {
+  .audience-card {
+    border-color: var(--card-accent);
+  }
+  
+  .card-description {
+    color: rgba(255, 255, 255, 0.95);
+  }
+}
+
+/* CBF: Mobile optimizations - ADD THIS TO AudienceCard.css */
+@media (max-width: 768px) {
+  .audience-card:first-child {
+    margin-left: 3rem; /* Center first card */
+  }
+  
+  .audience-card:last-child {
+    margin-right: 3rem; /* Center last card */
+  }
+}
+
 /* Custom SVG Icon Styling - Add this to AudienceCard.css */
 .card-icon-svg {
   width: 70%; /* Good size within the container */
