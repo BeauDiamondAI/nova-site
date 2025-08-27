@@ -351,3 +351,19 @@
 .audience-card.active .card-icon-svg {
   filter: drop-shadow(0 0 4px var(--card-accent));
 }
+
+/* Add colored glow to icon background when card is active */
+.audience-card.active .card-icon {
+  background: var(--card-glow) !important;
+  box-shadow: 
+    0 0 20px var(--card-glow),
+    0 0 40px rgba(var(--card-rgb), 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  border-color: var(--card-accent);
+  transform: scale(1.05);
+}
+
+/* Enhanced SVG glow for active state */
+.audience-card.active .card-icon-svg {
+  filter: drop-shadow(0 0 8px var(--card-accent)) drop-shadow(0 0 16px var(--card-glow));
+}
