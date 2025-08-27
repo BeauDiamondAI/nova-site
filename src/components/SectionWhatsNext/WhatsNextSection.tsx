@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ProductOrb } from "./ProductOrb";
 import { productsData } from "./productsData";
+import { CometTrail } from "./CometTrail";
 
 const WhatsNextSection: React.FC = () => {
   const [expandedProductId, setExpandedProductId] = useState<string | null>(null);
@@ -124,146 +125,145 @@ const WhatsNextSection: React.FC = () => {
   };
 
   const renderStreamingText = () => {
-    if (isTextCollapsed) {
-      // Show first paragraph only with expand button
-      const visibleText = paragraphs[0] + "...";
-      
-      return (
-        <motion.div
-          initial={{ opacity: 1, y: 0 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
-        >
-          <p style={{
-            fontSize: 'clamp(1rem, 2vw, 1.2rem)',
-            color: 'rgba(255, 255, 255, 0.85)',
-            lineHeight: 1.6,
-            margin: '0 0 1rem 0',
-            fontWeight: 400
-          }}>
-            {visibleText}
-          </p>
-          <button
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              toggleTextExpansion();
-            }}
-            style={{
-              background: 'rgba(6, 182, 212, 0.2)',
-              border: '1px solid rgba(6, 182, 212, 0.5)',
-              borderRadius: '20px',
-              color: '#06B6D4',
-              fontSize: '0.9rem',
-              padding: '0.5rem 1rem',
-              cursor: 'pointer',
-              transition: 'all 0.3s ease',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '0.5rem',
-              margin: '0 auto'
-            }}
-            onMouseOver={(e) => {
-              e.currentTarget.style.background = 'rgba(6, 182, 212, 0.3)';
-              e.currentTarget.style.borderColor = '#06B6D4';
-            }}
-            onMouseOut={(e) => {
-              e.currentTarget.style.background = 'rgba(6, 182, 212, 0.2)';
-              e.currentTarget.style.borderColor = 'rgba(6, 182, 212, 0.5)';
-            }}
-          >
-            Read More 
-            <span style={{ transform: 'rotate(90deg)', fontSize: '0.8rem' }}>→</span>
-          </button>
-        </motion.div>
-      );
-    }
-
     return (
-      <motion.div
-        initial={{ opacity: 1, y: 0 }}
-        animate={{ opacity: 1, y: 0 }}
-        exit={{ opacity: 0, y: -20 }}
-        transition={{ duration: 1.2, ease: "easeInOut" }} // Smooth retraction animation
-      >
-        {displayedText.split('\n\n').filter(p => p.trim()).map((paragraph, index) => {
-          const isBulletPoint = paragraph.trim().startsWith('•');
-          const isSecondParagraph = index === 1;
-          
-          return (
-            <motion.p 
-              key={index} 
-              initial={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.8, delay: index * 0.1 }}
+      <AnimatePresence mode="wait">
+        {!isTextCollapsed ? (
+          <motion.div
+            key="expanded"
+            initial={{ opacity: 1, y: 0 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 1.2, ease: "easeInOut" }}
+          >
+            {displayedText.split('\n\n').filter(p => p.trim()).map((paragraph, index) => {
+              const isBulletPoint = paragraph.trim().startsWith('•');
+              const isSecondParagraph = index === 1;
+              
+              return (
+                <motion.p 
+                  key={index} 
+                  initial={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.8, delay: index * 0.1 }}
+                  style={{
+                    fontSize: isBulletPoint ? 'clamp(0.9rem, 1.7vw, 1.05rem)' : 
+                             isSecondParagraph ? 'clamp(1rem, 1.9vw, 1.15rem)' :
+                             index === 0 ? 'clamp(1rem, 2vw, 1.2rem)' : 'clamp(0.95rem, 1.8vw, 1.1rem)',
+                    color: isBulletPoint ? 'rgba(255, 255, 255, 0.8)' :
+                           isSecondParagraph ? 'rgba(255, 255, 255, 0.9)' :
+                           index === 0 ? 'rgba(255, 255, 255, 0.85)' : 'rgba(255, 255, 255, 0.75)',
+                    lineHeight: 1.6,
+                    margin: isBulletPoint ? '0.5rem 0' : 
+                           isSecondParagraph ? '1.5rem 0 0.5rem 0' :
+                           index === 0 ? '0 0 1rem 0' : 
+                           index === paragraphs.length - 1 ? '1rem 0 0 0' : '0.5rem 0',
+                    fontWeight: isSecondParagraph ? 600 : 400,
+                    paddingLeft: isBulletPoint ? '1rem' : 0
+                  }}
+                >
+                  {paragraph}
+                  {index === displayedText.split('\n\n').filter(p => p.trim()).length - 1 && 
+                   currentParagraph < paragraphs.length && (
+                    <span style={{
+                      display: 'inline-block',
+                      width: '2px',
+                      height: '1.2em',
+                      backgroundColor: '#06B6D4',
+                      marginLeft: '4px',
+                      animation: 'blink 1s infinite'
+                    }} />
+                  )}
+                </motion.p>
+              );
+            })}
+            {isTextComplete && (
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  toggleTextExpansion();
+                }}
+                style={{
+                  background: 'rgba(6, 182, 212, 0.2)',
+                  border: '1px solid rgba(6, 182, 212, 0.5)',
+                  borderRadius: '20px',
+                  color: '#06B6D4',
+                  fontSize: '0.9rem',
+                  padding: '0.5rem 1rem',
+                  cursor: 'pointer',
+                  transition: 'all 0.3s ease',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.5rem',
+                  margin: '1rem auto 0 auto',
+                  opacity: 0,
+                  animation: 'fadeIn 0.5s ease 1s forwards'
+                }}
+                onMouseOver={(e) => {
+                  e.currentTarget.style.background = 'rgba(6, 182, 212, 0.3)';
+                  e.currentTarget.style.borderColor = '#06B6D4';
+                }}
+                onMouseOut={(e) => {
+                  e.currentTarget.style.background = 'rgba(6, 182, 212, 0.2)';
+                  e.currentTarget.style.borderColor = 'rgba(6, 182, 212, 0.5)';
+                }}
+              >
+                Collapse 
+                <span style={{ transform: 'rotate(-90deg)', fontSize: '0.8rem' }}>→</span>
+              </button>
+            )}
+          </motion.div>
+        ) : (
+          <motion.div
+            key="collapsed"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+          >
+            <p style={{
+              fontSize: 'clamp(1rem, 2vw, 1.2rem)',
+              color: 'rgba(255, 255, 255, 0.85)',
+              lineHeight: 1.6,
+              margin: '0 0 1rem 0',
+              fontWeight: 400
+            }}>
+              {paragraphs[0] + "..."}
+            </p>
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                toggleTextExpansion();
+              }}
               style={{
-                fontSize: isBulletPoint ? 'clamp(0.9rem, 1.7vw, 1.05rem)' : 
-                         isSecondParagraph ? 'clamp(1rem, 1.9vw, 1.15rem)' :
-                         index === 0 ? 'clamp(1rem, 2vw, 1.2rem)' : 'clamp(0.95rem, 1.8vw, 1.1rem)',
-                color: isBulletPoint ? 'rgba(255, 255, 255, 0.8)' :
-                       isSecondParagraph ? 'rgba(255, 255, 255, 0.9)' :
-                       index === 0 ? 'rgba(255, 255, 255, 0.85)' : 'rgba(255, 255, 255, 0.75)',
-                lineHeight: 1.6,
-                margin: isBulletPoint ? '0.5rem 0' : 
-                       isSecondParagraph ? '1.5rem 0 0.5rem 0' :
-                       index === 0 ? '0 0 1rem 0' : 
-                       index === paragraphs.length - 1 ? '1rem 0 0 0' : '0.5rem 0',
-                fontWeight: isSecondParagraph ? 600 : 400,
-                paddingLeft: isBulletPoint ? '1rem' : 0
+                background: 'rgba(6, 182, 212, 0.2)',
+                border: '1px solid rgba(6, 182, 212, 0.5)',
+                borderRadius: '20px',
+                color: '#06B6D4',
+                fontSize: '0.9rem',
+                padding: '0.5rem 1rem',
+                cursor: 'pointer',
+                transition: 'all 0.3s ease',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '0.5rem',
+                margin: '0 auto'
+              }}
+              onMouseOver={(e) => {
+                e.currentTarget.style.background = 'rgba(6, 182, 212, 0.3)';
+                e.currentTarget.style.borderColor = '#06B6D4';
+              }}
+              onMouseOut={(e) => {
+                e.currentTarget.style.background = 'rgba(6, 182, 212, 0.2)';
+                e.currentTarget.style.borderColor = 'rgba(6, 182, 212, 0.5)';
               }}
             >
-              {paragraph}
-              {index === displayedText.split('\n\n').filter(p => p.trim()).length - 1 && 
-               currentParagraph < paragraphs.length && (
-                <span style={{
-                  display: 'inline-block',
-                  width: '2px',
-                  height: '1.2em',
-                  backgroundColor: '#06B6D4',
-                  marginLeft: '4px',
-                  animation: 'blink 1s infinite'
-                }} />
-              )}
-            </motion.p>
-          );
-        })}
-        {isTextComplete && (
-          <button
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              toggleTextExpansion();
-            }}
-            style={{
-              background: 'rgba(6, 182, 212, 0.2)',
-              border: '1px solid rgba(6, 182, 212, 0.5)',
-              borderRadius: '20px',
-              color: '#06B6D4',
-              fontSize: '0.9rem',
-              padding: '0.5rem 1rem',
-              cursor: 'pointer',
-              transition: 'all 0.3s ease',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '0.5rem',
-              margin: '1rem auto 0 auto',
-              opacity: 0,
-              animation: 'fadeIn 0.5s ease 1s forwards'
-            }}
-            onMouseOver={(e) => {
-              e.currentTarget.style.background = 'rgba(6, 182, 212, 0.3)';
-              e.currentTarget.style.borderColor = '#06B6D4';
-            }}
-            onMouseOut={(e) => {
-              e.currentTarget.style.background = 'rgba(6, 182, 212, 0.2)';
-              e.currentTarget.style.borderColor = 'rgba(6, 182, 212, 0.5)';
-            }}
-          >
-            Collapse 
-            <span style={{ transform: 'rotate(-90deg)', fontSize: '0.8rem' }}>→</span>
-          </button>
+              Read More 
+              <span style={{ transform: 'rotate(90deg)', fontSize: '0.8rem' }}>→</span>
+            </button>
+          </motion.div>
         )}
-      </motion.div>
+      </AnimatePresence>
     );
   };
 
@@ -331,6 +331,9 @@ const WhatsNextSection: React.FC = () => {
           background: 'linear-gradient(135deg, rgba(0, 0, 0, 0.4) 0%, rgba(15, 23, 42, 0.6) 50%, rgba(0, 0, 0, 0.5) 100%)',
           zIndex: 2
         }} />
+
+        {/* Add Comet Trail Effect */}        
+        <CometTrail isActive={showContent} />
 
         {/* Section Title */}
         <motion.div
