@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ProductOrb } from "./ProductOrb";
 import { productsData } from "./productsData";
+import { CometTrail } from "./CometTrail";
 
 const WhatsNextSection: React.FC = () => {
   const [expandedProductId, setExpandedProductId] = useState<string | null>(null);
@@ -325,6 +326,9 @@ const WhatsNextSection: React.FC = () => {
           background: 'linear-gradient(135deg, rgba(0, 0, 0, 0.4) 0%, rgba(15, 23, 42, 0.6) 50%, rgba(0, 0, 0, 0.5) 100%)',
           zIndex: 2
         }} />
+
+        {/* Add Comet Trail Effect */}
+        <CometTrail isActive={showContent} />
 
         {/* Section Title */}
         <motion.div

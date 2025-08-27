@@ -1,7 +1,6 @@
 import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ProductData } from "./productsData";
-import { MouseHalo } from "./MouseHalo";
 
 interface ProductOrbProps {
   product: ProductData;
@@ -206,11 +205,7 @@ export const ProductOrb: React.FC<ProductOrbProps> = ({
               zIndex: 50
             }}
           >
-            {/* Mouse Halo Effect - Now inside the card */}
-            <MouseHalo
-              isActive={true}
-              colorRgb={product.colorRgb}
-            />
+  
             {/* Card Header */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
