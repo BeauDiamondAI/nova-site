@@ -75,7 +75,7 @@ const WhatsNextSection: React.FC = () => {
           margin: '0 0 1rem 0',
           fontWeight: 400
         }}>
-          The future of AI isn't more apps. It's the emergence of a cognitive operating system - a new layer of intelligence that makes strategy, execution, and adaptation seamless across every domain.
+          The future of AI isn&apos;t more apps. It&apos;s the emergence of a cognitive operating system - a new layer of intelligence that makes strategy, execution, and adaptation seamless across every domain.
         </p>
         <p style={{
           fontSize: 'clamp(0.95rem, 1.8vw, 1.1rem)',
@@ -84,7 +84,7 @@ const WhatsNextSection: React.FC = () => {
           margin: 0,
           fontWeight: 400
         }}>
-          That's what NovaThink is building. Not tools, but the scaffolding for an entirely new relationship between human and synthetic intelligence.
+          That&apos;s what NovaThink is building. Not tools, but the scaffolding for an entirely new relationship between human and synthetic intelligence.
         </p>
       </motion.div>
     );
