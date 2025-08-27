@@ -46,10 +46,10 @@ const WhatsNextSection: React.FC = () => {
     const streamText = () => {
       if (currentParagraph >= paragraphs.length) {
         setIsTextComplete(true);
-        // Auto-collapse after 3 seconds
+        // Auto-collapse after 7 seconds
         setTimeout(() => {
           setIsTextCollapsed(true);
-        }, 3000);
+        }, 7000);
         return;
       }
 
@@ -125,7 +125,11 @@ const WhatsNextSection: React.FC = () => {
       const visibleText = paragraphs[0] + "...";
       
       return (
-        <div>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+        >
           <p style={{
             fontSize: 'clamp(1rem, 2vw, 1.2rem)',
             color: 'rgba(255, 255, 255, 0.85)',
@@ -167,12 +171,17 @@ const WhatsNextSection: React.FC = () => {
             Read More 
             <span style={{ transform: 'rotate(90deg)', fontSize: '0.8rem' }}>→</span>
           </button>
-        </div>
+        </motion.div>
       );
     }
 
     return (
-      <div>
+      <motion.div
+        initial={{ opacity: 1, y: 0 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: -20 }}
+        transition={{ duration: 0.6, ease: "easeInOut" }}
+      >
         {displayedText.split('\n\n').filter(p => p.trim()).map((paragraph, index) => {
           const isBulletPoint = paragraph.trim().startsWith('•');
           const isSecondParagraph = index === 1;
@@ -210,7 +219,11 @@ const WhatsNextSection: React.FC = () => {
         })}
         {isTextComplete && (
           <button
-            onClick={toggleTextExpansion}
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              toggleTextExpansion();
+            }}
             style={{
               background: 'rgba(6, 182, 212, 0.2)',
               border: '1px solid rgba(6, 182, 212, 0.5)',
@@ -240,7 +253,7 @@ const WhatsNextSection: React.FC = () => {
             <span style={{ transform: 'rotate(-90deg)', fontSize: '0.8rem' }}>→</span>
           </button>
         )}
-      </div>
+      </motion.div>
     );
   };
 
