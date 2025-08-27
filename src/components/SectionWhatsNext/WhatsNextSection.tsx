@@ -15,11 +15,11 @@ const WhatsNextSection: React.FC = () => {
   const sectionRef = useRef<HTMLElement>(null);
 
   const paragraphs = [
-    "The future of AI isn't more apps. It's the rise of a cognitive operating system — a new layer of intelligence that makes strategy, execution, and adaptation seamless across every domain.",
+    "The future of AI isn&apos;t more apps. It&apos;s the rise of a cognitive operating system — a new layer of intelligence that makes strategy, execution, and adaptation seamless across every domain.",
     "NovaThink is building this foundation:",
     "• Architectures that sustain memory, logic, and autonomy over time.",
     "• Stateful intelligence engines deployed inside secure enterprise environments.", 
-    "• Frameworks where AI doesn't just assist — it collaborates, learns, and builds alongside you.",
+    "• Frameworks where AI doesn&apos;t just assist — it collaborates, learns, and builds alongside you.",
     "The horizon is clear: cognition itself as deployable infrastructure. And NovaThink is already laying the groundwork."
   ];
 
@@ -48,12 +48,12 @@ const WhatsNextSection: React.FC = () => {
     const streamText = () => {
       if (currentParagraph >= paragraphs.length) {
         setIsTextComplete(true);
-        // Auto-collapse after 7 seconds, but only on the initial completion
+        // Auto-collapse after 4 seconds (reduced from 7), but only on the initial completion
         if (!hasAutoCollapsed) {
           setTimeout(() => {
             setIsTextCollapsed(true);
             setHasAutoCollapsed(true);
-          }, 7000);
+          }, 4000);
         }
         return;
       }
@@ -131,7 +131,7 @@ const WhatsNextSection: React.FC = () => {
       
       return (
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 1, y: 0 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: "easeOut" }}
         >
@@ -185,28 +185,34 @@ const WhatsNextSection: React.FC = () => {
         initial={{ opacity: 1, y: 0 }}
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: -20 }}
-        transition={{ duration: 0.6, ease: "easeInOut" }}
+        transition={{ duration: 1.2, ease: "easeInOut" }} // Smooth retraction animation
       >
         {displayedText.split('\n\n').filter(p => p.trim()).map((paragraph, index) => {
           const isBulletPoint = paragraph.trim().startsWith('•');
           const isSecondParagraph = index === 1;
           
           return (
-            <p key={index} style={{
-              fontSize: isBulletPoint ? 'clamp(0.9rem, 1.7vw, 1.05rem)' : 
-                       isSecondParagraph ? 'clamp(1rem, 1.9vw, 1.15rem)' :
-                       index === 0 ? 'clamp(1rem, 2vw, 1.2rem)' : 'clamp(0.95rem, 1.8vw, 1.1rem)',
-              color: isBulletPoint ? 'rgba(255, 255, 255, 0.8)' :
-                     isSecondParagraph ? 'rgba(255, 255, 255, 0.9)' :
-                     index === 0 ? 'rgba(255, 255, 255, 0.85)' : 'rgba(255, 255, 255, 0.75)',
-              lineHeight: 1.6,
-              margin: isBulletPoint ? '0.5rem 0' : 
-                     isSecondParagraph ? '1.5rem 0 0.5rem 0' :
-                     index === 0 ? '0 0 1rem 0' : 
-                     index === paragraphs.length - 1 ? '1rem 0 0 0' : '0.5rem 0',
-              fontWeight: isSecondParagraph ? 600 : 400,
-              paddingLeft: isBulletPoint ? '1rem' : 0
-            }}>
+            <motion.p 
+              key={index} 
+              initial={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.8, delay: index * 0.1 }}
+              style={{
+                fontSize: isBulletPoint ? 'clamp(0.9rem, 1.7vw, 1.05rem)' : 
+                         isSecondParagraph ? 'clamp(1rem, 1.9vw, 1.15rem)' :
+                         index === 0 ? 'clamp(1rem, 2vw, 1.2rem)' : 'clamp(0.95rem, 1.8vw, 1.1rem)',
+                color: isBulletPoint ? 'rgba(255, 255, 255, 0.8)' :
+                       isSecondParagraph ? 'rgba(255, 255, 255, 0.9)' :
+                       index === 0 ? 'rgba(255, 255, 255, 0.85)' : 'rgba(255, 255, 255, 0.75)',
+                lineHeight: 1.6,
+                margin: isBulletPoint ? '0.5rem 0' : 
+                       isSecondParagraph ? '1.5rem 0 0.5rem 0' :
+                       index === 0 ? '0 0 1rem 0' : 
+                       index === paragraphs.length - 1 ? '1rem 0 0 0' : '0.5rem 0',
+                fontWeight: isSecondParagraph ? 600 : 400,
+                paddingLeft: isBulletPoint ? '1rem' : 0
+              }}
+            >
               {paragraph}
               {index === displayedText.split('\n\n').filter(p => p.trim()).length - 1 && 
                currentParagraph < paragraphs.length && (
@@ -219,7 +225,7 @@ const WhatsNextSection: React.FC = () => {
                   animation: 'blink 1s infinite'
                 }} />
               )}
-            </p>
+            </motion.p>
           );
         })}
         {isTextComplete && (
@@ -350,7 +356,7 @@ const WhatsNextSection: React.FC = () => {
             fontWeight: 800,
             color: '#ffffff',
             margin: '0 0 1.5rem 0',
-            background: 'linear-gradient(135deg, #ffffff 0%, rgba(255, 255, 255, 0.8) 15%, rgba(6, 182, 212, 0.9) 50%, rgba(255, 255, 255, 0.8) 85%, #ffffff 100%)', // More pronounced white on sides
+            background: 'linear-gradient(135deg, #ffffff 0%, #ffffff 25%, rgba(6, 182, 212, 0.8) 50%, #ffffff 75%, #ffffff 100%)', // More white on sides, less blue spread
             backgroundClip: 'text',
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent',
@@ -371,7 +377,9 @@ const WhatsNextSection: React.FC = () => {
               padding: '0 2rem'
             }}
           >
-            {renderStreamingText()}
+            <AnimatePresence mode="wait">
+              {renderStreamingText()}
+            </AnimatePresence>
           </motion.div>
         </motion.div>
 
