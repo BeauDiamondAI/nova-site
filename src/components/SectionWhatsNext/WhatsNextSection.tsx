@@ -14,12 +14,12 @@ const WhatsNextSection: React.FC = () => {
   const sectionRef = useRef<HTMLElement>(null);
 
   const paragraphs = [
-    "The future of AI isn't more apps. It's the rise of a cognitive operating system — a new layer of intelligence that makes strategy, execution, and adaptation seamless across every domain.",
-    "NovaThink is building this foundation:",
-    "• Architectures that sustain memory, logic, and autonomy over time.",
-    "• Stateful intelligence engines deployed inside secure enterprise environments.", 
-    "• Frameworks where AI doesn't just assist — it collaborates, learns, and builds alongside you.",
-    "The horizon is clear: cognition itself as deployable infrastructure. And NovaThink is already laying the groundwork."
+    `The future of AI isn't more apps. It's the rise of a cognitive operating system — a new layer of intelligence that makes strategy, execution, and adaptation seamless across every domain.`,
+    `NovaThink is building this foundation:`,
+    `• Architectures that sustain memory, logic, and autonomy over time.`,
+    `• Stateful intelligence engines deployed inside secure enterprise environments.`, 
+    `• Frameworks where AI doesn't just assist — it collaborates, learns, and builds alongside you.`,
+    `The horizon is clear: cognition itself as deployable infrastructure. And NovaThink is already laying the groundwork.`
   ];
 
   // Simple intersection observer to trigger content
