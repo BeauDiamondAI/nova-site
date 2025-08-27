@@ -1,5 +1,5 @@
 import React from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { ProductData } from "./productsData";
 
 interface ProductOrbProps {
@@ -19,165 +19,188 @@ export const ProductOrb: React.FC<ProductOrbProps> = ({
   onClick,
   index
 }) => {
+  // Clean spring physics from CBF v1.1
+  const springConfig = {
+    type: "spring" as const,
+    stiffness: 300,
+    damping: 25,
+    duration: 0.5
+  };
+
   return (
     <>
-      {/* Simple Floating Label - Fixed positioning */}
-      {!hasExpandedCard && (
-        <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          exit={{ opacity: 0, scale: 0.8 }}
-          transition={{ delay: 0.6 + index * 0.1, duration: 0.2 }}
-          style={{
-            position: "absolute",
-            left: position.x - 60,
-            top: position.y - 120,
-            zIndex: 5,
-            pointerEvents: 'none'
-          }}
-        >
-          <div style={{
-            background: 'rgba(17, 24, 39, 0.9)',
-            backdropFilter: 'blur(12px)',
-            border: '1px solid rgba(255, 255, 255, 0.1)',
-            borderRadius: 8,
-            padding: '0.5rem 1rem',
-            fontSize: '0.875rem',
-            fontWeight: 600,
-            color: 'rgba(255, 255, 255, 0.9)',
-            textAlign: 'center',
-            whiteSpace: 'nowrap',
-            boxShadow: `0 4px 12px rgba(0, 0, 0, 0.3), 0 0 20px rgba(${product.colorRgb}, 0.2)`
-          }}>
-            {product.title}
-          </div>
-        </motion.div>
-      )}
-
-      {/* Main morphing element - handles both orb and card states */}
-      <motion.div
-        onClick={onClick}
-        initial={
-          isExpanded
-            ? {
-                // Start as small box at orb position
-                width: 120,
-                height: 120,
-                borderRadius: 16,
-                left: position.x - 60,
-                top: position.y - 60,
-                opacity: 1,
-                scale: 1
-              }
-            : {
-                // Start as orb
-                opacity: 0,
-                scale: 0
-              }
-        }
-        animate={
-          isExpanded
-            ? {
-                // Expand to full card at center
-                width: 400,
-                height: 320,
-                borderRadius: 16,
+      {/* Simple Floating Label - Only show when no cards are expanded */}
+      <AnimatePresence>
+        {!hasExpandedCard && (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.8, transition: { duration: 0.1 } }}
+            transition={{ delay: 0.6 + index * 0.1, duration: 0.2 }}
+            style={{
+              position: "absolute",
+              left: position.x - 60,
+              top: position.y - 120,
+              zIndex: 5,
+              pointerEvents: 'none'
+            }}
+          >
+            <div style={{
+              background: 'rgba(17, 24, 39, 0.9)',
+              backdropFilter: 'blur(12px)',
+              border: '1px solid rgba(255, 255, 255, 0.1)',
+              borderRadius: 8,
+              padding: '0.5rem 1rem',
+              fontSize: '0.875rem',
+              fontWeight: 600,
+              color: 'rgba(255, 255, 255, 0.9)',
+              textAlign: 'center',
+              whiteSpace: 'nowrap',
+              boxShadow: `0 4px 12px rgba(0, 0, 0, 0.3), 0 0 20px rgba(${product.colorRgb}, 0.2)`,
+              position: 'relative'
+            }}>
+              {product.title}
+              {/* Connecting line */}
+              <div style={{
+                content: '""',
+                position: 'absolute',
+                top: '100%',
                 left: '50%',
-                top: '50%',
-                x: '-50%',
-                y: '-50%',
-                opacity: 1,
-                scale: 1
+                transform: 'translateX(-50%)',
+                width: 2,
+                height: 20,
+                background: `linear-gradient(to bottom, rgba(${product.colorRgb}, 0.6), transparent)`
+              }} />
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Orb - Only show when not expanded */}
+      <AnimatePresence>
+        {!isExpanded && (
+          <motion.div
+            onClick={onClick}
+            initial={{ opacity: 0, scale: 0 }}
+            animate={{ 
+              opacity: 1, 
+              scale: 1,
+              transition: { 
+                delay: index * 0.1,
+                ...springConfig
               }
-            : {
-                // Show as orb
-                opacity: 1,
-                scale: 1
-              }
-        }
-        exit={{
-          opacity: 0,
-          scale: 0.8
-        }}
-        transition={{
-          type: "spring",
-          stiffness: 300,
-          damping: 25,
-          duration: 0.6
-        }}
-        style={{
-          position: isExpanded ? "fixed" : "absolute",
-          left: isExpanded ? undefined : position.x - 40,
-          top: isExpanded ? undefined : position.y - 40,
-          width: isExpanded ? undefined : 80,
-          height: isExpanded ? undefined : 80,
-          borderRadius: isExpanded ? 16 : "50%",
-          background: isExpanded 
-            ? 'linear-gradient(135deg, rgba(17, 24, 39, 0.95) 0%, rgba(30, 41, 59, 0.9) 100%)'
-            : `radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.4), ${product.color} 40%, #1f2937 85%, #0f172a 100%)`,
-          backdropFilter: isExpanded ? 'blur(40px) saturate(180%)' : undefined,
-          border: isExpanded ? `1px solid ${product.accentColor}` : undefined,
-          boxShadow: isExpanded
-            ? `
-                0 0 0 1px rgba(255, 255, 255, 0.05),
-                0 0 60px rgba(${product.colorRgb}, 0.4),
-                0 20px 40px rgba(0, 0, 0, 0.5),
-                inset 0 1px 0 rgba(255, 255, 255, 0.15)
-              `
-            : `
+            }}
+            exit={{ opacity: 0, scale: 0, transition: { duration: 0.1 } }}
+            whileHover={{ scale: 1.1, y: -8 }}
+            whileTap={{ scale: 0.95 }}
+            style={{
+              position: "absolute",
+              left: position.x - 40,
+              top: position.y - 40,
+              width: 80,
+              height: 80,
+              borderRadius: "50%",
+              background: `radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.4), ${product.color} 40%, #1f2937 85%, #0f172a 100%)`,
+              boxShadow: `
                 inset 0 1px 3px rgba(255, 255, 255, 0.6),
                 inset 0 -1px 3px rgba(0, 0, 0, 0.4),
                 0 0 20px rgba(${product.colorRgb}, 0.5),
                 0 8px 20px rgba(0, 0, 0, 0.3),
                 0 0 2px rgba(255, 255, 255, 0.2)
               `,
-          cursor: "pointer",
-          zIndex: isExpanded ? 50 : 10,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          padding: isExpanded ? '2rem' : 0,
-          flexDirection: isExpanded ? 'column' : undefined,
-          overflow: isExpanded ? 'hidden' : 'visible'
-        }}
-        whileHover={!isExpanded ? { scale: 1.1, y: -8 } : {}}
-        whileTap={{ scale: 0.95 }}
-      >
-        {/* Orb inner highlight - only show when not expanded */}
-        {!isExpanded && (
-          <motion.div 
-            style={{
-              width: '30%',
-              height: '30%',
-              borderRadius: '50%',
-              background: 'radial-gradient(circle, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0.2) 50%, transparent 70%)',
-              position: 'absolute',
-              top: '15%',
-              left: '25%'
+              cursor: "pointer",
+              zIndex: 10,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center'
             }}
-            animate={{
-              y: [0, -4, 0],
-              transition: {
-                duration: 3 + index * 0.3,
-                repeat: Infinity,
-                ease: "easeInOut"
-              }
-            }}
-          />
+          >
+            {/* Inner highlight with floating animation */}
+            <motion.div 
+              style={{
+                position: 'absolute',
+                top: '15%',
+                left: '25%',
+                width: '30%',
+                height: '30%',
+                borderRadius: '50%',
+                background: 'radial-gradient(circle, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0.2) 50%, transparent 70%)'
+              }}
+              animate={{
+                y: [0, -4, 0],
+                transition: {
+                  duration: 3 + index * 0.3,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                }
+              }}
+            />
+          </motion.div>
         )}
+      </AnimatePresence>
 
-        {/* Card Content - only show when expanded */}
+      {/* Expanded Card with Smooth Morphing */}
+      <AnimatePresence>
         {isExpanded && (
-          <>
+          <motion.div
+            initial={{ 
+              width: 120,
+              height: 120,
+              borderRadius: 16,
+              left: position.x - 60,
+              top: position.y - 60,
+              opacity: 1
+            }}
+            animate={{ 
+              width: 400,
+              height: 320,
+              borderRadius: 16,
+              left: '50%',
+              top: '50%',
+              x: '-50%',
+              y: '-50%',
+              opacity: 1
+            }}
+            exit={{ 
+              width: 120,
+              height: 120,
+              borderRadius: 16,
+              left: position.x - 60,
+              top: position.y - 60,
+              x: 0,
+              y: 0,
+              opacity: 0
+            }}
+            transition={{
+              type: "spring",
+              stiffness: 300,
+              damping: 25,
+              duration: 0.6
+            }}
+            style={{
+              position: "fixed",
+              background: 'linear-gradient(135deg, rgba(17, 24, 39, 0.95) 0%, rgba(30, 41, 59, 0.9) 100%)',
+              backdropFilter: 'blur(40px) saturate(180%)',
+              border: `1px solid ${product.accentColor}`,
+              boxShadow: `
+                0 0 0 1px rgba(255, 255, 255, 0.05),
+                0 0 60px rgba(${product.colorRgb}, 0.4),
+                0 20px 40px rgba(0, 0, 0, 0.5),
+                inset 0 1px 0 rgba(255, 255, 255, 0.15)
+              `,
+              padding: '2rem',
+              display: 'flex',
+              flexDirection: 'column',
+              overflow: 'hidden',
+              zIndex: 50
+            }}
+          >
             {/* Card Header */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 }}
-              style={{ 
-                marginBottom: '1.5rem',
-                width: '100%'
-              }}
+              style={{ marginBottom: '1.5rem' }}
             >
               <h3 style={{
                 fontSize: '1.5rem',
@@ -206,8 +229,7 @@ export const ProductOrb: React.FC<ProductOrbProps> = ({
               transition={{ delay: 0.4 }}
               style={{
                 flex: 1,
-                overflowY: 'auto',
-                width: '100%'
+                overflowY: 'auto'
               }}
             >
               <div
@@ -247,7 +269,8 @@ export const ProductOrb: React.FC<ProductOrbProps> = ({
                 cursor: 'pointer',
                 display: 'flex',
                 alignItems: 'center',
-                justifyContent: 'center'
+                justifyContent: 'center',
+                transition: 'all 0.2s ease'
               }}
               whileHover={{
                 background: 'rgba(255, 255, 255, 0.2)',
@@ -283,9 +306,9 @@ export const ProductOrb: React.FC<ProductOrbProps> = ({
                 Flagship
               </motion.div>
             )}
-          </>
+          </motion.div>
         )}
-      </motion.div>
+      </AnimatePresence>
     </>
   );
 };
