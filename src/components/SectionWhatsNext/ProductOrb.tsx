@@ -41,7 +41,6 @@ export const ProductOrb: React.FC<ProductOrbProps> = ({
       <MouseHalo
         targetElements={[expandedCardRef.current]}
         isActive={isExpanded}
-        color={product.color}
         colorRgb={product.colorRgb}
       />
       {/* Simple Floating Label - Only show when no cards are expanded */}

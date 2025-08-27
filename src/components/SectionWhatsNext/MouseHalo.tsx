@@ -3,14 +3,12 @@ import React, { useState, useEffect, useRef } from "react";
 interface MouseHaloProps {
   targetElements: (HTMLDivElement | null)[];
   isActive: boolean;
-  color: string;
   colorRgb: string;
 }
 
 export const MouseHalo: React.FC<MouseHaloProps> = ({ 
   targetElements, 
   isActive, 
-  color, 
   colorRgb 
 }) => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
