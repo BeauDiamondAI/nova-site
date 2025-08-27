@@ -76,15 +76,14 @@ export const MouseHalo: React.FC<MouseHaloProps> = ({
     };
   }, [targetElements, isActive]);
 
-  // Don't render if not active or no valid target elements
-  const validElements = targetElements.filter(element => element !== null);
-  if (!isActive || !isHovering || validElements.length === 0) return null;
+  // Don't render if not active or hovering
+  if (!isActive || !isHovering) return null;
 
   return (
     <div
       ref={haloRef}
       style={{
-        position: 'absolute', // Changed from 'fixed' to 'absolute'
+        position: 'absolute',
         left: mousePosition.x - 75,
         top: mousePosition.y - 75,
         width: '150px',
@@ -92,7 +91,7 @@ export const MouseHalo: React.FC<MouseHaloProps> = ({
         borderRadius: '50%',
         background: `radial-gradient(circle, rgba(${colorRgb}, 0.25) 0%, rgba(${colorRgb}, 0.15) 40%, rgba(${colorRgb}, 0.05) 70%, transparent 100%)`,
         pointerEvents: 'none',
-        zIndex: 1001, // Higher than card zIndex
+        zIndex: 1001,
         transition: 'all 0.1s ease',
         opacity: 1,
         mixBlendMode: 'screen'
