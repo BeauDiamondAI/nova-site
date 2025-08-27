@@ -29,7 +29,7 @@ export const ProductOrb: React.FC<ProductOrbProps> = ({
 
   return (
     <>
-      {/* Main morphing container */}
+      {/* Main morphing container - simplified */}
       <motion.div
         layoutId={`product-${product.id}`}
         onClick={onClick}
@@ -39,7 +39,10 @@ export const ProductOrb: React.FC<ProductOrbProps> = ({
           top: isExpanded ? "50%" : position.y - 40,
           transform: isExpanded ? "translate(-50%, -50%)" : "translate(0, 0)",
           cursor: "pointer",
-          zIndex: isExpanded ? 50 : 10
+          zIndex: isExpanded ? 50 : 10,
+          width: isExpanded ? 400 : 80,
+          height: isExpanded ? 320 : 80,
+          borderRadius: isExpanded ? 16 : "50%"
         }}
         initial={{ opacity: 0, scale: 0 }}
         animate={{ 
@@ -52,13 +55,15 @@ export const ProductOrb: React.FC<ProductOrbProps> = ({
         }}
         whileHover={!isExpanded ? { scale: 1.1, y: -8 } : {}}
         whileTap={{ scale: 0.95 }}
+        layout
+        transition={springConfig}
       >
         {/* Orb State */}
         {!isExpanded && (
-          <motion.div
+          <div
             style={{
-              width: 80,
-              height: 80,
+              width: "100%",
+              height: "100%",
               borderRadius: "50%",
               background: `radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.4), ${product.color} 40%, #1f2937 85%, #0f172a 100%)`,
               boxShadow: `
@@ -70,26 +75,28 @@ export const ProductOrb: React.FC<ProductOrbProps> = ({
               `,
               position: 'relative'
             }}
-            animate={{
-              y: [0, -4, 0],
-              transition: {
-                duration: 3 + index * 0.3,
-                repeat: Infinity,
-                ease: "easeInOut"
-              }
-            }}
           >
             {/* Inner highlight */}
-            <div style={{
-              position: 'absolute',
-              top: '15%',
-              left: '25%',
-              width: '30%',
-              height: '30%',
-              borderRadius: '50%',
-              background: 'radial-gradient(circle, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0.2) 50%, transparent 70%)'
-            }} />
-          </motion.div>
+            <motion.div 
+              style={{
+                position: 'absolute',
+                top: '15%',
+                left: '25%',
+                width: '30%',
+                height: '30%',
+                borderRadius: '50%',
+                background: 'radial-gradient(circle, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0.2) 50%, transparent 70%)'
+              }}
+              animate={{
+                y: [0, -4, 0],
+                transition: {
+                  duration: 3 + index * 0.3,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                }
+              }}
+            />
+          </div>
         )}
 
         {/* Expanded Card State */}
