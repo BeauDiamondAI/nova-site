@@ -136,7 +136,11 @@ const WhatsNextSection: React.FC = () => {
             {visibleText}
           </p>
           <button
-            onClick={toggleTextExpansion}
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              toggleTextExpansion();
+            }}
             style={{
               background: 'rgba(6, 182, 212, 0.2)',
               border: '1px solid rgba(6, 182, 212, 0.5)',
