@@ -57,10 +57,6 @@ const WhatsNextSection: React.FC = () => {
     setExpandedProductId(expandedProductId === productId ? null : productId);
   };
 
-  const toggleTextExpansion = () => {
-    // Removed - not needed
-  };
-
   const renderText = () => {
     return (
       <motion.div
