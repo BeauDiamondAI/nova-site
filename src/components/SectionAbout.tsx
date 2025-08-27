@@ -72,11 +72,11 @@ export default function SectionAbout() {
         </p>
 
         <p className="mb-6 text-base" style={{ lineHeight: `${lineHeight}px` }}>
-          Where today's large language models offer raw capacity, NovaThink provides the <em>meta-layer</em> that unlocks their full potential — transforming reactive tools into <strong>adaptive, persistent intelligences</strong> capable of reasoning, remembering, and orchestrating action at scale.
+          Where today&apos;s large language models offer raw capacity, NovaThink provides the <em>meta-layer</em> that unlocks their full potential — transforming reactive tools into <strong>adaptive, persistent intelligences</strong> capable of reasoning, remembering, and orchestrating action at scale.
         </p>
 
         <p className="mb-6 text-base" style={{ lineHeight: `${lineHeight}px` }}>
-          Today's LLMs are not bottlenecked by training data or compute. They are bottlenecked by lack of structure — missing the <strong>multi-step reasoning frameworks</strong> and <strong>cognitive persistence</strong> required to sustain real-world complexity in domains like strategy, research, policy, defense, and executive operations.
+          Today&apos;s LLMs are not bottlenecked by training data or compute. They are bottlenecked by lack of structure — missing the <strong>multi-step reasoning frameworks</strong> and <strong>cognitive persistence</strong> required to sustain real-world complexity in domains like strategy, research, policy, defense, and executive operations.
         </p>
 
         <p className="mb-6 text-base" style={{ lineHeight: `${lineHeight}px` }}>
@@ -94,7 +94,7 @@ export default function SectionAbout() {
         </ul>
 
         <p className="mb-6 text-base" style={{ lineHeight: `${lineHeight}px` }}>
-          We're not another AI product. We're building the <strong>cognitive OS</strong> — the intelligence amplification layer that will define how humans and AI collaborate across the next decade.
+          We&apos;re not another AI product. We&apos;re building the <strong>cognitive OS</strong> — the intelligence amplification layer that will define how humans and AI collaborate across the next decade.
         </p>
       </motion.div>
 
