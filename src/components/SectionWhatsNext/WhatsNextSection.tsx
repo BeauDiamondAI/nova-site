@@ -104,6 +104,12 @@ const WhatsNextSection: React.FC = () => {
 
   const toggleTextExpansion = () => {
     setIsTextCollapsed(!isTextCollapsed);
+    // Reset text states when expanding
+    if (isTextCollapsed) {
+      setDisplayedText(paragraphs.join('\n\n'));
+      setCurrentParagraph(paragraphs.length);
+      setIsTextComplete(true);
+    }
   };
 
   const renderStreamingText = () => {
