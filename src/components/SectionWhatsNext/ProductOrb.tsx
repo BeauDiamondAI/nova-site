@@ -6,6 +6,7 @@ interface ProductOrbProps {
   product: ProductData;
   position: { x: number; y: number };
   isExpanded: boolean;
+  hasExpandedCard: boolean;
   onClick: () => void;
   index: number;
 }
@@ -14,6 +15,7 @@ export const ProductOrb: React.FC<ProductOrbProps> = ({
   product,
   position,
   isExpanded,
+  hasExpandedCard,
   onClick,
   index
 }) => {
@@ -243,9 +245,9 @@ export const ProductOrb: React.FC<ProductOrbProps> = ({
         </AnimatePresence>
       </motion.div>
 
-      {/* Floating Label - Only show when not expanded and no other orb is expanded */}
+      {/* Floating Label - Hide when any card is expanded */}
       <AnimatePresence>
-        {!isExpanded && (
+        {!isExpanded && !hasExpandedCard && (
           <motion.div
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}

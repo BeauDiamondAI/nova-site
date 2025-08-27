@@ -26,7 +26,7 @@ const WhatsNextSection: React.FC = () => {
     return () => observer.disconnect();
   }, [showContent]);
 
-  // Orbital arc positioning - downward curve like a satellite constellation
+  // Upward V-shaped arc - curves up and out from center
   const getOrbPosition = (index: number) => {
     const totalOrbs = productsData.length;
     const screenWidth = typeof window !== 'undefined' ? window.innerWidth : 1200;
@@ -35,17 +35,17 @@ const WhatsNextSection: React.FC = () => {
     const centerX = screenWidth / 2;
     const centerY = screenHeight / 2;
     
-    // Create an arc that curves downward at the edges
-    const arcWidth = Math.min(screenWidth * 0.85, 1400);
-    const arcHeight = 80; // How much the arc curves downward
-    const baseY = centerY - 20; // Base position above center
+    // Create a V-shape that curves upward from center
+    const arcWidth = Math.min(screenWidth * 0.8, 1300);
+    const arcHeight = 100; // How much the ends lift up
+    const baseY = centerY + 80; // Start lower to make room for text above
     
     const progress = index / (totalOrbs - 1); // 0 to 1
     const x = centerX - arcWidth / 2 + progress * arcWidth;
     
-    // Create downward parabolic curve (upside-down U)
-    const normalizedProgress = (progress - 0.5) * 2; // -1 to 1 from center
-    const y = baseY + arcHeight * (normalizedProgress * normalizedProgress);
+    // V-shape: distance from center determines height
+    const distanceFromCenter = Math.abs(progress - 0.5) * 2; // 0 at center, 1 at edges
+    const y = baseY - arcHeight * distanceFromCenter;
     
     return { x, y };
   };
@@ -185,6 +185,7 @@ const WhatsNextSection: React.FC = () => {
                   product={product}
                   position={position}
                   isExpanded={expandedProductId === product.id}
+                  hasExpandedCard={expandedProductId !== null}
                   onClick={() => handleOrbClick(product.id)}
                   index={index}
                 />
