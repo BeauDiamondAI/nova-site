@@ -352,3 +352,23 @@
   filter: drop-shadow(0 0 4px var(--card-accent));
 }
 
+/* Icon box glow when card is active/expanded */
+.audience-card.active .card-icon {
+  position: relative;
+  overflow: visible;
+}
+
+.audience-card.active .card-icon::after {
+  content: '';
+  position: absolute;
+  inset: -10px;
+  border-radius: 12px;
+  background: radial-gradient(
+    circle at center,
+    var(--card-accent) 0%,
+    transparent 60%
+  );
+  opacity: 0.4;
+  z-index: -1;
+  pointer-events: none;
+}
