@@ -90,7 +90,7 @@ const WhatsNextSection: React.FC = () => {
     // Create a V-shape that curves upward from center
     const arcWidth = Math.min(screenWidth * 0.8, 1300);
     const arcHeight = 100; // How much the ends lift up
-    const baseY = centerY + 160; // Moved down by about one orb length (80px more)
+    const baseY = centerY + 220; // Moved down from 160px to 220px for more text space
     
     const progress = index / (totalOrbs - 1); // 0 to 1
     const x = centerX - arcWidth / 2 + progress * arcWidth;
@@ -107,12 +107,15 @@ const WhatsNextSection: React.FC = () => {
   };
 
   const toggleTextExpansion = () => {
-    setIsTextCollapsed(!isTextCollapsed);
-    // When expanding, show all text immediately
     if (isTextCollapsed) {
+      // When expanding, reset all text states to show full content
       setDisplayedText(paragraphs.join('\n\n'));
       setCurrentParagraph(paragraphs.length);
       setIsTextComplete(true);
+      setIsTextCollapsed(false);
+    } else {
+      // When collapsing, just set collapsed state
+      setIsTextCollapsed(true);
     }
   };
 
