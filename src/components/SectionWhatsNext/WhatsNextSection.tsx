@@ -35,7 +35,7 @@ const WhatsNextSection: React.FC = () => {
     return () => observer.disconnect();
   }, [showContent]);
 
-  // Text streaming effect
+  // Text streaming effect - left to right, word by word
   useEffect(() => {
     if (!showContent) return;
 
@@ -50,21 +50,22 @@ const WhatsNextSection: React.FC = () => {
       }
 
       const currentParagraphText = paragraphs[currentParagraph];
-      let charIndex = 0;
+      const words = currentParagraphText.split(' ');
+      let wordIndex = 0;
       
       const typeInterval = setInterval(() => {
-        if (charIndex <= currentParagraphText.length) {
+        if (wordIndex <= words.length) {
           setDisplayedText(() => {
             const allPreviousParagraphs = paragraphs.slice(0, currentParagraph).join('\n\n');
-            const currentText = currentParagraphText.slice(0, charIndex);
+            const currentText = words.slice(0, wordIndex).join(' ');
             return allPreviousParagraphs + (allPreviousParagraphs ? '\n\n' : '') + currentText;
           });
-          charIndex++;
+          wordIndex++;
         } else {
           clearInterval(typeInterval);
           setCurrentParagraph(prevParagraph => prevParagraph + 1);
         }
-      }, 30); // Adjust speed as needed
+      }, 100); // Slower for word-by-word streaming
 
       return () => clearInterval(typeInterval);
     };
@@ -107,10 +108,10 @@ const WhatsNextSection: React.FC = () => {
 
   const renderStreamingText = () => {
     if (isTextCollapsed) {
-      // Show only first half with expand button
-      const firstParagraph = paragraphs[0];
-      const halfPoint = Math.floor(firstParagraph.length / 2);
-      const visibleText = firstParagraph.slice(0, halfPoint) + "...";
+      // Show first third of both paragraphs combined with expand button
+      const allText = paragraphs.join(' ');
+      const thirdPoint = Math.floor(allText.length / 3);
+      const visibleText = allText.slice(0, thirdPoint).trim() + "...";
       
       return (
         <div>
@@ -157,7 +158,7 @@ const WhatsNextSection: React.FC = () => {
 
     return (
       <div>
-        {displayedText.split('\n\n').map((paragraph, index) => (
+        {displayedText.split('\n\n').filter(p => p.trim()).map((paragraph, index) => (
           <p key={index} style={{
             fontSize: index === 0 ? 'clamp(1rem, 2vw, 1.2rem)' : 'clamp(0.95rem, 1.8vw, 1.1rem)',
             color: index === 0 ? 'rgba(255, 255, 255, 0.85)' : 'rgba(255, 255, 255, 0.75)',
@@ -166,13 +167,14 @@ const WhatsNextSection: React.FC = () => {
             fontWeight: 400
           }}>
             {paragraph}
-            {index === currentParagraph && currentParagraph < paragraphs.length && (
+            {index === displayedText.split('\n\n').filter(p => p.trim()).length - 1 && 
+             currentParagraph < paragraphs.length && (
               <span style={{
                 display: 'inline-block',
                 width: '2px',
                 height: '1.2em',
                 backgroundColor: '#06B6D4',
-                marginLeft: '2px',
+                marginLeft: '4px',
                 animation: 'blink 1s infinite'
               }} />
             )}

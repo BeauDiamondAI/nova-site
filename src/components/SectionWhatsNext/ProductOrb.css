@@ -312,13 +312,20 @@
   }
   
   .orb-container {
-    width: 90px; /* Proportionally scaled for mobile */
-    height: 90px;
+    width: 95px !important; /* Force larger mobile orbs */
+    height: 95px !important;
   }
   
   .tagline-content {
     font-size: 0.8rem;
     padding: 0.4rem 0.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .orb-container {
+    width: 85px !important; /* Still larger than original 70px */
+    height: 85px !important;
   }
 }
 
