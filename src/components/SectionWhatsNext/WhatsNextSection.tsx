@@ -361,7 +361,7 @@ const WhatsNextSection: React.FC = () => {
               position: 'relative',
               width: '100%',
               height: '100%',
-              zIndex: 10
+              zIndex: 5 // Lower than the text container (zIndex: 10)
             }}>
               {productsData.map((product, index) => {
                 const position = getOrbPosition(index);
