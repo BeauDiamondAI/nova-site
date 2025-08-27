@@ -54,7 +54,7 @@ const WhatsNextSection: React.FC = () => {
       
       const typeInterval = setInterval(() => {
         if (charIndex <= currentParagraphText.length) {
-          setDisplayedText(prev => {
+          setDisplayedText(() => {
             const allPreviousParagraphs = paragraphs.slice(0, currentParagraph).join('\n\n');
             const currentText = currentParagraphText.slice(0, charIndex);
             return allPreviousParagraphs + (allPreviousParagraphs ? '\n\n' : '') + currentText;
@@ -62,7 +62,7 @@ const WhatsNextSection: React.FC = () => {
           charIndex++;
         } else {
           clearInterval(typeInterval);
-          setCurrentParagraph(prev => prev + 1);
+          setCurrentParagraph(prevParagraph => prevParagraph + 1);
         }
       }, 30); // Adjust speed as needed
 
@@ -71,7 +71,7 @@ const WhatsNextSection: React.FC = () => {
 
     const timer = setTimeout(streamText, 800); // Delay before starting
     return () => clearTimeout(timer);
-  }, [showContent, currentParagraph]);
+  }, [showContent, currentParagraph, paragraphs]);
 
   // Upward V-shaped arc - curves up and out from center
   const getOrbPosition = (index: number) => {
