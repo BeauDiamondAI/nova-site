@@ -98,8 +98,8 @@
 /* Text content fade-in animation */
 .flip-card-back .card-content {
   opacity: 0;
-  transform: translateY(10px);
-  transition: opacity 0.6s ease 0.2s, transform 0.6s ease 0.2s;
+  transform: translateY(20px);
+  transition: opacity 0.8s ease 0.4s, transform 0.8s ease 0.4s;
 }
 
 .flip-card-container.flipped .flip-card-back .card-content {
@@ -172,6 +172,12 @@
   
   .flip-card-container.flipped .flip-card-front {
     display: none;
+  }
+  
+  /* Ensure fade-in animation works on mobile too */
+  .flip-card-container.flipped .flip-card-back .card-content {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
