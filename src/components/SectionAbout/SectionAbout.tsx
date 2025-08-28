@@ -71,10 +71,9 @@ export default function SectionAbout() {
         className="relative z-50 max-w-6xl px-4 w-full"
         style={{ y, opacity }}
       >
-        <h2 className="text-4xl sm:text-5xl font-bold font-headline mb-5">
+        <h2 className="text-4xl sm:text-5xl font-bold font-headline mb-12">
           Thinks Deeper. Moves Faster. Deploys Intelligently.
         </h2>
-
 
         {/* Main Subheadline */}
         <motion.div
@@ -85,8 +84,8 @@ export default function SectionAbout() {
           custom={0}
           className="mb-16"
         >
-          <h3 className="text-2xl sm:text-3xl font-bold mb-8 leading-tight">
-            NovaThink is building the <strong className="text-cyan-400">cognitive operating system</strong> for the AI era.
+          <h3 className="text-3xl sm:text-4xl font-bold mb-8 leading-tight">
+            NovaThink is building the <span className="text-cyan-400">cognitive operating system</span> for the AI era.
           </h3>
         </motion.div>
 
@@ -104,10 +103,10 @@ export default function SectionAbout() {
             <h4 className="text-lg font-bold text-cyan-400 mb-4 tracking-wide uppercase">
               The Cognitive OS Layer Between LLMs and Execution
             </h4>
-            <p className="mb-6 text-lg leading-relaxed">
+            <p className="mb-6 text-base sm:text-lg leading-relaxed">
               Where today&apos;s large language models offer raw capacity, NovaThink provides the <em className="text-cyan-300">meta-layer</em> that unlocks their full potential — transforming reactive tools into <strong className="text-white">adaptive, persistent intelligences</strong> capable of reasoning, remembering, and orchestrating action at scale.
             </p>
-            <p className="text-lg leading-relaxed">
+            <p className="text-base sm:text-lg leading-relaxed">
               Today&apos;s LLMs are not bottlenecked by training data or compute. They are bottlenecked by lack of structure — missing the <strong className="text-white">multi-step reasoning frameworks</strong> and <strong className="text-white">cognitive persistence</strong> required to sustain real-world complexity in domains like strategy, research, policy, defense, and executive operations.
             </p>
           </motion.div>
@@ -148,7 +147,7 @@ export default function SectionAbout() {
           className="mb-8"
         >
           <h3 className="text-2xl sm:text-3xl font-bold mb-4 leading-tight">
-            <strong className="text-cyan-400">NovaThink is something fundamentally new:</strong>
+            <span className="text-cyan-400">NovaThink is something fundamentally new:</span>
           </h3>
           <p className="text-xl leading-relaxed max-w-4xl mx-auto">
             An LLM-agnostic cognitive OS — the intelligence amplification layer that will define how humans and AI collaborate over the next decade.
