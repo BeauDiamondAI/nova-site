@@ -94,8 +94,6 @@ const SectionCometTrail: React.FC<SectionCometTrailProps> = ({ isActive, section
     
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
-
-    const sectionRect = sectionRef.current?.getBoundingClientRect();
     
     const resizeCanvas = () => {
       if (!sectionRef.current) return;
