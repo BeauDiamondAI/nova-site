@@ -97,41 +97,43 @@
 
 /* LINE-BY-LINE FADE-IN ANIMATION STYLES */
 
-/* Initially hide all content elements */
+/* Use animation instead of transition to avoid layout issues */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Initially hide content */
 .card-content > * {
   opacity: 0;
-  transform: translateY(10px);
-  transition: none;
 }
 
-/* When card is flipped, fade in each child element */
+/* Animate when flipped */
 .flip-card-container.flipped .card-content > * {
-  opacity: 1;
-  transform: translateY(0);
-  transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1),
-              transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  animation: fadeInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
-/* Force consistent paragraph spacing - simplified */
-.card-content h4 {
-  margin: 0 0 1rem 0 !important;
+/* Stagger animations */
+.flip-card-container.flipped .card-content > *:nth-child(1) {
+  animation-delay: 0.3s;
 }
-
-.card-content p {
-  margin: 0 0 1.5rem 0 !important;
+.flip-card-container.flipped .card-content > *:nth-child(2) {
+  animation-delay: 0.45s;
 }
-
-.card-content p:last-child {
-  margin-bottom: 0 !important;
+.flip-card-container.flipped .card-content > *:nth-child(3) {
+  animation-delay: 0.6s;
 }
-
-.card-content ul {
-  margin: 0 !important;
-  padding-left: 1.2rem;
+.flip-card-container.flipped .card-content > *:nth-child(4) {
+  animation-delay: 0.75s;
 }
-
-.card-content li {
-  margin: 0 0 0.5rem 0 !important;
+.flip-card-container.flipped .card-content > *:nth-child(5) {
+  animation-delay: 0.9s;
 }
 
 /* Stagger the animation delays for each element */
