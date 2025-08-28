@@ -95,16 +95,64 @@
   z-index: 1;
 }
 
-/* Text content fade-in animation */
-.flip-card-back .card-content {
+/* Line-by-line text fade-in animation */
+.card-content > * {
   opacity: 0;
   transform: translateY(20px);
-  transition: opacity 0.8s ease 0.4s, transform 0.8s ease 0.4s;
+  transition: none;
 }
 
-.flip-card-container.flipped .flip-card-back .card-content {
+/* When card is flipped, animate each child element */
+.flip-card-container.flipped .card-content > * {
   opacity: 1;
   transform: translateY(0);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+/* Stagger the animation delays for each element */
+.flip-card-container.flipped .card-content > *:nth-child(1) {
+  transition-delay: 0.3s;
+}
+.flip-card-container.flipped .card-content > *:nth-child(2) {
+  transition-delay: 0.45s;
+}
+.flip-card-container.flipped .card-content > *:nth-child(3) {
+  transition-delay: 0.6s;
+}
+.flip-card-container.flipped .card-content > *:nth-child(4) {
+  transition-delay: 0.75s;
+}
+.flip-card-container.flipped .card-content > *:nth-child(5) {
+  transition-delay: 0.9s;
+}
+
+/* For list items, add additional delays */
+.flip-card-container.flipped .card-content ul {
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+.flip-card-container.flipped .card-content ul li {
+  opacity: 0;
+  transform: translateY(15px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.flip-card-container.flipped .card-content ul li:nth-child(1) {
+  transition-delay: 1.05s;
+}
+.flip-card-container.flipped .card-content ul li:nth-child(2) {
+  transition-delay: 1.2s;
+}
+.flip-card-container.flipped .card-content ul li:nth-child(3) {
+  transition-delay: 1.35s;
+}
+
+/* Ensure list items animate properly */
+.card-content ul li {
+  opacity: 0;
+  transform: translateY(15px);
+  transition: none;
 }
 
 /* Smooth scrollbar for back content */
@@ -174,8 +222,13 @@
     display: none;
   }
   
-  /* Ensure fade-in animation works on mobile too */
-  .flip-card-container.flipped .flip-card-back .card-content {
+  /* Ensure line-by-line animations work on mobile */
+  .flip-card-container.flipped .card-content > * {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  .flip-card-container.flipped .card-content ul li {
     opacity: 1;
     transform: translateY(0);
   }
