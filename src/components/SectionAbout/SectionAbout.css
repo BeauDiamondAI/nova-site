@@ -97,37 +97,41 @@
 
 /* LINE-BY-LINE FADE-IN ANIMATION STYLES */
 
-/* Initially hide all content elements with opacity only */
+/* Initially hide all content elements */
 .card-content > * {
   opacity: 0;
+  transform: translateY(10px);
   transition: none;
 }
 
 /* When card is flipped, fade in each child element */
 .flip-card-container.flipped .card-content > * {
   opacity: 1;
-  transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: translateY(0);
+  transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+              transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Force consistent paragraph spacing */
+/* Force consistent paragraph spacing - simplified */
 .card-content h4 {
-  margin-bottom: 1rem !important;
+  margin: 0 0 1rem 0 !important;
 }
 
 .card-content p {
-  margin-bottom: 1.5rem !important;
+  margin: 0 0 1.5rem 0 !important;
 }
 
-.card-content p:last-of-type:not(:has(+ ul)) {
+.card-content p:last-child {
   margin-bottom: 0 !important;
-}
-
-.card-content p:has(+ ul) {
-  margin-bottom: 1rem !important;
 }
 
 .card-content ul {
-  margin-bottom: 0 !important;
+  margin: 0 !important;
+  padding-left: 1.2rem;
+}
+
+.card-content li {
+  margin: 0 0 0.5rem 0 !important;
 }
 
 /* Stagger the animation delays for each element */
