@@ -8,9 +8,9 @@
   /* Enhanced glassmorphism */
   background: linear-gradient(
     135deg,
-    rgba(17, 24, 39, 0.35) 0%,
-    rgba(30, 41, 59, 0.45) 50%,
-    rgba(15, 23, 42, 0.35) 100%
+    rgba(17, 24, 39, 0.25) 0%,
+    rgba(30, 41, 59, 0.30) 50%,
+    rgba(15, 23, 42, 0.30) 100%
   );
   backdrop-filter: blur(20px) saturate(180%) brightness(1.2);
   -webkit-backdrop-filter: blur(20px) saturate(180%) brightness(1.2);

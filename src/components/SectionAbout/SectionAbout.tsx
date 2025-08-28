@@ -75,9 +75,6 @@ export default function SectionAbout() {
           Thinks Deeper. Moves Faster. Deploys Intelligently.
         </h2>
 
-        <p className="text-sm text-slate-400 tracking-wide uppercase mb-16">
-          Built for mission-critical cognitive infrastructure.
-        </p>
 
         {/* Main Subheadline */}
         <motion.div
