@@ -180,7 +180,7 @@ export default function SectionAbout() {
 
   const frontFaceStyle = {
     position: 'absolute' as const,
-    inset: 0, // CHANGE from width/height to inset
+    inset: 0,
     backfaceVisibility: 'hidden' as const,
     display: 'flex',
     alignItems: 'center',
@@ -190,7 +190,7 @@ export default function SectionAbout() {
 
   const backFaceStyle = {
     position: 'absolute' as const,
-    inset: 0, // CHANGE from width/height to inset
+    inset: 0,
     backfaceVisibility: 'hidden' as const,
     transform: 'rotateY(180deg)',
     padding: '2rem',
@@ -264,7 +264,10 @@ export default function SectionAbout() {
             variants={cardVariants}
             custom={1}
             className="glassmorphic-card flex-1 max-w-lg"
-            style={cardStyle(flippedCards.has('card1'), hoveredCard === 'card1')}
+            style={{
+              ...cardStyle(flippedCards.has('card1'), hoveredCard === 'card1'),
+              perspective: '1000px'
+            }}
             onClick={() => handleCardClick('card1')}
             onMouseEnter={() => setHoveredCard('card1')}
             onMouseLeave={() => setHoveredCard(null)}
@@ -287,10 +290,10 @@ export default function SectionAbout() {
                   The Cognitive OS Layer Between LLMs and Execution
                 </h4>
                 <p className="mb-6 text-base sm:text-lg leading-relaxed">
-                  Where today&aposs large language models offer raw capacity, NovaThink provides the <em className="text-cyan-300">meta-layer</em> that unlocks their full potential — transforming reactive tools into <strong className="text-white">adaptive, persistent intelligences</strong> capable of reasoning, remembering, and orchestrating action at scale.
+                  Where today's large language models offer raw capacity, NovaThink provides the <em className="text-cyan-300">meta-layer</em> that unlocks their full potential — transforming reactive tools into <strong className="text-white">adaptive, persistent intelligences</strong> capable of reasoning, remembering, and orchestrating action at scale.
                 </p>
                 <p className="text-base sm:text-lg leading-relaxed">
-                  Today&aposs LLMs are not bottlenecked by training data or compute. They are bottlenecked by lack of structure — missing the <strong className="text-white">multi-step reasoning frameworks</strong> and <strong className="text-white">cognitive persistence</strong> required to sustain real-world complexity in domains like strategy, research, policy, defense, and executive operations.
+                  Today's LLMs are not bottlenecked by training data or compute. They are bottlenecked by lack of structure — missing the <strong className="text-white">multi-step reasoning frameworks</strong> and <strong className="text-white">cognitive persistence</strong> required to sustain real-world complexity in domains like strategy, research, policy, defense, and executive operations.
                 </p>
               </div>
             </div>
@@ -305,7 +308,10 @@ export default function SectionAbout() {
             variants={cardVariants}
             custom={2}
             className="glassmorphic-card flex-1 max-w-lg"
-            style={cardStyle(flippedCards.has('card2'), hoveredCard === 'card2')}
+            style={{
+              ...cardStyle(flippedCards.has('card2'), hoveredCard === 'card2'),
+              perspective: '1000px'
+            }}
             onClick={() => handleCardClick('card2')}
             onMouseEnter={() => setHoveredCard('card2')}
             onMouseLeave={() => setHoveredCard(null)}
