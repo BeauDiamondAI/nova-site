@@ -1,4 +1,4 @@
-/* SectionAbout.css - Fixed Glassmorphic Cards with Working Flip Animation */
+/* SectionAbout.css - Fixed Glassmorphic Cards with Working Flip Animation and Line-by-Line Fade */
 
 /* Flippable Card Container */
 .flip-card-container {
@@ -95,7 +95,9 @@
   z-index: 1;
 }
 
-/* Line-by-line text fade-in animation */
+/* LINE-BY-LINE FADE-IN ANIMATION STYLES */
+
+/* Initially hide all content elements */
 .card-content > * {
   opacity: 0;
   transform: translateY(20px);
@@ -106,66 +108,60 @@
 .flip-card-container.flipped .card-content > * {
   opacity: 1;
   transform: translateY(0);
-  transition: opacity 0.6s ease, transform 0.6s ease;
+  transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1), 
+              transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* Stagger the animation delays for each element */
 .flip-card-container.flipped .card-content > *:nth-child(1) {
   transition-delay: 0.3s;
 }
+
 .flip-card-container.flipped .card-content > *:nth-child(2) {
   transition-delay: 0.45s;
 }
+
 .flip-card-container.flipped .card-content > *:nth-child(3) {
   transition-delay: 0.6s;
 }
+
 .flip-card-container.flipped .card-content > *:nth-child(4) {
   transition-delay: 0.75s;
 }
+
 .flip-card-container.flipped .card-content > *:nth-child(5) {
   transition-delay: 0.9s;
 }
 
-/* For list items, add additional delays */
+/* Special handling for list items */
 .flip-card-container.flipped .card-content ul {
   opacity: 1 !important;
-  transform: none !important;
+  transform: translateY(0) !important;
 }
 
 .flip-card-container.flipped .card-content ul li {
   opacity: 0;
   transform: translateY(15px);
-  transition: opacity 0.5s ease, transform 0.5s ease;
+  transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1), 
+              transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .flip-card-container.flipped .card-content ul li:nth-child(1) {
   transition-delay: 1.05s;
+  opacity: 1;
+  transform: translateY(0);
 }
+
 .flip-card-container.flipped .card-content ul li:nth-child(2) {
   transition-delay: 1.2s;
+  opacity: 1;
+  transform: translateY(0);
 }
+
 .flip-card-container.flipped .card-content ul li:nth-child(3) {
   transition-delay: 1.35s;
-}
-
-/* Ensure list items animate properly */
-.card-content ul li {
-  opacity: 0;
-  transform: translateY(15px);
-  transition: none;
-}
-
-/* Prevent double spacing by preserving original margins */
-.card-content > * {
-  margin-top: 0;
-}
-
-.card-content > *:first-child {
-  margin-top: 0;
-}
-
-.card-content > *:last-child {
-  margin-bottom: 0;
+  opacity: 1;
+  transform: translateY(0);
 }
 
 /* Smooth scrollbar for back content */
@@ -176,13 +172,13 @@
 .flip-card-back::-webkit-scrollbar-track {
   background: rgba(255, 255, 255, 0.05);
   border-radius: 3px;
-  margin: 8px 0; /* Add top and bottom margin to respect rounded corners */
+  margin: 8px 0;
 }
 
 .flip-card-back::-webkit-scrollbar-thumb {
   background: rgba(6, 182, 212, 0.3);
   border-radius: 3px;
-  margin: 8px 0; /* Match the track margin */
+  margin: 8px 0;
 }
 
 .flip-card-back::-webkit-scrollbar-thumb:hover {
@@ -235,7 +231,7 @@
     display: none;
   }
   
-  /* Ensure line-by-line animations work on mobile */
+  /* Ensure fade-in animation works on mobile */
   .flip-card-container.flipped .card-content > * {
     opacity: 1;
     transform: translateY(0);
@@ -267,5 +263,14 @@
   
   .glassmorphic-card-face {
     transition: none;
+  }
+  
+  .card-content > * {
+    transition: none !important;
+  }
+  
+  .flip-card-container.flipped .card-content > * {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
