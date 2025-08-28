@@ -263,11 +263,9 @@ export default function SectionAbout() {
             viewport={{ once: true }}
             variants={cardVariants}
             custom={1}
-            className="glassmorphic-card flex-1 max-w-lg"
-            style={{
-              ...cardStyle(flippedCards.has('card1'), hoveredCard === 'card1'),
-              perspective: '1000px'
-            }}
+            className={`glassmorphic-card flip-card-container flex-1 max-w-lg ${
+              flippedCards.has('card1') ? 'flipped' : ''
+            } ${hoveredCard === 'card1' ? 'hover' : ''}`}
             onClick={() => handleCardClick('card1')}
             onMouseEnter={() => setHoveredCard('card1')}
             onMouseLeave={() => setHoveredCard(null)}
@@ -307,13 +305,11 @@ export default function SectionAbout() {
             viewport={{ once: true }}
             variants={cardVariants}
             custom={2}
-            className="glassmorphic-card flex-1 max-w-lg"
-            style={{
-              ...cardStyle(flippedCards.has('card2'), hoveredCard === 'card2'),
-              perspective: '1000px'
-            }}
-            onClick={() => handleCardClick('card2')}
-            onMouseEnter={() => setHoveredCard('card2')}
+            className={`glassmorphic-card flip-card-container flex-1 max-w-lg ${
+              flippedCards.has('card1') ? 'flipped' : ''
+            } ${hoveredCard === 'card1' ? 'hover' : ''}`}
+            onClick={() => handleCardClick('card1')}
+            onMouseEnter={() => setHoveredCard('card1')}
             onMouseLeave={() => setHoveredCard(null)}
           >
             {/* Front Face */}
