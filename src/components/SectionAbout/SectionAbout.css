@@ -109,6 +109,27 @@
   transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+/* Force consistent paragraph spacing */
+.card-content h4 {
+  margin-bottom: 1rem !important;
+}
+
+.card-content p {
+  margin-bottom: 1.5rem !important;
+}
+
+.card-content p:last-of-type:not(:has(+ ul)) {
+  margin-bottom: 0 !important;
+}
+
+.card-content p:has(+ ul) {
+  margin-bottom: 1rem !important;
+}
+
+.card-content ul {
+  margin-bottom: 0 !important;
+}
+
 /* Stagger the animation delays for each element */
 .flip-card-container.flipped .card-content > *:nth-child(1) {
   transition-delay: 0.3s;
