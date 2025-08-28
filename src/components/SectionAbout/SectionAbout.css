@@ -100,8 +100,9 @@
 /* Initially hide all content elements */
 .card-content > * {
   opacity: 0;
-  transform: translateY(20px);
+  transform: translateY(10px); /* Reduced from 20px */
   transition: none;
+  margin-top: 0 !important; /* Prevent margin doubling */
 }
 
 /* When card is flipped, animate each child element */
