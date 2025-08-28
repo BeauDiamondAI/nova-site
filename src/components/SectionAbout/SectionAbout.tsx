@@ -166,18 +166,6 @@ export default function SectionAbout() {
     });
   };
 
-  const cardStyle = (isFlipped: boolean, isHovered: boolean) => ({
-    transformStyle: 'preserve-3d' as const,
-    transition: 'transform 0.8s cubic-bezier(0.4, 0, 0.2, 1)',
-    transform: isFlipped ? 'rotateY(180deg)' : 'rotateY(0deg)',
-    cursor: 'pointer',
-    position: 'relative' as const,
-    borderColor: isHovered ? 'rgba(6, 182, 212, 0.5)' : 'rgba(255, 255, 255, 0.1)',
-    boxShadow: isHovered 
-      ? `0 0 30px rgba(6, 182, 212, 0.4), 0 0 60px rgba(6, 182, 212, 0.2), 0 10px 40px -10px rgba(6, 182, 212, 0.3)`
-      : `0 10px 40px -10px rgba(6, 182, 212, 0.2), 0 20px 25px -5px rgba(0, 0, 0, 0.3)`
-  });
-
   const frontFaceStyle = {
     position: 'absolute' as const,
     inset: 0,
