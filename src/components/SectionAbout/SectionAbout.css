@@ -155,6 +155,19 @@
   transition: none;
 }
 
+/* Prevent double spacing by preserving original margins */
+.card-content > * {
+  margin-top: 0;
+}
+
+.card-content > *:first-child {
+  margin-top: 0;
+}
+
+.card-content > *:last-child {
+  margin-bottom: 0;
+}
+
 /* Smooth scrollbar for back content */
 .flip-card-back::-webkit-scrollbar {
   width: 6px;

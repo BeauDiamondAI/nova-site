@@ -254,12 +254,12 @@ export default function SectionAbout() {
               </div>
               
               {/* Back Face */}
-              <div className="flip-card-back scrollable glassmorphic-card-face">
+              <div className="flip-card-back glassmorphic-card-face">
                 <CardCometTrail 
                   isActive={flippedCards.has('card1')} 
                   cardRef={card1Ref}
                 />
-                <div style={{ position: 'relative', zIndex: 2 }}>
+                <div className="card-content" style={{ position: 'relative', zIndex: 2 }}>
                   <h4 className="text-lg font-bold text-cyan-400 mb-4 tracking-wide uppercase">
                     The Cognitive OS Layer Between LLMs and Execution
                   </h4>
