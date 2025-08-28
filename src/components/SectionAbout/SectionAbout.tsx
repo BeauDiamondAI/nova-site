@@ -84,7 +84,7 @@ export default function SectionAbout() {
           custom={0}
           className="mb-16"
         >
-          <h3 className="text-3xl sm:text-4xl font-bold mb-8 leading-tight">
+          <h3 className="text-2xl sm:text-3xl font-bold mb-8 leading-tight">
             NovaThink is building the <span className="text-cyan-400">cognitive operating system</span> for the AI era.
           </h3>
         </motion.div>
