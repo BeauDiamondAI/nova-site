@@ -97,20 +97,16 @@
 
 /* LINE-BY-LINE FADE-IN ANIMATION STYLES */
 
-/* Initially hide all content elements */
+/* Initially hide all content elements with opacity only */
 .card-content > * {
   opacity: 0;
-  transform: translateY(10px); /* Reduced from 20px */
   transition: none;
-  margin-top: 0 !important; /* Prevent margin doubling */
 }
 
-/* When card is flipped, animate each child element */
+/* When card is flipped, fade in each child element */
 .flip-card-container.flipped .card-content > * {
   opacity: 1;
-  transform: translateY(0);
-  transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1), 
-              transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* Stagger the animation delays for each element */
