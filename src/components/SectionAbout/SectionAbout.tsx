@@ -180,8 +180,7 @@ export default function SectionAbout() {
 
   const frontFaceStyle = {
     position: 'absolute' as const,
-    width: '100%',
-    height: '100%',
+    inset: 0, // CHANGE from width/height to inset
     backfaceVisibility: 'hidden' as const,
     display: 'flex',
     alignItems: 'center',
@@ -191,8 +190,7 @@ export default function SectionAbout() {
 
   const backFaceStyle = {
     position: 'absolute' as const,
-    width: '100%',
-    height: '100%',
+    inset: 0, // CHANGE from width/height to inset
     backfaceVisibility: 'hidden' as const,
     transform: 'rotateY(180deg)',
     padding: '2rem',
