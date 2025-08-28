@@ -166,25 +166,6 @@ export default function SectionAbout() {
     });
   };
 
-  const frontFaceStyle = {
-    position: 'absolute' as const,
-    inset: 0,
-    backfaceVisibility: 'hidden' as const,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: '2rem',
-  };
-
-  const backFaceStyle = {
-    position: 'absolute' as const,
-    inset: 0,
-    backfaceVisibility: 'hidden' as const,
-    transform: 'rotateY(180deg)',
-    padding: '2rem',
-    overflowY: 'auto' as const,
-  };
-
   return (
     <section
       ref={ref}
@@ -251,41 +232,43 @@ export default function SectionAbout() {
             viewport={{ once: true }}
             variants={cardVariants}
             custom={1}
-            className={`glassmorphic-card flip-card-container flex-1 max-w-lg ${
+            className={`flip-card-container flex-1 max-w-lg ${
               flippedCards.has('card1') ? 'flipped' : ''
             } ${hoveredCard === 'card1' ? 'hover' : ''}`}
             onClick={() => handleCardClick('card1')}
             onMouseEnter={() => setHoveredCard('card1')}
             onMouseLeave={() => setHoveredCard(null)}
           >
-            {/* Front Face */}
-            <div style={frontFaceStyle}>
-              <h4 className="text-xl font-bold text-cyan-400 tracking-wide uppercase text-center">
-                The Cognitive OS Layer Between LLMs and Execution
-              </h4>
-            </div>
-            
-            {/* Back Face */}
-            <div style={backFaceStyle}>
-              <CardCometTrail 
-                isActive={flippedCards.has('card1')} 
-                cardRef={card1Ref}
-              />
-              <div style={{ position: 'relative', zIndex: 2 }}>
-                <h4 className="text-lg font-bold text-cyan-400 mb-4 tracking-wide uppercase">
+            <div className="flip-card-inner glassmorphic-card">
+              {/* Front Face */}
+              <div className="flip-card-front">
+                <h4 className="text-xl font-bold text-cyan-400 tracking-wide uppercase text-center">
                   The Cognitive OS Layer Between LLMs and Execution
                 </h4>
-                <p className="mb-6 text-base sm:text-lg leading-relaxed">
-                  Where today&aposs large language models offer raw capacity, NovaThink provides the <em className="text-cyan-300">meta-layer</em> that unlocks their full potential — transforming reactive tools into <strong className="text-white">adaptive, persistent intelligences</strong> capable of reasoning, remembering, and orchestrating action at scale.
-                </p>
-                <p className="text-base sm:text-lg leading-relaxed">
-                  Today&aposs LLMs are not bottlenecked by training data or compute. They are bottlenecked by lack of structure — missing the <strong className="text-white">multi-step reasoning frameworks</strong> and <strong className="text-white">cognitive persistence</strong> required to sustain real-world complexity in domains like strategy, research, policy, defense, and executive operations.
-                </p>
+              </div>
+              
+              {/* Back Face */}
+              <div className="flip-card-back">
+                <CardCometTrail 
+                  isActive={flippedCards.has('card1')} 
+                  cardRef={card1Ref}
+                />
+                <div style={{ position: 'relative', zIndex: 2 }}>
+                  <h4 className="text-lg font-bold text-cyan-400 mb-4 tracking-wide uppercase">
+                    The Cognitive OS Layer Between LLMs and Execution
+                  </h4>
+                  <p className="mb-6 text-base sm:text-lg leading-relaxed">
+                    Where today's large language models offer raw capacity, NovaThink provides the <em className="text-cyan-300">meta-layer</em> that unlocks their full potential — transforming reactive tools into <strong className="text-white">adaptive, persistent intelligences</strong> capable of reasoning, remembering, and orchestrating action at scale.
+                  </p>
+                  <p className="text-base sm:text-lg leading-relaxed">
+                    Today's LLMs are not bottlenecked by training data or compute. They are bottlenecked by lack of structure — missing the <strong className="text-white">multi-step reasoning frameworks</strong> and <strong className="text-white">cognitive persistence</strong> required to sustain real-world complexity in domains like strategy, research, policy, defense, and executive operations.
+                  </p>
+                </div>
               </div>
             </div>
           </motion.div>
 
-          {/* Card 2 */}
+          {/* Card 2 - FIXED */}
           <motion.div
             ref={card2Ref}
             initial="hidden"
@@ -293,41 +276,43 @@ export default function SectionAbout() {
             viewport={{ once: true }}
             variants={cardVariants}
             custom={2}
-            className={`glassmorphic-card flip-card-container flex-1 max-w-lg ${
-              flippedCards.has('card1') ? 'flipped' : ''
-            } ${hoveredCard === 'card1' ? 'hover' : ''}`}
-            onClick={() => handleCardClick('card1')}
-            onMouseEnter={() => setHoveredCard('card1')}
+            className={`flip-card-container flex-1 max-w-lg ${
+              flippedCards.has('card2') ? 'flipped' : ''
+            } ${hoveredCard === 'card2' ? 'hover' : ''}`}
+            onClick={() => handleCardClick('card2')}
+            onMouseEnter={() => setHoveredCard('card2')}
             onMouseLeave={() => setHoveredCard(null)}
           >
-            {/* Front Face */}
-            <div style={frontFaceStyle}>
-              <h4 className="text-xl font-bold text-cyan-400 tracking-wide uppercase text-center">
-                Built for Mission-Critical Cognitive Infrastructure
-              </h4>
-            </div>
-            
-            {/* Back Face */}
-            <div style={backFaceStyle}>
-              <CardCometTrail 
-                isActive={flippedCards.has('card2')} 
-                cardRef={card2Ref}
-              />
-              <div style={{ position: 'relative', zIndex: 2 }}>
-                <h4 className="text-lg font-bold text-cyan-400 mb-4 tracking-wide uppercase">
+            <div className="flip-card-inner glassmorphic-card">
+              {/* Front Face */}
+              <div className="flip-card-front">
+                <h4 className="text-xl font-bold text-cyan-400 tracking-wide uppercase text-center">
                   Built for Mission-Critical Cognitive Infrastructure
                 </h4>
-                <p className="mb-6 text-base leading-relaxed">
-                  NovaThink closes this gap. We embed recursive logic frameworks, adaptive cognition patterns, and domain-specific reasoning protocols — creating stateful AI systems that <strong className="text-white">think beyond the prompt window</strong> and carry objectives forward with continuity, depth, and adaptive learning over time.
-                </p>
-                <p className="mb-4 text-base leading-relaxed">
-                  All of this is delivered through <strong className="text-white">enterprise-grade infrastructure</strong>:
-                </p>
-                <ul className="text-left space-y-2 text-sm leading-relaxed text-slate-200">
-                  <li>• Fully isolated, encrypted VPC deployments for uncompromising data security</li>
-                  <li>• Multi-model backends (OpenAI, Anthropic, open-source) for continuity and resilience</li>
-                  <li>• Compliance engineered from the ground up — SOC 2, ISO 27001, and beyond</li>
-                </ul>
+              </div>
+              
+              {/* Back Face */}
+              <div className="flip-card-back">
+                <CardCometTrail 
+                  isActive={flippedCards.has('card2')} 
+                  cardRef={card2Ref}
+                />
+                <div style={{ position: 'relative', zIndex: 2 }}>
+                  <h4 className="text-lg font-bold text-cyan-400 mb-4 tracking-wide uppercase">
+                    Built for Mission-Critical Cognitive Infrastructure
+                  </h4>
+                  <p className="mb-6 text-base leading-relaxed">
+                    NovaThink closes this gap. We embed recursive logic frameworks, adaptive cognition patterns, and domain-specific reasoning protocols — creating stateful AI systems that <strong className="text-white">think beyond the prompt window</strong> and carry objectives forward with continuity, depth, and adaptive learning over time.
+                  </p>
+                  <p className="mb-4 text-base leading-relaxed">
+                    All of this is delivered through <strong className="text-white">enterprise-grade infrastructure</strong>:
+                  </p>
+                  <ul className="text-left space-y-2 text-sm leading-relaxed text-slate-200">
+                    <li>• Fully isolated, encrypted VPC deployments for uncompromising data security</li>
+                    <li>• Multi-model backends (OpenAI, Anthropic, open-source) for continuity and resilience</li>
+                    <li>• Compliance engineered from the ground up — SOC 2, ISO 27001, and beyond</li>
+                  </ul>
+                </div>
               </div>
             </div>
           </motion.div>
