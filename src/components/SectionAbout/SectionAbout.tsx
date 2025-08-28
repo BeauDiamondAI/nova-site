@@ -88,7 +88,7 @@ export default function SectionAbout() {
           custom={0}
           className="mb-16"
         >
-          <h3 className="text-3xl sm:text-4xl font-bold mb-8 leading-tight">
+          <h3 className="text-2xl sm:text-3xl font-bold mb-8 leading-tight">
             NovaThink is building the <strong className="text-cyan-400">cognitive operating system</strong> for the AI era.
           </h3>
         </motion.div>
@@ -104,10 +104,13 @@ export default function SectionAbout() {
             custom={1}
             className="glassmorphic-card flex-1 max-w-lg"
           >
-            <p className="mb-6 text-base leading-relaxed">
+            <h4 className="text-lg font-bold text-cyan-400 mb-4 tracking-wide uppercase">
+              The Cognitive OS Layer Between LLMs and Execution
+            </h4>
+            <p className="mb-6 text-lg leading-relaxed">
               Where today&apos;s large language models offer raw capacity, NovaThink provides the <em className="text-cyan-300">meta-layer</em> that unlocks their full potential — transforming reactive tools into <strong className="text-white">adaptive, persistent intelligences</strong> capable of reasoning, remembering, and orchestrating action at scale.
             </p>
-            <p className="text-base leading-relaxed">
+            <p className="text-lg leading-relaxed">
               Today&apos;s LLMs are not bottlenecked by training data or compute. They are bottlenecked by lack of structure — missing the <strong className="text-white">multi-step reasoning frameworks</strong> and <strong className="text-white">cognitive persistence</strong> required to sustain real-world complexity in domains like strategy, research, policy, defense, and executive operations.
             </p>
           </motion.div>
@@ -121,9 +124,9 @@ export default function SectionAbout() {
             custom={2}
             className="glassmorphic-card flex-1 max-w-lg"
           >
-            <p className="text-sm text-slate-300 tracking-wide uppercase mb-4">
-              Built for mission-critical cognitive infrastructure.
-            </p>
+            <h4 className="text-lg font-bold text-cyan-400 mb-4 tracking-wide uppercase">
+              Built for Mission-Critical Cognitive Infrastructure
+            </h4>
             <p className="mb-6 text-base leading-relaxed">
               NovaThink closes this gap. We embed recursive logic frameworks, adaptive cognition patterns, and domain-specific reasoning protocols — creating stateful AI systems that <strong className="text-white">think beyond the prompt window</strong> and carry objectives forward with continuity, depth, and adaptive learning over time.
             </p>
