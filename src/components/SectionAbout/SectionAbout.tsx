@@ -254,7 +254,7 @@ export default function SectionAbout() {
               </div>
               
               {/* Back Face */}
-              <div className="flip-card-back glassmorphic-card-face">
+              <div className="flip-card-back scrollable glassmorphic-card-face">
                 <CardCometTrail 
                   isActive={flippedCards.has('card1')} 
                   cardRef={card1Ref}
