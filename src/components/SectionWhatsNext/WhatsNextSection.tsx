@@ -1,352 +1,416 @@
-'use client';
-import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
-import React, { useRef, useState, useEffect } from 'react';
-import './SectionAbout.css';
+import React, { useState, useEffect, useRef } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { ProductOrb } from "./ProductOrb";
+import { productsData } from "./productsData";
+import { CometTrail } from "./CometTrail";
 
-// Section-specific comet trail for mouse tracking inside cards
-interface CardCometTrailProps {
-  isActive: boolean;
-  cardRef: React.RefObject<HTMLDivElement | null>;
-  colorRgb?: string;
-}
+const WhatsNextSection: React.FC = () => {
+  const [expandedProductId, setExpandedProductId] = useState<string | null>(null);
+  const [showContent, setShowContent] = useState(false);
+  const [displayedText, setDisplayedText] = useState('');
+  const [currentParagraph, setCurrentParagraph] = useState(0);
+  const [isTextComplete, setIsTextComplete] = useState(false);
+  const [isTextCollapsed, setIsTextCollapsed] = useState(false);
+  const [hasAutoCollapsed, setHasAutoCollapsed] = useState(false);
+  const sectionRef = useRef<HTMLElement>(null);
 
-const CardCometTrail: React.FC<CardCometTrailProps> = ({ 
-  isActive, 
-  cardRef,
-  colorRgb = '6, 182, 212'
-}) => {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const mouseRef = useRef({ x: 0, y: 0, prevX: 0, prevY: 0 });
-  const particlesRef = useRef<Array<{
-    x: number;
-    y: number;
-    vx: number;
-    vy: number;
-    life: number;
-    size: number;
-  }>>([]);
-  const animationRef = useRef<number | undefined>(undefined);
+  const paragraphs = [
+    `The future of AI isn't more apps. It's the rise of a cognitive operating system — a new layer of intelligence that makes strategy, execution, and adaptation seamless across every domain.`,
+    `NovaThink is building this foundation:`,
+    `• Architectures that sustain memory, logic, and autonomy over time.`,
+    `• Stateful intelligence engines deployed inside secure enterprise environments.`, 
+    `• Frameworks where AI doesn't just assist — it collaborates, learns, and builds alongside you.`,
+    `The horizon is clear: cognition itself as deployable infrastructure. And NovaThink is already laying the groundwork.`
+  ];
 
+  // Simple intersection observer to trigger content
   useEffect(() => {
-    if (!isActive || !cardRef?.current) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !showContent) {
+          setShowContent(true);
+        }
+      },
+      { threshold: 0.3 }
+    );
 
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
 
-    const cardRect = cardRef.current.getBoundingClientRect();
-    canvas.width = cardRect.width;
-    canvas.height = cardRect.height;
+    return () => observer.disconnect();
+  }, [showContent]);
 
-    const handleMouseMove = (e: MouseEvent) => {
-      const rect = cardRef.current?.getBoundingClientRect();
-      if (!rect) return;
+  // Text streaming effect - word by word
+  useEffect(() => {
+    if (!showContent) return;
+
+    const streamText = () => {
+      if (currentParagraph >= paragraphs.length) {
+        setIsTextComplete(true);
+        // Auto-collapse after 4 seconds (reduced from 7), but only on the initial completion
+        if (!hasAutoCollapsed) {
+          setTimeout(() => {
+            setIsTextCollapsed(true);
+            setHasAutoCollapsed(true);
+          }, 4000);
+        }
+        return;
+      }
+
+      const currentParagraphText = paragraphs[currentParagraph];
+      const words = currentParagraphText.split(' ');
+      let wordIndex = 0;
       
-      if (e.clientX >= rect.left && e.clientX <= rect.right &&
-          e.clientY >= rect.top && e.clientY <= rect.bottom) {
-        
-        mouseRef.current.prevX = mouseRef.current.x;
-        mouseRef.current.prevY = mouseRef.current.y;
-        mouseRef.current.x = e.clientX - rect.left;
-        mouseRef.current.y = e.clientY - rect.top;
-        
-        // Create subtle trail particles
-        if (Math.random() > 0.1) { // More frequent particle creation
-          particlesRef.current.push({
-            x: mouseRef.current.x,
-            y: mouseRef.current.y,
-            vx: (Math.random() - 0.5) * 1.2,
-            vy: (Math.random() - 0.5) * 1.2,
-            life: 1.0,
-            size: Math.random() * 4 + 2
+      const typeInterval = setInterval(() => {
+        if (wordIndex <= words.length) {
+          setDisplayedText(() => {
+            const allPreviousParagraphs = paragraphs.slice(0, currentParagraph).join('\n\n');
+            const currentText = words.slice(0, wordIndex).join(' ');
+            return allPreviousParagraphs + (allPreviousParagraphs ? '\n\n' : '') + currentText;
           });
+          wordIndex++;
+        } else {
+          clearInterval(typeInterval);
+          setCurrentParagraph(prevParagraph => prevParagraph + 1);
         }
-        
-        if (particlesRef.current.length > 60) {
-          particlesRef.current = particlesRef.current.slice(-60);
-        }
-      }
+      }, 100); // Word by word speed
+
+      return () => clearInterval(typeInterval);
     };
 
-    const animate = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      
-      particlesRef.current = particlesRef.current.filter(particle => {
-        particle.x += particle.vx;
-        particle.y += particle.vy;
-        particle.life -= 0.015;
-        
-        if (particle.life <= 0) return false;
-        
-        const opacity = particle.life * 0.8; // Much more visible opacity
-        ctx.beginPath();
-        ctx.fillStyle = `rgba(${colorRgb}, ${opacity})`;
-        ctx.shadowBlur = 15;
-        ctx.shadowColor = `rgba(${colorRgb}, ${opacity * 0.8})`;
-        ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.shadowBlur = 0; // Reset shadow
-        
-        return true;
-      });
-      
-      animationRef.current = requestAnimationFrame(animate);
-    };
+    const timer = setTimeout(streamText, 800); // Delay before starting
+    return () => clearTimeout(timer);
+  }, [showContent, currentParagraph, paragraphs]);
 
-    document.addEventListener('mousemove', handleMouseMove);
-    animate();
+  // Upward V-shaped arc - curves up and out from center
+  const getOrbPosition = (index: number) => {
+    const totalOrbs = productsData.length;
+    const screenWidth = typeof window !== 'undefined' ? window.innerWidth : 1200;
+    const screenHeight = typeof window !== 'undefined' ? window.innerHeight : 800;
+    
+    const centerX = screenWidth / 2;
+    const centerY = screenHeight / 2;
+    
+    // Create a V-shape that curves upward from center
+    const arcWidth = Math.min(screenWidth * 0.8, 1300);
+    const arcHeight = 100; // How much the ends lift up
+    const baseY = centerY + 220; // Moved down from 160px to 220px for more text space
+    
+    const progress = index / (totalOrbs - 1); // 0 to 1
+    const x = centerX - arcWidth / 2 + progress * arcWidth;
+    
+    // V-shape: distance from center determines height
+    const distanceFromCenter = Math.abs(progress - 0.5) * 2; // 0 at center, 1 at edges
+    const y = baseY - arcHeight * distanceFromCenter;
+    
+    return { x, y };
+  };
 
-    return () => {
-      document.removeEventListener('mousemove', handleMouseMove);
-      if (animationRef.current) {
-        cancelAnimationFrame(animationRef.current);
-      }
-    };
-  }, [isActive, cardRef, colorRgb]);
+  const handleOrbClick = (productId: string) => {
+    setExpandedProductId(expandedProductId === productId ? null : productId);
+  };
 
-  if (!isActive || !cardRef?.current) return null;
+  const toggleTextExpansion = () => {
+    if (isTextCollapsed) {
+      // When expanding, reset all text states to show full content
+      setDisplayedText(paragraphs.join('\n\n'));
+      setCurrentParagraph(paragraphs.length);
+      setIsTextComplete(true);
+      setIsTextCollapsed(false);
+    } else {
+      // When collapsing, just set collapsed state
+      setIsTextCollapsed(true);
+    }
+  };
+
+  const renderStreamingText = () => {
+    return (
+      <AnimatePresence mode="wait">
+        {!isTextCollapsed ? (
+          <motion.div
+            key="expanded"
+            initial={{ opacity: 1, y: 0 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 1.2, ease: "easeInOut" }}
+          >
+            {displayedText.split('\n\n').filter(p => p.trim()).map((paragraph, index) => {
+              const isBulletPoint = paragraph.trim().startsWith('•');
+              const isSecondParagraph = index === 1;
+              
+              return (
+                <motion.p 
+                  key={index} 
+                  initial={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.8, delay: index * 0.1 }}
+                  style={{
+                    fontSize: isBulletPoint ? 'clamp(0.9rem, 1.7vw, 1.05rem)' : 
+                             isSecondParagraph ? 'clamp(1rem, 1.9vw, 1.15rem)' :
+                             index === 0 ? 'clamp(1rem, 2vw, 1.2rem)' : 'clamp(0.95rem, 1.8vw, 1.1rem)',
+                    color: isBulletPoint ? 'rgba(255, 255, 255, 0.8)' :
+                           isSecondParagraph ? 'rgba(255, 255, 255, 0.9)' :
+                           index === 0 ? 'rgba(255, 255, 255, 0.85)' : 'rgba(255, 255, 255, 0.75)',
+                    lineHeight: 1.6,
+                    margin: isBulletPoint ? '0.5rem 0' : 
+                           isSecondParagraph ? '1.5rem 0 0.5rem 0' :
+                           index === 0 ? '0 0 1rem 0' : 
+                           index === paragraphs.length - 1 ? '1rem 0 0 0' : '0.5rem 0',
+                    fontWeight: isSecondParagraph ? 600 : 400,
+                    paddingLeft: isBulletPoint ? '1rem' : 0
+                  }}
+                >
+                  {paragraph}
+                  {index === displayedText.split('\n\n').filter(p => p.trim()).length - 1 && 
+                   currentParagraph < paragraphs.length && (
+                    <span style={{
+                      display: 'inline-block',
+                      width: '2px',
+                      height: '1.2em',
+                      backgroundColor: '#06B6D4',
+                      marginLeft: '4px',
+                      animation: 'blink 1s infinite'
+                    }} />
+                  )}
+                </motion.p>
+              );
+            })}
+            {isTextComplete && (
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  toggleTextExpansion();
+                }}
+                style={{
+                  background: 'rgba(6, 182, 212, 0.2)',
+                  border: '1px solid rgba(6, 182, 212, 0.5)',
+                  borderRadius: '20px',
+                  color: '#06B6D4',
+                  fontSize: '0.9rem',
+                  padding: '0.5rem 1rem',
+                  cursor: 'pointer',
+                  transition: 'all 0.3s ease',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.5rem',
+                  margin: '1rem auto 0 auto',
+                  opacity: 0,
+                  animation: 'fadeIn 0.5s ease 1s forwards'
+                }}
+                onMouseOver={(e) => {
+                  e.currentTarget.style.background = 'rgba(6, 182, 212, 0.3)';
+                  e.currentTarget.style.borderColor = '#06B6D4';
+                }}
+                onMouseOut={(e) => {
+                  e.currentTarget.style.background = 'rgba(6, 182, 212, 0.2)';
+                  e.currentTarget.style.borderColor = 'rgba(6, 182, 212, 0.5)';
+                }}
+              >
+                Collapse 
+                <span style={{ transform: 'rotate(-90deg)', fontSize: '0.8rem' }}>→</span>
+              </button>
+            )}
+          </motion.div>
+        ) : (
+          <motion.div
+            key="collapsed"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+          >
+            <p style={{
+              fontSize: 'clamp(1rem, 2vw, 1.2rem)',
+              color: 'rgba(255, 255, 255, 0.85)',
+              lineHeight: 1.6,
+              margin: '0 0 1rem 0',
+              fontWeight: 400
+            }}>
+              {paragraphs[0] + "..."}
+            </p>
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                toggleTextExpansion();
+              }}
+              style={{
+                background: 'rgba(6, 182, 212, 0.2)',
+                border: '1px solid rgba(6, 182, 212, 0.5)',
+                borderRadius: '20px',
+                color: '#06B6D4',
+                fontSize: '0.9rem',
+                padding: '0.5rem 1rem',
+                cursor: 'pointer',
+                transition: 'all 0.3s ease',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '0.5rem',
+                margin: '0 auto'
+              }}
+              onMouseOver={(e) => {
+                e.currentTarget.style.background = 'rgba(6, 182, 212, 0.3)';
+                e.currentTarget.style.borderColor = '#06B6D4';
+              }}
+              onMouseOut={(e) => {
+                e.currentTarget.style.background = 'rgba(6, 182, 212, 0.2)';
+                e.currentTarget.style.borderColor = 'rgba(6, 182, 212, 0.5)';
+              }}
+            >
+              Read More 
+              <span style={{ transform: 'rotate(90deg)', fontSize: '0.8rem' }}>→</span>
+            </button>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    );
+  };
 
   return (
-    <canvas
-      ref={canvasRef}
-      style={{
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        width: '100%',
-        height: '100%',
-        pointerEvents: 'none',
-        zIndex: 1
-      }}
-    />
+    <>
+      <style jsx>{`
+        @keyframes blink {
+          0%, 50% { opacity: 1; }
+          51%, 100% { opacity: 0; }
+        }
+        
+        @keyframes fadeIn {
+          from { opacity: 0; }
+          to { opacity: 1; }
+        }
+      `}</style>
+      
+      <section
+        ref={sectionRef}
+        className="whats-next-section"
+        style={{
+          position: 'relative',
+          width: '100vw',
+          height: '100vh',
+          overflow: 'hidden',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          isolation: 'isolate', // Prevent layout bleeding
+          zIndex: 1 // Lower than previous sections
+        }}
+      >
+        {/* Earth Background Video */}
+        <div style={{
+          position: 'absolute',
+          inset: 0,
+          zIndex: 1
+        }}>
+          <video
+            style={{
+              position: 'absolute',
+              top: '50%',
+              left: '50%',
+              minWidth: '100%',
+              minHeight: '100%',
+              transform: 'translate(-50%, -50%)',
+              objectFit: 'cover',
+              willChange: 'auto'
+            }}
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="metadata"
+          >
+            <source src="/images/SectionWhatsNextMedia/WhatsNext.mp4" type="video/mp4" />
+          </video>
+        </div>
+
+        {/* Background overlay */}
+        <div style={{
+          position: 'absolute',
+          inset: 0,
+          background: 'linear-gradient(135deg, rgba(0, 0, 0, 0.4) 0%, rgba(15, 23, 42, 0.6) 50%, rgba(0, 0, 0, 0.5) 100%)',
+          zIndex: 2
+        }} />
+
+        {/* Add Comet Trail Effect */}        
+        <CometTrail isActive={showContent} />
+
+        {/* Section Title */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={showContent ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8 }}
+          style={{
+            position: 'absolute',
+            top: '40px', // Moved up from 60px
+            left: 0,
+            right: 0,
+            zIndex: 10,
+            textAlign: 'center',
+            width: '100%'
+          }}
+        >
+          <h2 className="text-4xl sm:text-5xl font-bold font-headline mb-5" style={{
+            fontSize: 'clamp(2.5rem, 5vw, 4rem)',
+            fontWeight: 800,
+            color: '#ffffff',
+            margin: '0 0 1.5rem 0',
+            background: 'linear-gradient(135deg, #ffffff 0%, #ffffff 25%, rgba(6, 182, 212, 0.8) 50%, #ffffff 75%, #ffffff 100%)', // More white on sides, less blue spread
+            backgroundClip: 'text',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+            textShadow: '0 0 30px rgba(6, 182, 212, 0.3)',
+            letterSpacing: '-0.02em'
+          }}>
+            What&apos;s Next at NovaThink
+          </h2>
+          
+          {/* Streaming intro text */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={showContent ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.8, delay: 0.3 }}
+            style={{
+              maxWidth: '800px',
+              margin: '0 auto',
+              padding: '0 2rem'
+            }}
+          >
+            <AnimatePresence mode="wait">
+              {renderStreamingText()}
+            </AnimatePresence>
+          </motion.div>
+        </motion.div>
+
+        {/* Product Orbs - Show only after text is complete */}
+        <AnimatePresence>
+          {showContent && isTextComplete && (
+            <div style={{
+              position: 'relative',
+              width: '100%',
+              height: '100%',
+              zIndex: 5 // Lower than the text container (zIndex: 10)
+            }}>
+              {productsData.map((product, index) => {
+                const position = getOrbPosition(index);
+                return (
+                  <ProductOrb
+                    key={product.id}
+                    product={product}
+                    position={position}
+                    isExpanded={expandedProductId === product.id}
+                    hasExpandedCard={expandedProductId !== null}
+                    onClick={() => handleOrbClick(product.id)}
+                    index={index}
+                  />
+                );
+              })}
+            </div>
+          )}
+        </AnimatePresence>
+      </section>
+    </>
   );
 };
 
-export default function SectionAbout() {
-  const ref = useRef<HTMLElement>(null);
-  const card1Ref = useRef<HTMLDivElement>(null);
-  const card2Ref = useRef<HTMLDivElement>(null);
-  
-  const [flippedCards, setFlippedCards] = useState<Set<string>>(new Set());
-  const [hoveredCard, setHoveredCard] = useState<string | null>(null);
-  
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ['start end', 'end start'],
-  });
-
-  const y = useSpring(useTransform(scrollYProgress, [0, 1], [75, -75]), {
-    stiffness: 40,
-    damping: 12,
-  });
-  
-  const opacity = useTransform(scrollYProgress, [0, 0.3, 1], [0.2, 1, 1]);
-
-  const cardVariants = {
-    hidden: { opacity: 0, y: 40 },
-    visible: (i: number) => ({
-      opacity: 1,
-      y: 0,
-      transition: {
-        delay: i * 0.2,
-        duration: 0.8,
-        ease: [0.4, 0, 0.2, 1]
-      }
-    })
-  };
-
-  const handleCardClick = (cardId: string) => {
-    setFlippedCards(prev => {
-      const newSet = new Set(prev);
-      if (newSet.has(cardId)) {
-        newSet.delete(cardId);
-      } else {
-        newSet.add(cardId);
-      }
-      return newSet;
-    });
-  };
-
-  return (
-    <section
-      ref={ref}
-      className="relative w-full text-white min-h-screen pt-32 pb-16 sm:pb-32 px-6 flex flex-col items-center justify-center text-center overflow-visible"
-    >
-      {/* Background layers */}
-      <div className="absolute inset-0 z-0 pointer-events-none">
-        <video
-          autoPlay
-          loop
-          muted
-          playsInline
-          className="w-full h-full object-cover opacity-25"
-        >
-          <source
-            src="/images/SectionAboutMedia/SectionAboutVideo2.mp4"
-            type="video/mp4"
-          />
-        </video>
-      </div>
-
-      <div
-        className="pointer-events-none absolute inset-0 w-full h-full z-10"
-        style={{
-          backgroundImage: `url('/images/SectionAboutBlueWave.webp')`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat',
-          opacity: 0.2,
-        }}
-      />
-  
-      <div className="absolute inset-0 bg-black opacity-20 z-20 pointer-events-none" />  
-
-      {/* Content */}
-      <motion.div
-        className="relative z-50 max-w-6xl px-4 w-full"
-        style={{ y, opacity }}
-      >
-        <h2 className="text-4xl sm:text-5xl font-bold font-headline mb-12">
-          Thinks Deeper. Moves Faster. Deploys Intelligently.
-        </h2>
-
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={cardVariants}
-          custom={0}
-          className="mb-16"
-        >
-          <h3 className="text-2xl sm:text-3xl font-bold mb-8 leading-tight">
-            NovaThink is building the <span className="text-cyan-400">cognitive operating system</span> for the AI era.
-          </h3>
-        </motion.div>
-
-        {/* Flippable Cards */}
-        <div className="flex flex-col lg:flex-row gap-8 mb-16 justify-center">
-          {/* Card 1 */}
-          <motion.div
-            ref={card1Ref}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={cardVariants}
-            custom={1}
-            className={`flip-card-container flex-1 max-w-lg ${
-              flippedCards.has('card1') ? 'flipped' : ''
-            } ${hoveredCard === 'card1' ? 'hover' : ''}`}
-            onClick={(e) => {
-              e.stopPropagation();
-              handleCardClick('card1');
-            }}
-            onMouseEnter={() => setHoveredCard('card1')}
-            onMouseLeave={() => setHoveredCard(null)}
-          >
-            <div className="flip-card-inner">
-              {/* Front Face */}
-              <div className="flip-card-front glassmorphic-card-face">
-                <h4 className="text-xl font-bold text-cyan-400 tracking-wide uppercase text-center">
-                  The Cognitive OS Layer Between LLMs and Execution
-                </h4>
-              </div>
-              
-              {/* Back Face */}
-              <div className="flip-card-back glassmorphic-card-face">
-                <CardCometTrail 
-                  isActive={flippedCards.has('card1')} 
-                  cardRef={card1Ref}
-                />
-                <div style={{ position: 'relative', zIndex: 2 }}>
-                  <h4 className="text-lg font-bold text-cyan-400 mb-4 tracking-wide uppercase">
-                    The Cognitive OS Layer Between LLMs and Execution
-                  </h4>
-                  <p className="mb-6 text-base sm:text-lg leading-relaxed">
-                    Where today's large language models offer raw capacity, NovaThink provides the <em className="text-cyan-300">meta-layer</em> that unlocks their full potential — transforming reactive tools into <strong className="text-white">adaptive, persistent intelligences</strong> capable of reasoning, remembering, and orchestrating action at scale.
-                  </p>
-                  <p className="text-base sm:text-lg leading-relaxed">
-                    Today's LLMs are not bottlenecked by training data or compute. They are bottlenecked by lack of structure — missing the <strong className="text-white">multi-step reasoning frameworks</strong> and <strong className="text-white">cognitive persistence</strong> required to sustain real-world complexity in domains like strategy, research, policy, defense, and executive operations.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </motion.div>
-
-          {/* Card 2 */}
-          <motion.div
-            ref={card2Ref}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={cardVariants}
-            custom={2}
-            className={`flip-card-container flex-1 max-w-lg ${
-              flippedCards.has('card2') ? 'flipped' : ''
-            } ${hoveredCard === 'card2' ? 'hover' : ''}`}
-            onClick={(e) => {
-              e.stopPropagation();
-              handleCardClick('card2');
-            }}
-            onMouseEnter={() => setHoveredCard('card2')}
-            onMouseLeave={() => setHoveredCard(null)}
-          >
-            <div className="flip-card-inner">
-              {/* Front Face */}
-              <div className="flip-card-front glassmorphic-card-face">
-                <h4 className="text-xl font-bold text-cyan-400 tracking-wide uppercase text-center">
-                  Built for Mission-Critical Cognitive Infrastructure
-                </h4>
-              </div>
-              
-              {/* Back Face */}
-              <div className="flip-card-back glassmorphic-card-face">
-                <CardCometTrail 
-                  isActive={flippedCards.has('card2')} 
-                  cardRef={card2Ref}
-                />
-                <div style={{ position: 'relative', zIndex: 2 }}>
-                  <h4 className="text-lg font-bold text-cyan-400 mb-4 tracking-wide uppercase">
-                    Built for Mission-Critical Cognitive Infrastructure
-                  </h4>
-                  <p className="mb-6 text-base leading-relaxed">
-                    NovaThink closes this gap. We embed recursive logic frameworks, adaptive cognition patterns, and domain-specific reasoning protocols — creating stateful AI systems that <strong className="text-white">think beyond the prompt window</strong> and carry objectives forward with continuity, depth, and adaptive learning over time.
-                  </p>
-                  <p className="mb-4 text-base leading-relaxed">
-                    All of this is delivered through <strong className="text-white">enterprise-grade infrastructure</strong>:
-                  </p>
-                  <ul className="text-left space-y-2 text-sm leading-relaxed text-slate-200">
-                    <li>• Fully isolated, encrypted VPC deployments for uncompromising data security</li>
-                    <li>• Multi-model backends (OpenAI, Anthropic, open-source) for continuity and resilience</li>
-                    <li>• Compliance engineered from the ground up — SOC 2, ISO 27001, and beyond</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </motion.div>
-        </div>
-
-        {/* Closing Subheadline */}
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={cardVariants}
-          custom={3}
-          className="mb-8"
-        >
-          <h3 className="text-2xl sm:text-3xl font-bold mb-4 leading-tight">
-            <span className="text-cyan-400">NovaThink is something fundamentally new:</span>
-          </h3>
-          <p className="text-xl leading-relaxed max-w-4xl mx-auto">
-            An LLM-agnostic cognitive OS — the intelligence amplification layer that will define how humans and AI collaborate over the next decade.
-          </p>
-        </motion.div>
-      </motion.div>
-
-      {/* Cyan Accent Line */}
-      <div className="h-[3px] mx-auto mt-12 bg-cyan-400 rounded-full shadow-[0_0_20px_5px_rgba(34,211,238,0.5)] w-1/4 z-60" />
-    </section>
-  );
-}
+export default WhatsNextSection;

@@ -53,19 +53,19 @@ const CardCometTrail: React.FC<CardCometTrailProps> = ({
         mouseRef.current.y = e.clientY - rect.top;
         
         // Create subtle trail particles
-        if (Math.random() > 0.3) { // Less frequent particle creation
+        if (Math.random() > 0.1) { // More frequent particle creation
           particlesRef.current.push({
             x: mouseRef.current.x,
             y: mouseRef.current.y,
-            vx: (Math.random() - 0.5) * 0.5,
-            vy: (Math.random() - 0.5) * 0.5,
+            vx: (Math.random() - 0.5) * 1.2,
+            vy: (Math.random() - 0.5) * 1.2,
             life: 1.0,
-            size: Math.random() * 2 + 1
+            size: Math.random() * 4 + 2
           });
         }
         
-        if (particlesRef.current.length > 30) {
-          particlesRef.current = particlesRef.current.slice(-30);
+        if (particlesRef.current.length > 60) {
+          particlesRef.current = particlesRef.current.slice(-60);
         }
       }
     };
@@ -76,15 +76,18 @@ const CardCometTrail: React.FC<CardCometTrailProps> = ({
       particlesRef.current = particlesRef.current.filter(particle => {
         particle.x += particle.vx;
         particle.y += particle.vy;
-        particle.life -= 0.02;
+        particle.life -= 0.015;
         
         if (particle.life <= 0) return false;
         
-        const opacity = particle.life * 0.3; // Subtle opacity
+        const opacity = particle.life * 0.8; // Much more visible opacity
         ctx.beginPath();
         ctx.fillStyle = `rgba(${colorRgb}, ${opacity})`;
+        ctx.shadowBlur = 15;
+        ctx.shadowColor = `rgba(${colorRgb}, ${opacity * 0.8})`;
         ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
         ctx.fill();
+        ctx.shadowBlur = 0; // Reset shadow
         
         return true;
       });
