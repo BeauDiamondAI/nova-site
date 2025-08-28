@@ -1,9 +1,34 @@
-/* SectionAbout.css - Glassmorphic Cards */
+/* SectionAbout.css - Glassmorphic Cards with Fixed Flip Animation */
 
+/* Flippable Card Container */
+.flip-card-container {
+  min-height: 400px;
+  height: 100%;
+  perspective: 1000px;
+  cursor: pointer;
+  position: relative;
+}
+
+/* Inner container that actually flips */
+.flip-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 400px;
+  transform-style: preserve-3d;
+  transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: rotateY(0deg);
+}
+
+/* Apply flip transform to inner container */
+.flip-card-container.flipped .flip-card-inner {
+  transform: rotateY(180deg);
+}
+
+/* Glassmorphic styling */
 .glassmorphic-card {
   padding: 2rem;
   border-radius: 16px;
-  position: relative;
   
   /* Enhanced glassmorphism */
   background: linear-gradient(
@@ -28,24 +53,79 @@
   /* Performance optimizations */
   transform: translateZ(0);
   contain: layout style paint;
-  transition: all 0.3s ease;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-.glassmorphic-card:hover {
-  transform: translateY(-4px) translateZ(0);
-  border-color: rgba(255, 255, 255, 0.15);
+/* Hover effect - only on the container */
+.flip-card-container.hover .glassmorphic-card {
+  border-color: rgba(6, 182, 212, 0.5);
   box-shadow: 
-    0 0 0 1px rgba(255, 255, 255, 0.08),
-    0 15px 50px -10px rgba(6, 182, 212, 0.3),
-    0 30px 35px -5px rgba(0, 0, 0, 0.4),
+    0 0 30px rgba(6, 182, 212, 0.4), 
+    0 0 60px rgba(6, 182, 212, 0.2), 
+    0 10px 40px -10px rgba(6, 182, 212, 0.3),
     inset 0 1px 0 rgba(255, 255, 255, 0.15);
 }
 
+/* Front face */
+.flip-card-front {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  transform: rotateY(0deg);
+  z-index: 2;
+}
+
+/* Back face */
+.flip-card-back {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform: rotateY(180deg);
+  padding: 2rem;
+  overflow-y: auto;
+  z-index: 1;
+}
+
+/* Smooth scrollbar for back content */
+.flip-card-back::-webkit-scrollbar {
+  width: 6px;
+}
+
+.flip-card-back::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 3px;
+}
+
+.flip-card-back::-webkit-scrollbar-thumb {
+  background: rgba(6, 182, 212, 0.3);
+  border-radius: 3px;
+}
+
+.flip-card-back::-webkit-scrollbar-thumb:hover {
+  background: rgba(6, 182, 212, 0.5);
+}
+
+/* Responsive adjustments */
 @media (max-width: 1024px) {
   .glassmorphic-card {
     padding: 1.5rem;
     margin: 0 auto;
     max-width: 600px;
+  }
+  
+  .flip-card-front,
+  .flip-card-back {
+    padding: 1.5rem;
   }
 }
 
@@ -53,6 +133,19 @@
   .glassmorphic-card {
     padding: 1.25rem;
     max-width: 100%;
+  }
+  
+  .flip-card-front,
+  .flip-card-back {
+    padding: 1.25rem;
+  }
+  
+  .flip-card-container {
+    min-height: 350px;
+  }
+  
+  .flip-card-inner {
+    min-height: 350px;
   }
 }
 
@@ -68,50 +161,13 @@
   }
 }
 
-/* Accessibility */
+/* Accessibility - reduced motion */
 @media (prefers-reduced-motion: reduce) {
+  .flip-card-inner {
+    transition: none;
+  }
+  
   .glassmorphic-card {
     transition: none;
   }
-}
-
-/* Flippable Card Styles */
-.flip-card-container {
-  min-height: 400px;
-  height: 100%;
-  perspective: 1000px;
-  transform-style: preserve-3d;
-  transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-  cursor: pointer;
-  position: relative;
-}
-
-.flip-card-container.flipped {
-  transform: rotateY(180deg);
-}
-
-.flip-card-container.hover {
-  border-color: rgba(6, 182, 212, 0.5);
-  box-shadow: 0 0 30px rgba(6, 182, 212, 0.4), 
-              0 0 60px rgba(6, 182, 212, 0.2), 
-              0 10px 40px -10px rgba(6, 182, 212, 0.3);
-}
-
-.flip-card-face {
-  position: absolute;
-  inset: 0;
-  backface-visibility: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 2rem;
-}
-
-.flip-card-back {
-  position: absolute;
-  inset: 0;
-  backface-visibility: hidden;
-  transform: rotateY(180deg);
-  padding: 2rem;
-  overflow-y: auto;
 }
