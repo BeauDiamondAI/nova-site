@@ -2,7 +2,7 @@
 'use client'
 
 import Hero from '@/components/Hero'
-import SectionAbout from '@/components/SectionAbout';
+import SectionAbout from '@/components/SectionAbout/SectionAbout';
 import SectionCorePillars from '@/components/SectionCorePillars';
 import SectionNovaThinkLabs from '@/components/SectionNovaThinkLabs';
 import WhoWeServeSection from '@/components/SectionWhoWeServe/WhoWeServeSection';
