@@ -103,11 +103,13 @@
 .flip-card-back::-webkit-scrollbar-track {
   background: rgba(255, 255, 255, 0.05);
   border-radius: 3px;
+  margin: 8px 0; /* Add top and bottom margin to respect rounded corners */
 }
 
 .flip-card-back::-webkit-scrollbar-thumb {
   background: rgba(6, 182, 212, 0.3);
   border-radius: 3px;
+  margin: 8px 0; /* Match the track margin */
 }
 
 .flip-card-back::-webkit-scrollbar-thumb:hover {
