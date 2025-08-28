@@ -306,7 +306,7 @@ export default function SectionAbout() {
                   isActive={flippedCards.has('card2')} 
                   cardRef={card2Ref}
                 />
-                <div style={{ position: 'relative', zIndex: 2 }}>
+                <div className="card-content" style={{ position: 'relative', zIndex: 2 }}>
                   <h4 className="text-lg font-bold text-cyan-400 mb-4 tracking-wide uppercase">
                     Built for Mission-Critical Cognitive Infrastructure
                   </h4>
