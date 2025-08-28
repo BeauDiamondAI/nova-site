@@ -263,12 +263,12 @@ export default function SectionAbout() {
                   <h4 className="text-lg font-bold text-cyan-400 mb-4 tracking-wide uppercase">
                     The Cognitive OS Layer Between LLMs and Execution
                   </h4>
-                 <p className="mb-6 text-base sm:text-lg leading-relaxed">
-                    Where today's large language models offer raw capacity, NovaThink provides the <em className="text-cyan-300">meta-layer</em> that unlocks their full potential — transforming reactive tools into <strong className="text-white">adaptive, persistent intelligences</strong> capable of reasoning, remembering, and orchestrating action at scale.
-                </p>
-                <p className="text-base sm:text-lg leading-relaxed">
-                    Today's LLMs are not bottlenecked by training data or compute. They are bottlenecked by lack of structure — missing the <strong className="text-white">multi-step reasoning frameworks</strong> and <strong className="text-white">cognitive persistence</strong> required to sustain real-world complexity in domains like strategy, research, policy, defense, and executive operations.
-                </p>
+                  <p className="mb-6 text-base sm:text-lg leading-relaxed">
+                    Where today{`'`}s large language models offer raw capacity, NovaThink provides the <em className="text-cyan-300">meta-layer</em> that unlocks their full potential {`—`} transforming reactive tools into <strong className="text-white">adaptive, persistent intelligences</strong> capable of reasoning, remembering, and orchestrating action at scale.
+                  </p>
+                  <p className="text-base sm:text-lg leading-relaxed">
+                    Today{`'`}s LLMs are not bottlenecked by training data or compute. They are bottlenecked by lack of structure {`—`} missing the <strong className="text-white">multi-step reasoning frameworks</strong> and <strong className="text-white">cognitive persistence</strong> required to sustain real-world complexity in domains like strategy, research, policy, defense, and executive operations.
+                  </p>
                 </div>
               </div>
             </div>
@@ -311,7 +311,7 @@ export default function SectionAbout() {
                     Built for Mission-Critical Cognitive Infrastructure
                   </h4>
                   <p className="mb-6 text-base leading-relaxed">
-                    NovaThink closes this gap. We embed recursive logic frameworks, adaptive cognition patterns, and domain-specific reasoning protocols — creating stateful AI systems that <strong className="text-white">think beyond the prompt window</strong> and carry objectives forward with continuity, depth, and adaptive learning over time.
+                    NovaThink closes this gap. We embed recursive logic frameworks, adaptive cognition patterns, and domain-specific reasoning protocols {`—`} creating stateful AI systems that <strong className="text-white">think beyond the prompt window</strong> and carry objectives forward with continuity, depth, and adaptive learning over time.
                   </p>
                   <p className="mb-4 text-base leading-relaxed">
                     All of this is delivered through <strong className="text-white">enterprise-grade infrastructure</strong>:
@@ -340,7 +340,7 @@ export default function SectionAbout() {
             <span className="text-cyan-400">NovaThink is something fundamentally new:</span>
           </h3>
           <p className="text-xl leading-relaxed max-w-4xl mx-auto">
-            An LLM-agnostic cognitive OS — the intelligence amplification layer that will define how humans and AI collaborate over the next decade.
+            An LLM-agnostic cognitive OS {`—`} the intelligence amplification layer that will define how humans and AI collaborate over the next decade.
           </p>
         </motion.div>
       </motion.div>
