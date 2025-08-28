@@ -264,10 +264,10 @@ export default function SectionAbout() {
                     The Cognitive OS Layer Between LLMs and Execution
                   </h4>
                   <p className="mb-6 text-base sm:text-lg leading-relaxed">
-                    Where today{`'`}s large language models offer raw capacity, NovaThink provides the <em className="text-cyan-300">meta-layer</em> that unlocks their full potential {`—`} transforming reactive tools into <strong className="text-white">adaptive, persistent intelligences</strong> capable of reasoning, remembering, and orchestrating action at scale.
+                    Where today{`'`}s large language models offer <span className="text-cyan-400">raw capacity</span>, NovaThink provides the <em className="text-cyan-300">meta-layer</em> that unlocks their full potential {`—`} transforming reactive tools into <span className="text-cyan-400">adaptive, persistent intelligences</span> capable of reasoning, remembering, and orchestrating action at scale.
                   </p>
                   <p className="text-base sm:text-lg leading-relaxed">
-                    Today{`'`}s LLMs are not bottlenecked by training data or compute. They are bottlenecked by lack of structure {`—`} missing the <strong className="text-white">multi-step reasoning frameworks</strong> and <strong className="text-white">cognitive persistence</strong> required to sustain real-world complexity in domains like strategy, research, policy, defense, and executive operations.
+                    Today{`'`}s LLMs are <span className="text-cyan-400">not bottlenecked by training data or compute</span>. They are bottlenecked by lack of structure {`—`} missing the <span className="text-cyan-400">multi-step reasoning frameworks</span> and cognitive scaffolding required to sustain real-world complexity in domains like <span className="text-cyan-400">strategy, research, policy, defense, and executive operations</span>.
                   </p>
                 </div>
               </div>
@@ -311,15 +311,18 @@ export default function SectionAbout() {
                     Built for Mission-Critical Cognitive Infrastructure
                   </h4>
                   <p className="mb-6 text-base leading-relaxed">
-                    NovaThink closes this gap. We embed recursive logic frameworks, adaptive cognition patterns, and domain-specific reasoning protocols {`—`} creating stateful AI systems that <strong className="text-white">think beyond the prompt window</strong> and carry objectives forward with continuity, depth, and adaptive learning over time.
+                    NovaThink closes the gap between <span className="text-cyan-400">possible and actual</span>.
+                  </p>
+                  <p className="mb-6 text-base leading-relaxed">
+                    Our innovation is <span className="text-cyan-400">proprietary cognitive scaffolding</span> that amplifies intelligence <span className="text-cyan-400">without adding token overhead</span> {`—`} restructuring rather than inflating. The result is orders-of-magnitude <span className="text-cyan-400">increases in reasoning depth, continuity, and adaptive execution</span>. This isn{`'`}t more baggage for models to carry, but a <span className="text-cyan-400">precision cognitive OS layer</span> that transforms <span className="text-cyan-400">latent potential into actual intelligence</span> {`—`} persistent, stateful, and ready for mission-critical objectives.
                   </p>
                   <p className="mb-4 text-base leading-relaxed">
-                    All of this is delivered through <strong className="text-white">enterprise-grade infrastructure</strong>:
+                    All of this is delivered through <span className="text-cyan-400">enterprise-grade infrastructure</span>:
                   </p>
                   <ul className="text-left space-y-2 text-sm leading-relaxed text-slate-200">
-                    <li>• Fully isolated, encrypted VPC deployments for uncompromising data security</li>
-                    <li>• Multi-model backends (OpenAI, Anthropic, open-source) for continuity and resilience</li>
-                    <li>• Compliance engineered from the ground up — SOC 2, ISO 27001, and beyond</li>
+                    <li>• <span className="text-cyan-400">Fully isolated, encrypted VPC deployments</span> for uncompromising data security</li>
+                    <li>• <span className="text-cyan-400">Multi-model backends</span> (OpenAI, Anthropic, open-source) for <span className="text-cyan-400">continuity and resilience</span></li>
+                    <li>• <span className="text-cyan-400">Compliance engineered</span> from the ground up {`—`} <span className="text-cyan-400">SOC 2, ISO 27001</span>, and beyond</li>
                   </ul>
                 </div>
               </div>
