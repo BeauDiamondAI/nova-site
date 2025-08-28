@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect, MouseEvent } from "react";
+import { useState, useRef, useEffect } from "react";
 import "./SectionAbout.css";
 
 type CardId = "card1" | "card2";
@@ -12,25 +12,38 @@ export default function SectionAbout() {
 
   // Mouse tracking glow — only active when a card is flipped
   const handleMouseMove =
-    (ref: React.RefObject<HTMLDivElement | null>, id: CardId) =>
+    (ref: React.RefObject<HTMLDivElement | null>) =>
     (e: React.MouseEvent<HTMLDivElement>) => {
       const el = ref.current;
-      if (!el) return;                    // null-safe
+      if (!el) return;
+
+      // Only track when this specific card is flipped
+      if (
+        (ref === card1Ref && !flipped.has("card1")) ||
+        (ref === card2Ref && !flipped.has("card2"))
+      ) {
+        return;
+      }
+
       const rect = el.getBoundingClientRect();
       const x = e.clientX - rect.left;
       const y = e.clientY - rect.top;
       el.style.setProperty("--mx", `${x}px`);
       el.style.setProperty("--my", `${y}px`);
-  };
+    };
 
   const toggle = (id: CardId) =>
     setFlipped((prev) => {
       const next = new Set(prev);
-      next.has(id) ? next.delete(id) : next.add(id);
+      if (next.has(id)) {
+        next.delete(id);
+      } else {
+        next.add(id);
+      }
       return next;
     });
 
-  // Make sure CSS vars are initialized so the glow has a position
+  // Initialize CSS vars so the glow has a starting position
   useEffect(() => {
     [card1Ref, card2Ref].forEach((r) => {
       if (r.current) {
@@ -57,10 +70,8 @@ export default function SectionAbout() {
         {/* Card 1 */}
         <div
           ref={card1Ref}
-          className={`flip-card-container ${
-            flipped.has("card1") ? "flipped" : ""
-          }`}
-          onMouseMove={handleMouseMove(card1Ref, "card1")}
+          className={`flip-card-container ${flipped.has("card1") ? "flipped" : ""}`}
+          onMouseMove={handleMouseMove(card1Ref)}
         >
           <button
             type="button"
@@ -81,7 +92,6 @@ export default function SectionAbout() {
                   <h3 className="card-kicker">THE COGNITIVE OS LAYER</h3>
                   <p className="card-text">Between LLMs and execution.</p>
                 </div>
-                {/* hover cyan line/glow */}
                 <div className="hover-glow" />
               </div>
 
@@ -91,16 +101,10 @@ export default function SectionAbout() {
                   <h3 className="card-kicker">Deep System Context</h3>
                   <p className="card-text">
                     NovaThink orchestrates reasoning, budget, and latency across
-                    providers with guardrailed execution and mission-critical
-                    reliability.
+                    providers with guardrailed execution and mission-critical reliability.
                   </p>
                 </div>
-                {/* cyan mouse-tracking glow appears only when flipped */}
-                <div
-                  className={`tracked-glow ${
-                    flipped.has("card1") ? "active" : ""
-                  }`}
-                />
+                <div className={`tracked-glow ${flipped.has("card1") ? "active" : ""}`} />
               </div>
             </div>
           </button>
@@ -109,10 +113,8 @@ export default function SectionAbout() {
         {/* Card 2 */}
         <div
           ref={card2Ref}
-          className={`flip-card-container ${
-            flipped.has("card2") ? "flipped" : ""
-          }`}
-          onMouseMove={handleMouseMove(card2Ref, "card2")}
+          className={`flip-card-container ${flipped.has("card2") ? "flipped" : ""}`}
+          onMouseMove={handleMouseMove(card2Ref)}
         >
           <button
             type="button"
@@ -141,15 +143,11 @@ export default function SectionAbout() {
                 <div className="face-content">
                   <h3 className="card-kicker">Enterprise-Grade Controls</h3>
                   <p className="card-text">
-                    Observability, policy enforcement, and rollback-safe
-                    workflows with cyan comet glow tracking for focused reveal.
+                    Observability, policy enforcement, and rollback-safe workflows with
+                    cyan comet glow tracking for focused reveal.
                   </p>
                 </div>
-                <div
-                  className={`tracked-glow ${
-                    flipped.has("card2") ? "active" : ""
-                  }`}
-                />
+                <div className={`tracked-glow ${flipped.has("card2") ? "active" : ""}`} />
               </div>
             </div>
           </button>
@@ -159,8 +157,8 @@ export default function SectionAbout() {
       <div className="about-footer">
         <h3 className="about-claim">NovaThink is something fundamentally new:</h3>
         <p className="about-copy">
-          An LLM-agnostic cognitive OS — the intelligence amplification layer
-          that will define how humans and AI collaborate over the next decade.
+          An LLM-agnostic cognitive OS — the intelligence amplification layer that will
+          define how humans and AI collaborate over the next decade.
         </p>
       </div>
     </section>
