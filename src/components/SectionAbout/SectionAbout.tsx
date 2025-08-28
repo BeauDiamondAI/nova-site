@@ -19,7 +19,7 @@ export default function SectionAbout() {
 
   const cardVariants = {
     hidden: { opacity: 0, y: 40 },
-    visible: (i) => ({
+    visible: (i: number) => ({
       opacity: 1,
       y: 0,
       transition: {
