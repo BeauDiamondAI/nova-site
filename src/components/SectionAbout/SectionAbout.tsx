@@ -95,11 +95,11 @@ const SectionCometTrail: React.FC<SectionCometTrailProps> = ({ isActive, section
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    const sectionRect = sectionRef.current.getBoundingClientRect();
+    const sectionRect = sectionRef.current?.getBoundingClientRect();
     
     const resizeCanvas = () => {
       if (!sectionRef.current) return;
-      const sectionRect = sectionRef.current.getBoundingClientRect();
+      const sectionRect = sectionRef.current?.getBoundingClientRect();
       canvas.width = sectionRect.width;
       canvas.height = sectionRect.height;
     };
@@ -207,7 +207,7 @@ const SectionCometTrail: React.FC<SectionCometTrailProps> = ({ isActive, section
 
   if (!isActive || !sectionRef?.current) return null;
 
-  const sectionRect = sectionRef.current.getBoundingClientRect();
+  const sectionRect = sectionRef.current?.getBoundingClientRect();
 
   return (
     <canvas
@@ -352,10 +352,10 @@ export default function SectionAbout() {
               The Cognitive OS Layer Between LLMs and Execution
             </h4>
             <p className="mb-6 text-base sm:text-lg leading-relaxed">
-              Where today's large language models offer raw capacity, NovaThink provides the <em className="text-cyan-300">meta-layer</em> that unlocks their full potential — transforming reactive tools into <strong className="text-white">adaptive, persistent intelligences</strong> capable of reasoning, remembering, and orchestrating action at scale.
+              Where today&apos;s large language models offer raw capacity, NovaThink provides the <em className="text-cyan-300">meta-layer</em> that unlocks their full potential — transforming reactive tools into <strong className="text-white">adaptive, persistent intelligences</strong> capable of reasoning, remembering, and orchestrating action at scale.
             </p>
             <p className="text-base sm:text-lg leading-relaxed">
-              Today's LLMs are not bottlenecked by training data or compute. They are bottlenecked by lack of structure — missing the <strong className="text-white">multi-step reasoning frameworks</strong> and <strong className="text-white">cognitive persistence</strong> required to sustain real-world complexity in domains like strategy, research, policy, defense, and executive operations.
+              Today&apos;s LLMs are not bottlenecked by training data or compute. They are bottlenecked by lack of structure — missing the <strong className="text-white">multi-step reasoning frameworks</strong> and <strong className="text-white">cognitive persistence</strong> required to sustain real-world complexity in domains like strategy, research, policy, defense, and executive operations.
             </p>
             
             {/* Blur overlay */}
