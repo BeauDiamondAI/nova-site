@@ -90,6 +90,7 @@
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
   transform: rotateY(180deg);
+  overflow-y: auto;
   z-index: 1;
 }
 
@@ -150,6 +151,7 @@
     position: relative;
     height: auto;
     min-height: auto;
+    overflow-y: visible;
   }
   
   .flip-card-container.flipped .flip-card-front {
