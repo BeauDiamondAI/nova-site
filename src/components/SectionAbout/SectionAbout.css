@@ -7,6 +7,7 @@
   perspective: 1000px;
   cursor: pointer;
   position: relative;
+  max-width: 580px; /* Increased from default to accommodate more text */
 }
 
 /* Inner container that actually flips */
@@ -90,27 +91,7 @@
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
   transform: rotateY(180deg);
-  overflow-y: auto;
   z-index: 1;
-}
-
-/* Smooth scrollbar for back content */
-.flip-card-back::-webkit-scrollbar {
-  width: 6px;
-}
-
-.flip-card-back::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 3px;
-}
-
-.flip-card-back::-webkit-scrollbar-thumb {
-  background: rgba(6, 182, 212, 0.3);
-  border-radius: 3px;
-}
-
-.flip-card-back::-webkit-scrollbar-thumb:hover {
-  background: rgba(6, 182, 212, 0.5);
 }
 
 /* Responsive adjustments */
@@ -130,32 +111,11 @@
   
   .flip-card-container {
     min-height: 450px;
+    max-width: 100%;
   }
   
   .flip-card-inner {
     min-height: 450px;
-  }
-  
-  /* Mobile-specific: Make flipped cards taller to show all content */
-  .flip-card-container.flipped {
-    min-height: auto;
-    height: auto;
-  }
-  
-  .flip-card-container.flipped .flip-card-inner {
-    min-height: auto;
-    height: auto;
-  }
-  
-  .flip-card-container.flipped .flip-card-back {
-    position: relative;
-    height: auto;
-    min-height: auto;
-    overflow-y: visible;
-  }
-  
-  .flip-card-container.flipped .flip-card-front {
-    display: none;
   }
 }
 
