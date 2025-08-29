@@ -54,12 +54,12 @@ const BlinkingArrow = () => (
     initial={{ opacity: 0.3 }}
     animate={{ opacity: [0.3, 1, 0.3] }}
     transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-    className="md:hidden absolute right-4 top-1/2 transform -translate-y-1/2 z-10 pointer-events-none"
+    className="block md:hidden fixed right-4 top-1/2 transform -translate-y-1/2 z-50 pointer-events-none"
   >
-    <div className="flex flex-col items-center space-y-1">
-      <ChevronRight className="w-6 h-6 text-cyan-400" />
-      <ChevronRight className="w-6 h-6 text-cyan-400 -mt-3" />
-      <ChevronRight className="w-6 h-6 text-cyan-400 -mt-3" />
+    <div className="flex flex-col items-center">
+      <ChevronRight className="w-8 h-8 text-cyan-400" />
+      <ChevronRight className="w-8 h-8 text-cyan-400 -mt-4" />
+      <ChevronRight className="w-8 h-8 text-cyan-400 -mt-4" />
     </div>
   </motion.div>
 );
@@ -71,39 +71,55 @@ export default function SectionCorePillars() {
 
   // Remove the auto-scroll useEffect entirely
 
-  // Update scroll position when index changes
-  useEffect(() => {
-    containerRef.current?.scrollTo({
-      left: containerRef.current.offsetWidth * index,
-      behavior: 'smooth',
-    });
-  }, [index]);
+  // Remove this useEffect - it was causing scroll sync issues
+  // useEffect(() => {
+  //   containerRef.current?.scrollTo({
+  //     left: containerRef.current.offsetWidth * index,
+  //     behavior: 'smooth',
+  //   });
+  // }, [index]);
 
   // Hide arrows after user interaction
   const handleUserInteraction = () => {
     setShowArrows(false);
   };
 
+  // Handle manual scroll on mobile/desktop
+  const handleScroll = () => {
+    if (!containerRef.current) return;
+    
+    const container = containerRef.current;
+    const scrollLeft = container.scrollLeft;
+    const cardWidth = container.offsetWidth;
+    const newIndex = Math.round(scrollLeft / cardWidth);
+    
+    if (newIndex !== index && newIndex >= 0 && newIndex < cards.length) {
+      setIndex(newIndex);
+      handleUserInteraction();
+    }
+  };
+
   const scrollLeft = () => {
     handleUserInteraction();
-    setIndex((prev) => (prev - 1 + cards.length) % cards.length);
+    const newIndex = (index - 1 + cards.length) % cards.length;
+    setIndex(newIndex);
+    if (containerRef.current) {
+      containerRef.current.scrollTo({
+        left: containerRef.current.offsetWidth * newIndex,
+        behavior: 'smooth',
+      });
+    }
   };
 
   const scrollRight = () => {
     handleUserInteraction();
-    setIndex((prev) => (prev + 1) % cards.length);
-  };
-
-  // Handle manual scroll on mobile
-  const handleScroll = () => {
+    const newIndex = (index + 1) % cards.length;
+    setIndex(newIndex);
     if (containerRef.current) {
-      const scrollLeft = containerRef.current.scrollLeft;
-      const cardWidth = containerRef.current.offsetWidth;
-      const newIndex = Math.round(scrollLeft / cardWidth);
-      if (newIndex !== index) {
-        setIndex(newIndex);
-        handleUserInteraction();
-      }
+      containerRef.current.scrollTo({
+        left: containerRef.current.offsetWidth * newIndex,
+        behavior: 'smooth',
+      });
     }
   };
 
