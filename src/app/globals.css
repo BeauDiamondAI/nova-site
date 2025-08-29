@@ -91,15 +91,14 @@ body {
   }
 }
 
+.text-base, .text-lg, .text-sm {
+  font-weight: 300 !important;
+}
+
 /* Force Geomanist on all text elements with lighter weight */
 * {
   font-family: 'Geomanist', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   font-weight: 300; /* This will use your loaded Book weight for all text */
-}
-
-/* Make body text appear lighter */
-p, li, span:not(.geomanist-book):not(.geomanist-regular) {
-  font-weight: 300 !important;
 }
 
 /* Except headlines which should use Orbitron */
