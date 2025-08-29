@@ -10,7 +10,7 @@ const SectionInMotion = () => {
           Independent. Intentional. In Motion.
         </h2>
         <p className="text-lg md:text-xl text-gray-300 whitespace-pre-line mb-12">
-          NovaThink is independently owned, privately funded, and fully operational.
+          NovaThink is independently owned and privately funded.
 We are not pursuing venture funding.
 
 Most collaborations are privately initiated.
