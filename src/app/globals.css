@@ -91,9 +91,10 @@ body {
   }
 }
 
-/* Force Geomanist on all text elements */
+/* Force Geomanist on all text elements with lighter weight */
 * {
   font-family: 'Geomanist', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-weight: 300; /* This will use your loaded Book weight for all text */
 }
 
 /* Except headlines which should use Orbitron */
