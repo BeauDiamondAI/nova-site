@@ -5,6 +5,7 @@ module.exports = {
     extend: {
       fontFamily: {
         headline: ['var(--font-headline)'],
+        sans: ['Borna', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
       },
       animation: {
         'fade-in': 'fadeIn 4s ease-out forwards',
