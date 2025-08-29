@@ -48,17 +48,30 @@ const cards: Card[] = [
   },
 ];
 
+// Blinking arrow component for mobile
+const BlinkingArrow = () => (
+  <motion.div
+    initial={{ opacity: 0.3 }}
+    animate={{ opacity: [0.3, 1, 0.3] }}
+    transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+    className="md:hidden absolute right-4 top-1/2 transform -translate-y-1/2 z-10 pointer-events-none"
+  >
+    <div className="flex flex-col items-center space-y-1">
+      <ChevronRight className="w-6 h-6 text-cyan-400" />
+      <ChevronRight className="w-6 h-6 text-cyan-400 -mt-3" />
+      <ChevronRight className="w-6 h-6 text-cyan-400 -mt-3" />
+    </div>
+  </motion.div>
+);
+
 export default function SectionCorePillars() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [index, setIndex] = useState(0);
+  const [showArrows, setShowArrows] = useState(true);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setIndex((prev) => (prev + 1) % cards.length);
-    }, 6000);
-    return () => clearInterval(interval);
-  }, []);
+  // Remove the auto-scroll useEffect entirely
 
+  // Update scroll position when index changes
   useEffect(() => {
     containerRef.current?.scrollTo({
       left: containerRef.current.offsetWidth * index,
@@ -66,11 +79,32 @@ export default function SectionCorePillars() {
     });
   }, [index]);
 
+  // Hide arrows after user interaction
+  const handleUserInteraction = () => {
+    setShowArrows(false);
+  };
+
   const scrollLeft = () => {
+    handleUserInteraction();
     setIndex((prev) => (prev - 1 + cards.length) % cards.length);
   };
+
   const scrollRight = () => {
+    handleUserInteraction();
     setIndex((prev) => (prev + 1) % cards.length);
+  };
+
+  // Handle manual scroll on mobile
+  const handleScroll = () => {
+    if (containerRef.current) {
+      const scrollLeft = containerRef.current.scrollLeft;
+      const cardWidth = containerRef.current.offsetWidth;
+      const newIndex = Math.round(scrollLeft / cardWidth);
+      if (newIndex !== index) {
+        setIndex(newIndex);
+        handleUserInteraction();
+      }
+    }
   };
 
   return (
@@ -82,21 +116,25 @@ export default function SectionCorePillars() {
         <div className="hidden md:flex gap-2">
           <button
             onClick={scrollLeft}
-            className="p-2 bg-white/10 hover:bg-white/20 rounded-full"
+            className="p-2 bg-white/10 hover:bg-white/20 rounded-full transition-colors"
           >
             <ChevronLeft />
           </button>
           <button
             onClick={scrollRight}
-            className="p-2 bg-white/10 hover:bg-white/20 rounded-full"
+            className="p-2 bg-white/10 hover:bg-white/20 rounded-full transition-colors"
           >
             <ChevronRight />
           </button>
         </div>
       </div>
+
+      {/* Show blinking arrows on mobile when user hasn't interacted yet */}
+      {showArrows && <BlinkingArrow />}
   
       <div
         ref={containerRef}
+        onScroll={handleScroll}
         className="flex overflow-x-auto snap-x snap-mandatory scroll-smooth scrollbar-hide px-4 md:px-16 min-h-[53rem]"
       >
         {cards.map((card, i) => (
