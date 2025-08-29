@@ -97,8 +97,8 @@ body {
   font-weight: 300; /* This will use your loaded Book weight for all text */
 }
 
-/* Target body text specifically */
-p, li, span:not(.font-headline):not(.geomanist-book):not(.geomanist-regular) {
+/* Make body text appear lighter */
+p, li, span:not(.geomanist-book):not(.geomanist-regular) {
   font-weight: 300 !important;
 }
 
