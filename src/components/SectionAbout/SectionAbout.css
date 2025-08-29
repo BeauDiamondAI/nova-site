@@ -1,4 +1,4 @@
-/* SectionAbout.css - Fixed Glassmorphic Cards with Working Flip Animation and Line-by-Line Fade */
+/* SectionAbout.css - Fixed Glassmorphic Cards with Working Flip Animation */
 
 /* Flippable Card Container */
 .flip-card-container {
@@ -95,106 +95,6 @@
   z-index: 1;
 }
 
-/* LINE-BY-LINE FADE-IN ANIMATION STYLES - Mask Approach */
-
-/* Mask-based reveal animation */
-@keyframes revealContent {
-  0% {
-    -webkit-mask-position: 0% -100%;
-    mask-position: 0% -100%;
-    opacity: 0;
-  }
-  20% {
-    opacity: 1;
-  }
-  100% {
-    -webkit-mask-position: 0% 0%;
-    mask-position: 0% 0%;
-    opacity: 1;
-  }
-}
-
-/* Apply mask gradient to card content */
-.card-content {
-  position: relative;
-  z-index: 2;
-}
-
-/* Initially hide with mask */
-.flip-card-back .card-content {
-  -webkit-mask-image: linear-gradient(to bottom, 
-    transparent 0%, 
-    black 50%, 
-    black 100%);
-  mask-image: linear-gradient(to bottom, 
-    transparent 0%, 
-    black 50%, 
-    black 100%);
-  -webkit-mask-size: 100% 200%;
-  mask-size: 100% 200%;
-  -webkit-mask-position: 0% -100%;
-  mask-position: 0% -100%;
-  opacity: 0;
-}
-
-/* Animate when flipped */
-.flip-card-container.flipped .flip-card-back .card-content {
-  animation: revealContent 1.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-  animation-delay: 0.3s;
-}
-
-/* Stagger the animation delays for each element */
-.flip-card-container.flipped .card-content > *:nth-child(1) {
-  transition-delay: 0.3s;
-}
-
-.flip-card-container.flipped .card-content > *:nth-child(2) {
-  transition-delay: 0.45s;
-}
-
-.flip-card-container.flipped .card-content > *:nth-child(3) {
-  transition-delay: 0.6s;
-}
-
-.flip-card-container.flipped .card-content > *:nth-child(4) {
-  transition-delay: 0.75s;
-}
-
-.flip-card-container.flipped .card-content > *:nth-child(5) {
-  transition-delay: 0.9s;
-}
-
-/* Special handling for list items */
-.flip-card-container.flipped .card-content ul {
-  opacity: 1 !important;
-  transform: translateY(0) !important;
-}
-
-.flip-card-container.flipped .card-content ul li {
-  opacity: 0;
-  transform: translateY(15px);
-  transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1), 
-              transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.flip-card-container.flipped .card-content ul li:nth-child(1) {
-  transition-delay: 1.05s;
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.flip-card-container.flipped .card-content ul li:nth-child(2) {
-  transition-delay: 1.2s;
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.flip-card-container.flipped .card-content ul li:nth-child(3) {
-  transition-delay: 1.35s;
-  opacity: 1;
-  transform: translateY(0);
-}
-
 /* Smooth scrollbar for back content */
 .flip-card-back::-webkit-scrollbar {
   width: 6px;
@@ -203,13 +103,13 @@
 .flip-card-back::-webkit-scrollbar-track {
   background: rgba(255, 255, 255, 0.05);
   border-radius: 3px;
-  margin: 8px 0;
+  margin: 8px 0; /* Add top and bottom margin to respect rounded corners */
 }
 
 .flip-card-back::-webkit-scrollbar-thumb {
   background: rgba(6, 182, 212, 0.3);
   border-radius: 3px;
-  margin: 8px 0;
+  margin: 8px 0; /* Match the track margin */
 }
 
 .flip-card-back::-webkit-scrollbar-thumb:hover {
@@ -261,17 +161,6 @@
   .flip-card-container.flipped .flip-card-front {
     display: none;
   }
-  
-  /* Ensure fade-in animation works on mobile */
-  .flip-card-container.flipped .card-content > * {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  
-  .flip-card-container.flipped .card-content ul li {
-    opacity: 1;
-    transform: translateY(0);
-  }
 }
 
 /* Browser fallbacks */
@@ -294,14 +183,5 @@
   
   .glassmorphic-card-face {
     transition: none;
-  }
-  
-  .card-content > * {
-    transition: none !important;
-  }
-  
-  .flip-card-container.flipped .card-content > * {
-    opacity: 1;
-    transform: translateY(0);
   }
 }

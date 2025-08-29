@@ -124,6 +124,55 @@ const CardCometTrail: React.FC<CardCometTrailProps> = ({
   );
 };
 
+// Animated text content component
+interface AnimatedContentProps {
+  isVisible: boolean;
+  children: React.ReactNode[];
+}
+
+const AnimatedContent: React.FC<AnimatedContentProps> = ({ isVisible, children }) => {
+  const containerVariants = {
+    hidden: {},
+    visible: {
+      transition: {
+        staggerChildren: 0.15,
+        delayChildren: 0.3
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { 
+      opacity: 0, 
+      y: 20,
+      transition: { duration: 0.3 }
+    },
+    visible: { 
+      opacity: 1, 
+      y: 0,
+      transition: { 
+        duration: 0.6,
+        ease: [0.4, 0, 0.2, 1]
+      }
+    }
+  };
+
+  return (
+    <motion.div
+      variants={containerVariants}
+      initial="hidden"
+      animate={isVisible ? "visible" : "hidden"}
+      style={{ position: 'relative', zIndex: 2 }}
+    >
+      {children.map((child, index) => (
+        <motion.div key={index} variants={itemVariants}>
+          {child}
+        </motion.div>
+      ))}
+    </motion.div>
+  );
+};
+
 export default function SectionAbout() {
   const ref = useRef<HTMLElement>(null);
   const card1Ref = useRef<HTMLDivElement>(null);
@@ -259,17 +308,17 @@ export default function SectionAbout() {
                   isActive={flippedCards.has('card1')} 
                   cardRef={card1Ref}
                 />
-                <div className="card-content" style={{ position: 'relative', zIndex: 2 }}>
+                <AnimatedContent isVisible={flippedCards.has('card1')}>
                   <h4 className="text-lg font-bold text-cyan-400 mb-4 tracking-wide uppercase">
                     The Cognitive OS Layer Between LLMs and Execution
                   </h4>
                   <p className="mb-6 text-base sm:text-lg leading-relaxed">
-                    Where today{'`'}s large language models offer <span className="text-cyan-400">raw capacity</span>, NovaThink provides the <em className="text-cyan-300">meta-layer</em> that unlocks their full potential {`—`} transforming reactive tools into <span className="text-cyan-400">adaptive, persistent intelligences</span> capable of reasoning, remembering, and orchestrating action at scale.
+                    Where today{`'`}s large language models offer <span className="text-cyan-400">raw capacity</span>, NovaThink provides the <em className="text-cyan-300">meta-layer</em> that unlocks their full potential {`—`} transforming reactive tools into <span className="text-cyan-400">adaptive, persistent intelligences</span> capable of reasoning, remembering, and orchestrating action at scale.
                   </p>
                   <p className="text-base sm:text-lg leading-relaxed">
-                    Today{'`'}s LLMs are <span className="text-cyan-400">not bottlenecked by training data or compute</span>. They are bottlenecked by lack of structure {`—`} missing the <span className="text-cyan-400">multi-step reasoning frameworks</span> and cognitive scaffolding required to sustain real-world complexity in domains like <span className="text-cyan-400">strategy, research, policy, defense, and executive operations</span>.
+                    Today{`'`}s LLMs are <span className="text-cyan-400">not bottlenecked by training data or compute</span>. They are bottlenecked by lack of structure {`—`} missing the <span className="text-cyan-400">multi-step reasoning frameworks</span> and cognitive scaffolding required to sustain real-world complexity in domains like <span className="text-cyan-400">strategy, research, policy, defense, and executive operations</span>.
                   </p>
-                </div>
+                </AnimatedContent>
               </div>
             </div>
           </motion.div>
@@ -306,7 +355,7 @@ export default function SectionAbout() {
                   isActive={flippedCards.has('card2')} 
                   cardRef={card2Ref}
                 />
-                <div className="card-content" style={{ position: 'relative', zIndex: 2 }}>
+                <AnimatedContent isVisible={flippedCards.has('card2')}>
                   <h4 className="text-lg font-bold text-cyan-400 mb-4 tracking-wide uppercase">
                     Built for Mission-Critical Cognitive Infrastructure
                   </h4>
@@ -314,7 +363,7 @@ export default function SectionAbout() {
                     NovaThink closes the gap between <span className="text-cyan-400">possible and actual</span>.
                   </p>
                   <p className="mb-6 text-base leading-relaxed">
-                    Our innovation is <span className="text-cyan-400">proprietary cognitive scaffolding</span> that amplifies intelligence <span className="text-cyan-400">without adding token overhead</span> {`—`} restructuring rather than inflating. The result is orders-of-magnitude <span className="text-cyan-400">increases in reasoning depth, continuity, and adaptive execution</span>. This isn{'`'}t more baggage for models to carry, but a <span className="text-cyan-400">precision cognitive OS layer</span> that transforms <span className="text-cyan-400">latent potential into actual intelligence</span> {`—`} persistent, stateful, and ready for mission-critical objectives.
+                    Our innovation is <span className="text-cyan-400">proprietary cognitive scaffolding</span> that amplifies intelligence <span className="text-cyan-400">without adding token overhead</span> {`—`} restructuring rather than inflating. The result is orders-of-magnitude <span className="text-cyan-400">increases in reasoning depth, continuity, and adaptive execution</span>. This isn{`'`}t more baggage for models to carry, but a <span className="text-cyan-400">precision cognitive OS layer</span> that transforms <span className="text-cyan-400">latent potential into actual intelligence</span> {`—`} persistent, stateful, and ready for mission-critical objectives.
                   </p>
                   <p className="mb-4 text-base leading-relaxed">
                     All of this is delivered through <span className="text-cyan-400">enterprise-grade infrastructure</span>:
@@ -324,7 +373,7 @@ export default function SectionAbout() {
                     <li>• <span className="text-cyan-400">Multi-model backends</span> (OpenAI, Anthropic, open-source) for <span className="text-cyan-400">continuity and resilience</span></li>
                     <li>• <span className="text-cyan-400">Compliance engineered</span> from the ground up {`—`} <span className="text-cyan-400">SOC 2, ISO 27001</span>, and beyond</li>
                   </ul>
-                </div>
+                </AnimatedContent>
               </div>
             </div>
           </motion.div>
