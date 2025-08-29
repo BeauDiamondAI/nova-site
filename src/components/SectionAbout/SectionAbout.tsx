@@ -269,7 +269,7 @@ export default function SectionAbout() {
           custom={0}
           className="mb-16"
         >
-          <h3 className="text-2xl sm:text-3xl font-bold mb-8 leading-tight borna-medium">
+          <h3 className="text-2xl sm:text-3xl font-bold mb-8 leading-tight geomanist-book">
             NovaThink is building the <span className="text-cyan-400">cognitive operating system</span> for the AI era.
           </h3>
         </motion.div>
@@ -297,7 +297,7 @@ export default function SectionAbout() {
             <div className="flip-card-inner">
               {/* Front Face */}
               <div className="flip-card-front glassmorphic-card-face">
-                <h4 className="text-xl font-bold text-cyan-400 tracking-wide uppercase text-center borna-regular">
+                <h4 className="text-xl font-bold text-cyan-400 tracking-wide uppercase text-center geomanist-regular">
                   The Cognitive OS Layer Between LLMs and Execution
                 </h4>
               </div>
@@ -309,7 +309,7 @@ export default function SectionAbout() {
                   cardRef={card1Ref}
                 />
                 <AnimatedContent isVisible={flippedCards.has('card1')}>
-                  <h4 className="text-lg font-bold text-cyan-400 mb-4 tracking-wide uppercase borna-regular">
+                  <h4 className="text-lg font-bold text-cyan-400 mb-4 tracking-wide uppercase geomanist-regular">
                     The Cognitive OS Layer Between LLMs and Execution
                   </h4>
                   <p className="mb-6 text-base sm:text-lg leading-relaxed">
@@ -344,7 +344,7 @@ export default function SectionAbout() {
             <div className="flip-card-inner">
               {/* Front Face */}
               <div className="flip-card-front glassmorphic-card-face">
-                <h4 className="text-xl font-bold text-cyan-400 tracking-wide uppercase text-center borna-regular">
+                <h4 className="text-xl font-bold text-cyan-400 tracking-wide uppercase text-center geomanist-regular">
                   Built for Mission-Critical Cognitive Infrastructure
                 </h4>
               </div>
@@ -356,7 +356,7 @@ export default function SectionAbout() {
                   cardRef={card2Ref}
                 />
                 <AnimatedContent isVisible={flippedCards.has('card2')}>
-                  <h4 className="text-lg font-bold text-cyan-400 mb-4 tracking-wide uppercase borna-regular">
+                  <h4 className="text-lg font-bold text-cyan-400 mb-4 tracking-wide uppercase geomanist-regular">
                     Built for Mission-Critical Cognitive Infrastructure
                   </h4>
                   <p className="mb-6 text-base leading-relaxed">
@@ -388,7 +388,7 @@ export default function SectionAbout() {
           custom={3}
           className="mb-8"
         >
-          <h3 className="text-2xl sm:text-3xl font-bold mb-4 leading-tight borna-medium">
+          <h3 className="text-2xl sm:text-3xl font-bold mb-4 leading-tight geomanist-book">
             <span className="text-cyan-400">NovaThink is something fundamentally new:</span>
           </h3>
           <p className="text-xl leading-relaxed max-w-4xl mx-auto">

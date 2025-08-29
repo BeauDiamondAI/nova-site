@@ -1,0 +1,105 @@
+@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Geomanist Font Definitions */
+@font-face {
+  font-family: 'Geomanist';
+  src: url('/fonts/geomanist/geomanist-regular-webfont.woff2') format('woff2'),
+       url('/fonts/geomanist/geomanist-regular-webfont.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Geomanist';
+  src: url('/fonts/geomanist/geomanist-book-webfont.woff2') format('woff2'),
+       url('/fonts/geomanist/geomanist-book-webfont.woff') format('woff');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+  --font-headline: 'Orbitron', sans-serif;
+  --font-body: 'Geomanist', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: 'Geomanist', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+/* Geomanist Font Utility Classes */
+.geomanist-regular {
+  font-family: 'Geomanist', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-weight: 400;
+}
+
+.geomanist-book {
+  font-family: 'Geomanist', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-weight: 300;
+}
+
+@keyframes slideUpFast {
+  from {
+    opacity: 0;
+    transform: translateY(60px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-slideUpFast {
+  animation: slideUpFast 0.6s ease-out forwards;
+}
+
+.animate-slideUpFastDelayed {
+  animation: slideUpFast 0.6s ease-out 0.3s forwards;
+}
+
+@keyframes fadeInStrong {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.animate-fadeInStrong {
+  animation: fadeInStrong 1.5s ease-out forwards;
+}
+
+@layer utilities {
+  .font-headline {
+    font-family: 'Orbitron', sans-serif;
+  }
+}
+
+/* Force Geomanist on all text elements */
+* {
+  font-family: 'Geomanist', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+/* Except headlines which should use Orbitron */
+.font-headline,
+h1, h2 {
+  font-family: 'Orbitron', sans-serif !important;
+}
+
+@tailwind utilities;
