@@ -66,6 +66,41 @@
     0 10px 40px -10px rgba(6, 182, 212, 0.3),
     inset 0 1px 0 rgba(255, 255, 255, 0.15);
 }
+    
+/* Tablet-specific adjustments (768px - 1024px) */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .glassmorphic-card-face {
+    padding: 1.75rem;
+    max-width: 500px;
+  }
+  
+  .flip-card-container {
+    min-height: 500px;
+    max-width: 500px;
+  }
+  
+  .flip-card-inner {
+    min-height: 500px;
+  }
+  
+  /* Ensure scrolling works properly on tablets */
+  .flip-card-container.flipped .flip-card-back {
+    position: absolute;
+    height: 100%;
+    min-height: 500px;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+  }
+  
+  /* Don't hide the front face on tablets like we do on mobile */
+  .flip-card-container.flipped .flip-card-front {
+    display: flex;
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+  }
 
 /* Front face */
 .flip-card-front {
