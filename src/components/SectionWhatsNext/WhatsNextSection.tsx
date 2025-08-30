@@ -328,7 +328,7 @@ const WhatsNextSection: React.FC = () => {
         <div style={{
           position: 'absolute',
           inset: 0,
-          background: 'linear-gradient(135deg, rgba(0, 0, 0, 0.4) 0%, rgba(15, 23, 42, 0.6) 20%, rgba(0, 0, 0, 0.5) 100%)',
+          background: 'linear-gradient(135deg, rgba(0, 0, 0, 0.4) 0%, rgba(15, 23, 42, 0.6) 20%, rgba(0, 0, 0, 0.5) 50%)',
           zIndex: 2
         }} />
 
