@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
@@ -48,13 +48,13 @@ const cards: Card[] = [
   },
 ];
 
-// Blinking arrow component for mobile
+// Blinking arrow component for mobile - scoped to this section only
 const BlinkingArrow = () => (
   <motion.div
     initial={{ opacity: 0.3 }}
     animate={{ opacity: [0.3, 1, 0.3] }}
     transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-    className="block md:hidden fixed right-4 top-1/2 transform -translate-y-1/2 z-50 pointer-events-none"
+    className="block md:hidden absolute right-4 top-1/2 transform -translate-y-1/2 z-20 pointer-events-none"
   >
     <div className="flex flex-col items-center">
       <ChevronRight className="w-8 h-8 text-cyan-400" />
@@ -68,6 +68,50 @@ export default function SectionCorePillars() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [index, setIndex] = useState(0);
   const [showArrows, setShowArrows] = useState(true);
+  const [isDragging, setIsDragging] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [scrollStart, setScrollStart] = useState(0);
+
+  // Mouse/touch drag functionality
+  const handleMouseDown = (e: React.MouseEvent) => {
+    if (!containerRef.current) return;
+    setIsDragging(true);
+    setStartX(e.pageX);
+    setScrollStart(containerRef.current.scrollLeft);
+    containerRef.current.style.cursor = 'grabbing';
+    handleUserInteraction();
+  };
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!isDragging || !containerRef.current) return;
+    e.preventDefault();
+    const x = e.pageX;
+    const walk = (x - startX) * 2; // Adjust scroll speed
+    containerRef.current.scrollLeft = scrollStart - walk;
+  };
+
+  const handleMouseUp = () => {
+    if (!containerRef.current) return;
+    setIsDragging(false);
+    containerRef.current.style.cursor = 'grab';
+    
+    // Snap to nearest card
+    const container = containerRef.current;
+    const cardWidth = container.offsetWidth;
+    const newIndex = Math.round(container.scrollLeft / cardWidth);
+    setIndex(Math.max(0, Math.min(newIndex, cards.length - 1)));
+    
+    container.scrollTo({
+      left: cardWidth * newIndex,
+      behavior: 'smooth',
+    });
+  };
+
+  const handleMouseLeave = () => {
+    if (isDragging) {
+      handleMouseUp();
+    }
+  };
 
   // Remove the auto-scroll useEffect entirely
 
@@ -124,7 +168,7 @@ export default function SectionCorePillars() {
   };
 
   return (
-    <section className="py-16 bg-black text-white relative">
+    <section className="py-16 bg-black text-white relative overflow-hidden">
       <div className="flex justify-between items-center px-4 md:px-16 mb-6">
         <h2 className="text-3xl md:text-5xl font-headline font-bold">
           What We&apos;re Building
@@ -151,7 +195,12 @@ export default function SectionCorePillars() {
       <div
         ref={containerRef}
         onScroll={handleScroll}
-        className="flex overflow-x-auto snap-x snap-mandatory scroll-smooth scrollbar-hide px-4 md:px-16 min-h-[53rem]"
+        onMouseDown={handleMouseDown}
+        onMouseMove={handleMouseMove}
+        onMouseUp={handleMouseUp}
+        onMouseLeave={handleMouseLeave}
+        className="flex overflow-x-auto snap-x snap-mandatory scroll-smooth scrollbar-hide px-4 md:px-16 min-h-[53rem] cursor-grab select-none"
+        style={{ cursor: isDragging ? 'grabbing' : 'grab' }}
       >
         {cards.map((card, i) => (
           <motion.div
