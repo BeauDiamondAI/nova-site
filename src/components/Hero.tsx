@@ -28,7 +28,7 @@ export default function Hero() {
         loop
         playsInline
       >
-        <source src="/hero-h264-v1.mp4" type="video/mp4" />
+        <source src="/hero-h264-slow-v1.mp4" type="video/mp4" />
       </video>
 
       {/* Overlay */}
