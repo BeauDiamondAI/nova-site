@@ -30,19 +30,20 @@ export default function Hero() {
   preload="auto"            // helps iOS begin fetching immediately
   // poster="/images/hero/hero-poster.jpg" // optional: add a poster to avoid any initial flash
 >
-  {/* HEVC (H.265) for Apple devices — VideoToolbox exports are tagged hvc1 */}
-  <source
-    src="/hero-hevc-CQ30-v1.mp4"
-    type='video/mp4; codecs="hvc1"'
-  />
 
   {/* Fallback for browsers without HEVC-in-MP4 support (Chrome/Edge/Firefox on many platforms) */}
   <source
-    src="/hero-h264-slow-v2.mp4"
+    src="/hero-h264-v2.mp4"
     type="video/mp4"
   />
-</video>
 
+ {/* HEVC (H.265) for Apple devices — VideoToolbox exports are tagged hvc1 */}
+ // <source
+ //   src="/hero-hevc-CQ30-v1.mp4"
+ //   type='video/mp4; codecs="hvc1"'
+  />
+
+</video>
 
       {/* Overlay */}
       <div className="absolute inset-0 bg-black opacity-40 z-10" />

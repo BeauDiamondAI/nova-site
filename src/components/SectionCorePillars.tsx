@@ -16,35 +16,35 @@ const cards: Card[] = [
     title: 'Security-First Architecture',
     paragraph:
       'Our infrastructure starts from zero trust - encrypted, isolated, and fortified for high-sensitivity deployments.',
-    image: '/images/cards/Security-FirstArchitecture.webp',
+    image: '/images/cards/Security-FirstArchitecture_v2.webp',
   },
   {
     tag: 'insight_at_velocity',
     title: 'Dynamic Data Intelligence',
     paragraph:
       'Our models adapt to real-world signals - fusing behavioral, contextual, and operational data into fluid intelligence layers.',
-    image: '/images/cards/DynamicDataIntelligence.webp',
+    image: '/images/cards/DynamicDataIntelligence_v2.webp',
   },
   {
     tag: 'superior_intelligence_core',
     title: 'Proprietary Reasoning Engines',
     paragraph:
       'Beyond outputs - these are logic frameworks that reason, orchestrate, and drive decision-making across domains.',
-    image: '/images/cards/ProprietaryReasoningEngines.webp',
+    image: '/images/cards/ProprietaryReasoningEngines_v2.webp',
   },
   {
     tag: 'modular_scale',
     title: 'Scalable Cloud Framework',
     paragraph:
       'Elastic, modular, and built for scale - with zero-overhead deployment and enterprise-grade performance boundaries.',
-    image: '/images/cards/ScalableCloudFramework.webp',
+    image: '/images/cards/ScalableCloudFramework_v2.webp',
   },
   {
     tag: 'mission_ready',
     title: 'Deployment Ready by Design',
     paragraph:
       'These systems don\'t just demo well - they operate in the wild. Built for execution, not just experimentation.',
-    image: '/images/cards/DeploymentReadybyDesign.webp',
+    image: '/images/cards/DeploymentReadybyDesign_v2.webp',
   },
 ];
 
