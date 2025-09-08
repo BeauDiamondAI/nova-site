@@ -37,12 +37,6 @@ export default function Hero() {
     type="video/mp4"
   />
 
- {/* HEVC (H.265) for Apple devices — VideoToolbox exports are tagged hvc1 */}
-  <source
-    src="/hero-hevc-CQ30-v1.mp4"
-    type='video/mp4; codecs="hvc1"'
-  />
-
 </video>
 
       {/* Overlay */}
