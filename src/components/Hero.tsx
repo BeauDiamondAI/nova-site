@@ -33,7 +33,7 @@ export default function Hero() {
 
   {/* Fallback for browsers without HEVC-in-MP4 support (Chrome/Edge/Firefox on many platforms) */}
   <source
-    src="/hero-h264-v2.3.mp4"
+    src="/hero-h264-v2.4.mp4"
     type="video/mp4"
   />
 
