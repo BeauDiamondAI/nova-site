@@ -37,7 +37,7 @@ const cards: Card[] = [
     title: 'Scalable Cloud Framework',
     paragraph:
       'Elastic, modular, and built for scale - with zero-overhead deployment and enterprise-grade performance boundaries.',
-    image: '/images/cards/ScalableCloudFramework_v2.webp',
+    image: '/images/cards/ScalableCloudFramework_v2.1.webp',
   },
   {
     tag: 'mission_ready',
