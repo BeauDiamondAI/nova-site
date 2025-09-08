@@ -242,7 +242,7 @@ export default function SectionAbout() {
       <div
         className="pointer-events-none absolute inset-0 w-full h-full z-10"
         style={{
-          backgroundImage: `url('/images/SectionAboutBlueWave.webp')`,
+          backgroundImage: `url('/images/SectionAboutMedia/SectionAboutBlueWave.webp')`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',
