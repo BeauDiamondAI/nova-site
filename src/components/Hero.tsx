@@ -31,17 +31,19 @@ export default function Hero() {
   // poster="/images/hero/hero-poster.jpg" // optional: add a poster to avoid any initial flash
 >
 
-{/* Fallback for browsers without HEVC-in-MP4 support (Chrome/Edge/Firefox on many platforms) */}
-  <source
-    src="/hero-h264-v2.3.mp4"
-    type="video/mp4"
-  />
+<link rel="preload" as="video" href="/hero-h264-slow-v2.mp4" type="video/mp4" />
+<video
+  className="absolute top-0 left-0 w-full h-full object-cover z-0 object-center"
+  autoPlay
+  muted
+  loop
+  playsInline
+  preload="auto"
+  poster="/images/hero/hero-poster.jpg"
+>
+  <source src="/hero-h264-1080-v1.mp4" type="video/mp4" />
+</video>
 
-  {/* HEVC (H.265) for Apple devices — VideoToolbox exports are tagged hvc1 */}
-  <source
-    src="/hero-hevc-CQ27-v1.mp4"
-    type='video/mp4; codecs="hvc1"'
-  />
   
 </video>
 
