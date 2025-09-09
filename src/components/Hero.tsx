@@ -28,13 +28,11 @@ export default function Hero() {
   loop
   playsInline
   preload="auto"            // helps iOS begin fetching immediately
-  // poster="/images/hero/hero-poster.jpg" // optional: add a poster to avoid any initial flash
 >
 
-  
   {/* Fallback for browsers without HEVC-in-MP4 support (Chrome/Edge/Firefox on many platforms) */}
   <source
-    src="/hero-h264-1080-v1.1.mp4"
+    src="/hero-h264-1080-v1.2.mp4"
     type="video/mp4"
   />
 
