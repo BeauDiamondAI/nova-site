@@ -31,7 +31,7 @@ export default function Hero() {
   // poster="/images/hero/hero-poster.jpg" // optional: add a poster to avoid any initial flash
 >
 
-<link rel="preload" as="video" href="/hero-h264-slow-v2.mp4" type="video/mp4" />
+<link rel="preload" as="video" href="/hero-h264-1080-v1.mp4" type="video/mp4" />
 <video
   className="absolute top-0 left-0 w-full h-full object-cover z-0 object-center"
   autoPlay
