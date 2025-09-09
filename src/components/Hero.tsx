@@ -32,16 +32,16 @@ export default function Hero() {
 >
 
 {/* Fallback for browsers without HEVC-in-MP4 support (Chrome/Edge/Firefox on many platforms) */}
-  <video
+<video
   className="absolute top-0 left-0 w-full h-full object-cover z-0 object-center"
+  src="/hero-h264-1080-v1.1.mp4"
   autoPlay
   muted
-  loop
   playsInline
+  loop
   preload="auto"
->
-  <source src="/hero-h264-1080-v1.1.mp4" type="video/mp4" />
-</video>
+  onCanPlay={(e) => e.currentTarget.play()} // nudge for Safari
+/>
 
   
 </video>
