@@ -40,7 +40,7 @@ export default function Hero() {
   playsInline
   preload="auto"
 >
-  <source src="/hero-h264-v2.3.mp4" type="video/mp4" />
+  <source src="/hero-h264-1080-v1.1.mp4" type="video/mp4" />
 </video>
 
   
