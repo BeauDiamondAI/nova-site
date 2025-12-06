@@ -62,12 +62,15 @@ export const CometTrail: React.FC<CometTrailProps> = ({
       const velocity = velocityRef.current;
       if (velocity < 1) return; // Don't create particles if mouse isn't moving
       
-      // More particles with faster movement
-      const particleCount = Math.min(Math.floor(velocity / 3), 8);
+      // Cap the effective velocity to prevent explosion effects
+      const cappedVelocity = Math.min(velocity, 15);
+      
+      // Fewer particles overall, and less scaling with speed
+      const particleCount = Math.min(Math.floor(cappedVelocity / 5) + 1, 4);
       
       for (let i = 0; i < particleCount; i++) {
         const angle = (Math.PI * 2 * i) / particleCount + Math.random() * 0.5;
-        const speed = velocity * 0.1 + Math.random() * 2;
+        const speed = cappedVelocity * 0.08 + Math.random() * 1.5;
         
         particlesRef.current.push({
           x: mouseRef.current.x,
@@ -75,14 +78,15 @@ export const CometTrail: React.FC<CometTrailProps> = ({
           vx: Math.cos(angle) * speed,
           vy: Math.sin(angle) * speed,
           life: 1.0,
-          size: Math.random() * 3 + velocity * 0.2,
+          // Much smaller size scaling - cap the velocity contribution
+          size: Math.random() * 2 + Math.min(cappedVelocity * 0.08, 1.5),
           hue: 180 + Math.random() * 40 // Cyan to blue range
         });
       }
       
-      // Limit particle count
-      if (particlesRef.current.length > 150) {
-        particlesRef.current = particlesRef.current.slice(-150);
+      // Lower particle limit
+      if (particlesRef.current.length > 100) {
+        particlesRef.current = particlesRef.current.slice(-100);
       }
     };
 
@@ -100,7 +104,7 @@ export const CometTrail: React.FC<CometTrailProps> = ({
         particle.y += particle.vy;
         particle.vx *= 0.98; // Friction
         particle.vy *= 0.98;
-        particle.life -= 0.015;
+        particle.life -= 0.02; // Slightly faster fade
         
         if (particle.life <= 0) return false;
         
@@ -108,17 +112,17 @@ export const CometTrail: React.FC<CometTrailProps> = ({
         const opacity = particle.life;
         const size = particle.size * particle.life;
         
-        // Outer glow
+        // Smaller glow radius (2.5x instead of 4x)
         ctx.beginPath();
         const gradient = ctx.createRadialGradient(
           particle.x, particle.y, 0,
-          particle.x, particle.y, size * 4
+          particle.x, particle.y, size * 2.5
         );
-        gradient.addColorStop(0, `rgba(${baseColor.r}, ${baseColor.g}, ${baseColor.b}, ${opacity * 0.4})`);
-        gradient.addColorStop(0.4, `rgba(${baseColor.r}, ${baseColor.g}, ${baseColor.b}, ${opacity * 0.2})`);
+        gradient.addColorStop(0, `rgba(${baseColor.r}, ${baseColor.g}, ${baseColor.b}, ${opacity * 0.3})`);
+        gradient.addColorStop(0.4, `rgba(${baseColor.r}, ${baseColor.g}, ${baseColor.b}, ${opacity * 0.15})`);
         gradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
         ctx.fillStyle = gradient;
-        ctx.arc(particle.x, particle.y, size * 4, 0, Math.PI * 2);
+        ctx.arc(particle.x, particle.y, size * 2.5, 0, Math.PI * 2);
         ctx.fill();
         
         // Inner bright core
@@ -130,14 +134,15 @@ export const CometTrail: React.FC<CometTrailProps> = ({
         return true;
       });
       
-      // Draw trail connecting recent particles
+      // Draw trail connecting recent particles - much thinner line
       if (particlesRef.current.length > 1) {
-        ctx.strokeStyle = `rgba(${baseColor.r}, ${baseColor.g}, ${baseColor.b}, 0.1)`;
-        ctx.lineWidth = velocityRef.current * 0.5;
+        const cappedVelocity = Math.min(velocityRef.current, 15);
+        ctx.strokeStyle = `rgba(${baseColor.r}, ${baseColor.g}, ${baseColor.b}, 0.08)`;
+        ctx.lineWidth = Math.min(cappedVelocity * 0.15, 2); // Cap line width at 2px
         ctx.beginPath();
         ctx.moveTo(particlesRef.current[0].x, particlesRef.current[0].y);
         
-        for (let i = 1; i < Math.min(particlesRef.current.length, 20); i++) {
+        for (let i = 1; i < Math.min(particlesRef.current.length, 15); i++) {
           const particle = particlesRef.current[i];
           ctx.lineTo(particle.x, particle.y);
         }
@@ -174,7 +179,7 @@ export const CometTrail: React.FC<CometTrailProps> = ({
         width: '100%',
         height: '100%',
         pointerEvents: 'none',
-        zIndex: isOverCard ? 100 : 3, // Higher when over card, but below card content
+        zIndex: isOverCard ? 100 : 3,
         mixBlendMode: 'screen',
         opacity: isOverCard ? 0.7 : 1
       }}
