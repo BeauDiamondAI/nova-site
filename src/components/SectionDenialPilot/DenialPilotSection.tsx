@@ -66,7 +66,7 @@ export default function DenialPilotSection() {
             {/* Header with Typing Effect */}
             <div className="flex items-center gap-4 mb-10 shrink-0">
               <img 
-                src="https://storage.googleapis.com/msgsndr/CGzQYFP48e3RZppvGSHz/media/69343f9ae6551c07e7b5af9c.png" 
+                src="https://storage.googleapis.com/msgsndr/CGzQYFP48e3RZppvGSHz/media/69344b75ec99b3e859cef294.png" 
                 alt="NovaThink" 
                 className="w-10 h-10 opacity-80 group-hover:opacity-100 transition-opacity"
               />
