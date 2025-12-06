@@ -5,7 +5,8 @@ import Hero from '@/components/Hero'
 import SectionAbout from '@/components/SectionAbout/SectionAbout';
 import SectionCorePillars from '@/components/SectionCorePillars';
 import SectionNovaThinkLabs from '@/components/SectionNovaThinkLabs';
-import WhoWeServeSection from '@/components/SectionWhoWeServe/WhoWeServeSection';
+{/* import WhoWeServeSection from '@/components/SectionWhoWeServe/WhoWeServeSection'; */}
+import SectionDenialPilot from '@/components/SectionDenialPilot/Denialpilotsection';
 import WhatsNextSection from '@/components/SectionWhatsNext/WhatsNextSection';
 import SectionInMotion from '@/components/SectionInMotion';
 import FooterMinimal from '@/components/FooterMinimal';
@@ -19,7 +20,7 @@ export default function Home() {
       <SectionAbout />
       <SectionCorePillars />
       <SectionNovaThinkLabs />
-      <WhoWeServeSection />
+      <SectionDenialPilot />
       <WhatsNextSection />
       <SectionInMotion />
       <FooterMinimal />
