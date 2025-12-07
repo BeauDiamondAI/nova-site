@@ -42,24 +42,18 @@ export const MobileProductCarousel: React.FC<MobileProductCarouselProps> = ({
   const nextProduct = products[currentIndex + 1];
   const prevProduct = products[currentIndex - 1];
 
-  // Animation variants for the card
+  // Animation variants for the card - simple slide, no morph
   const cardVariants = {
     enter: (direction: number) => ({
-      x: direction > 0 ? 200 : -200,
-      scale: 0.3,
-      borderRadius: "50%",
-      opacity: 0.8
+      x: direction > 0 ? 300 : -300,
+      opacity: 0
     }),
     center: {
       x: 0,
-      scale: 1,
-      borderRadius: 16,
       opacity: 1
     },
     exit: (direction: number) => ({
-      x: direction > 0 ? -200 : 200,
-      scale: 0.3,
-      borderRadius: "50%",
+      x: direction > 0 ? -300 : 300,
       opacity: 0
     })
   };
@@ -134,10 +128,9 @@ export const MobileProductCarousel: React.FC<MobileProductCarouselProps> = ({
             animate="center"
             exit="exit"
             transition={{
-              type: "spring",
-              stiffness: 300,
-              damping: 30,
-              duration: 0.5
+              type: "tween",
+              ease: "easeOut",
+              duration: 0.3
             }}
             drag="x"
             dragConstraints={{ left: 0, right: 0 }}
