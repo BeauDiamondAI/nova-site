@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ProductOrb } from "./ProductOrb";
 import { productsData } from "./productsData";
 import { CometTrail } from "./CometTrail";
+import { MobileProductCarousel } from "./MobileProductCarousel";
 
 const WhatsNextSection: React.FC = () => {
   const [expandedProductId, setExpandedProductId] = useState<string | null>(null);
@@ -12,6 +13,7 @@ const WhatsNextSection: React.FC = () => {
   const [isTextComplete, setIsTextComplete] = useState(false);
   const [isTextCollapsed, setIsTextCollapsed] = useState(false);
   const [hasAutoCollapsed, setHasAutoCollapsed] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
 
   const paragraphs = [
@@ -22,6 +24,17 @@ const WhatsNextSection: React.FC = () => {
     `• Frameworks where AI doesn't just assist — it collaborates, learns, and builds alongside you.`,
     `The horizon is clear: cognition itself as deployable infrastructure. And NovaThink is already laying the groundwork.`
   ];
+
+  // Mobile detection
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   // Simple intersection observer to trigger content
   useEffect(() => {
@@ -48,7 +61,7 @@ const WhatsNextSection: React.FC = () => {
     const streamText = () => {
       if (currentParagraph >= paragraphs.length) {
         setIsTextComplete(true);
-        // Auto-collapse after 4 seconds (reduced from 7), but only on the initial completion
+        // Auto-collapse after 4 seconds, but only on the initial completion
         if (!hasAutoCollapsed) {
           setTimeout(() => {
             setIsTextCollapsed(true);
@@ -81,9 +94,9 @@ const WhatsNextSection: React.FC = () => {
 
     const timer = setTimeout(streamText, 800); // Delay before starting
     return () => clearTimeout(timer);
-  }, [showContent, currentParagraph, paragraphs]);
+  }, [showContent, currentParagraph, paragraphs, hasAutoCollapsed]);
 
-  // Upward V-shaped arc - curves up and out from center
+  // Upward V-shaped arc - curves up and out from center (desktop only)
   const getOrbPosition = (index: number) => {
     const totalOrbs = productsData.length;
     const screenWidth = typeof window !== 'undefined' ? window.innerWidth : 1200;
@@ -92,16 +105,14 @@ const WhatsNextSection: React.FC = () => {
     const centerX = screenWidth / 2;
     const centerY = screenHeight / 2;
     
-    // Create a V-shape that curves upward from center
     const arcWidth = Math.min(screenWidth * 0.8, 1300);
-    const arcHeight = 100; // How much the ends lift up
-    const baseY = centerY + 220; // Moved down from 160px to 220px for more text space
+    const arcHeight = 100;
+    const baseY = centerY + 220;
     
-    const progress = index / (totalOrbs - 1); // 0 to 1
+    const progress = index / (totalOrbs - 1);
     const x = centerX - arcWidth / 2 + progress * arcWidth;
     
-    // V-shape: distance from center determines height
-    const distanceFromCenter = Math.abs(progress - 0.5) * 2; // 0 at center, 1 at edges
+    const distanceFromCenter = Math.abs(progress - 0.5) * 2;
     const y = baseY - arcHeight * distanceFromCenter;
     
     return { x, y };
@@ -113,13 +124,11 @@ const WhatsNextSection: React.FC = () => {
 
   const toggleTextExpansion = () => {
     if (isTextCollapsed) {
-      // When expanding, reset all text states to show full content
       setDisplayedText(paragraphs.join('\n\n'));
       setCurrentParagraph(paragraphs.length);
       setIsTextComplete(true);
       setIsTextCollapsed(false);
     } else {
-      // When collapsing, just set collapsed state
       setIsTextCollapsed(true);
     }
   };
@@ -267,9 +276,30 @@ const WhatsNextSection: React.FC = () => {
     );
   };
 
+  // Mobile-specific intro text (shorter)
+  const renderMobileIntro = () => {
+    return (
+      <motion.p
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: 0.3 }}
+        style={{
+          fontSize: '0.95rem',
+          color: 'rgba(255, 255, 255, 0.85)',
+          lineHeight: 1.6,
+          margin: '0 0 1.5rem 0',
+          fontWeight: 400,
+          textAlign: 'center'
+        }}
+      >
+        The future of AI isn't more apps. It's the rise of a cognitive operating system — intelligence that makes strategy and execution seamless.
+      </motion.p>
+    );
+  };
+
   return (
     <>
-      <style jsx>{`
+      <style>{`
         @keyframes blink {
           0%, 50% { opacity: 1; }
           51%, 100% { opacity: 0; }
@@ -287,14 +317,17 @@ const WhatsNextSection: React.FC = () => {
         style={{
           position: 'relative',
           width: '100vw',
-          height: '100vh',
+          height: isMobile ? 'auto' : '100vh',
+          minHeight: isMobile ? '100vh' : 'auto',
           overflow: 'hidden',
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          justifyContent: 'center',
-          isolation: 'isolate', // Prevent layout bleeding
-          zIndex: 1 // Lower than previous sections
+          justifyContent: isMobile ? 'flex-start' : 'center',
+          paddingTop: isMobile ? '60px' : 0,
+          paddingBottom: isMobile ? '40px' : 0,
+          isolation: 'isolate',
+          zIndex: 1
         }}
       >
         {/* Earth Background Video */}
@@ -324,16 +357,18 @@ const WhatsNextSection: React.FC = () => {
           </video>
         </div>
 
-        {/* Background overlay */}
+        {/* Background overlay - slightly darker on mobile for readability */}
         <div style={{
           position: 'absolute',
           inset: 0,
-          background: 'linear-gradient(135deg, rgba(0, 0, 0, 0.4) 0%, rgba(15, 23, 42, 0.6) 20%, rgba(0, 0, 0, 0.5) 50%)',
+          background: isMobile 
+            ? 'linear-gradient(180deg, rgba(0, 0, 0, 0.6) 0%, rgba(15, 23, 42, 0.7) 30%, rgba(0, 0, 0, 0.6) 100%)'
+            : 'linear-gradient(135deg, rgba(0, 0, 0, 0.4) 0%, rgba(15, 23, 42, 0.6) 20%, rgba(0, 0, 0, 0.5) 50%)',
           zIndex: 2
         }} />
 
-        {/* Add Comet Trail Effect */}        
-        <CometTrail isActive={showContent} />
+        {/* Comet Trail Effect - Desktop only for performance */}
+        {!isMobile && <CometTrail isActive={showContent} />}
 
         {/* Section Title */}
         <motion.div
@@ -341,71 +376,95 @@ const WhatsNextSection: React.FC = () => {
           animate={showContent ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8 }}
           style={{
-            position: 'absolute',
-            top: '40px', // Moved up from 60px
+            position: isMobile ? 'relative' : 'absolute',
+            top: isMobile ? 'auto' : '40px',
             left: 0,
             right: 0,
             zIndex: 10,
             textAlign: 'center',
-            width: '100%'
+            width: '100%',
+            marginBottom: isMobile ? '1.5rem' : 0
           }}
         >
-          <h2 className="text-4xl sm:text-5xl font-bold font-headline mb-5" style={{
-            fontSize: 'clamp(2.5rem, 5vw, 4rem)',
+          <h2 style={{
+            fontSize: isMobile ? 'clamp(2rem, 8vw, 2.5rem)' : 'clamp(2.5rem, 5vw, 4rem)',
             fontWeight: 800,
             color: '#ffffff',
-            margin: '0 0 1.5rem 0',
-            background: 'linear-gradient(135deg, #ffffff 0%, #ffffff 25%, rgba(6, 182, 212, 0.8) 50%, #ffffff 75%, #ffffff 100%)', // More white on sides, less blue spread
+            margin: isMobile ? '0 0 1rem 0' : '0 0 1.5rem 0',
+            background: 'linear-gradient(135deg, #ffffff 0%, #ffffff 25%, rgba(6, 182, 212, 0.8) 50%, #ffffff 75%, #ffffff 100%)',
             backgroundClip: 'text',
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent',
             textShadow: '0 0 30px rgba(6, 182, 212, 0.3)',
-            letterSpacing: '-0.02em'
+            letterSpacing: '-0.02em',
+            padding: isMobile ? '0 1rem' : 0
           }}>
             What&apos;s Next at NovaThink
           </h2>
           
-          {/* Streaming intro text */}
+          {/* Text content - different for mobile vs desktop */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={showContent ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.8, delay: 0.3 }}
             style={{
-              maxWidth: '800px',
+              maxWidth: isMobile ? '100%' : '800px',
               margin: '0 auto',
-              padding: '0 2rem'
+              padding: isMobile ? '0 1.5rem' : '0 2rem'
             }}
           >
-            <AnimatePresence mode="wait">
-              {renderStreamingText()}
-            </AnimatePresence>
+            {isMobile ? renderMobileIntro() : (
+              <AnimatePresence mode="wait">
+                {renderStreamingText()}
+              </AnimatePresence>
+            )}
           </motion.div>
         </motion.div>
 
-        {/* Product Orbs - Show only after text is complete */}
+        {/* Product Display - Carousel on mobile, Orbs on desktop */}
         <AnimatePresence>
-          {showContent && isTextComplete && (
-            <div style={{
-              position: 'relative',
-              width: '100%',
-              height: '100%',
-              zIndex: 5 // Lower than the text container (zIndex: 10)
-            }}>
-              {productsData.map((product, index) => {
-                const position = getOrbPosition(index);
-                return (
-                  <ProductOrb
-                    key={product.id}
-                    product={product}
-                    position={position}
-                    isExpanded={expandedProductId === product.id}
-                    hasExpandedCard={expandedProductId !== null}
-                    onClick={() => handleOrbClick(product.id)}
-                    index={index}
-                  />
-                );
-              })}
-            </div>
+          {showContent && (isMobile || isTextComplete) && (
+            <>
+              {isMobile ? (
+                /* Mobile Carousel */
+                <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: 0.5 }}
+                  style={{
+                    position: 'relative',
+                    width: '100%',
+                    zIndex: 10,
+                    marginTop: '1rem'
+                  }}
+                >
+                  <MobileProductCarousel products={productsData} />
+                </motion.div>
+              ) : (
+                /* Desktop Orbs */
+                <div style={{
+                  position: 'relative',
+                  width: '100%',
+                  height: '100%',
+                  zIndex: 5
+                }}>
+                  {productsData.map((product, index) => {
+                    const position = getOrbPosition(index);
+                    return (
+                      <ProductOrb
+                        key={product.id}
+                        product={product}
+                        position={position}
+                        isExpanded={expandedProductId === product.id}
+                        hasExpandedCard={expandedProductId !== null}
+                        onClick={() => handleOrbClick(product.id)}
+                        index={index}
+                      />
+                    );
+                  })}
+                </div>
+              )}
+            </>
           )}
         </AnimatePresence>
       </section>
