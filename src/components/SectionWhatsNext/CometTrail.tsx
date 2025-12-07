@@ -65,8 +65,8 @@ export const CometTrail: React.FC<CometTrailProps> = ({
       // Cap the effective velocity to prevent explosion effects
       const cappedVelocity = Math.min(velocity, 15);
       
-      // Fewer particles overall, and less scaling with speed
-      const particleCount = Math.min(Math.floor(cappedVelocity / 5) + 1, 4);
+      // Baseline of 2 particles, scaling gently with speed, capped at 5
+      const particleCount = Math.min(Math.floor(cappedVelocity / 4) + 2, 5);
       
       for (let i = 0; i < particleCount; i++) {
         const angle = (Math.PI * 2 * i) / particleCount + Math.random() * 0.5;
@@ -78,8 +78,8 @@ export const CometTrail: React.FC<CometTrailProps> = ({
           vx: Math.cos(angle) * speed,
           vy: Math.sin(angle) * speed,
           life: 1.0,
-          // Much smaller size scaling - cap the velocity contribution
-          size: Math.random() * 2 + Math.min(cappedVelocity * 0.08, 1.5),
+          // Slightly larger baseline size, still capped for fast movement
+          size: Math.random() * 2.5 + 1 + Math.min(cappedVelocity * 0.06, 1.2),
           hue: 180 + Math.random() * 40 // Cyan to blue range
         });
       }
