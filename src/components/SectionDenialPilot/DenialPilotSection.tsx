@@ -137,7 +137,7 @@ export default function DenialPilotSection() {
           </div>
 
           {/* RIGHT CARD: DenialPilot Deployment */}
-          <div className="lg:col-span-5 bg-gradient-to-br from-[#0B1120] to-[#0F172A] border border-slate-700 rounded-3xl lg:rounded-l-none lg:border-l-0 p-8 md:p-12 relative z-10 dp-card group h-[600px] flex flex-col shadow-2xl">
+          <div className="lg:col-span-5 bg-gradient-to-br from-[#0B1120] to-[#0F172A] border border-slate-700 rounded-3xl lg:rounded-l-none lg:border-l-0 p-8 md:p-12 relative z-10 dp-card group h-[600px] flex flex-col overflow-hidden shadow-2xl">
             
             {/* Header */}
             <div className="flex items-center gap-3 mb-8 shrink-0 relative z-20">
@@ -158,33 +158,35 @@ export default function DenialPilotSection() {
             <div className="relative flex-1">
               
               {/* DEFAULT VIEW */}
-              <div className="default-view space-y-6">
-                <div className="mb-6">
+              <div className="default-view space-y-5">
+                <div className="mb-4">
                   <h3 className="text-white font-semibold text-lg mb-3">Clinical Criteria Intelligence Platform</h3>
                   <p className="text-slate-400 text-sm leading-relaxed">
-                    Makes invisible payer approval rules visible: the hidden thresholds, documentation requirements, and delegation routing that determine whether a claim gets approved or denied, before submission ever happens. Coverage spans 11 surgical specialties and 6 major payers including UHC, Anthem, Aetna, Cigna, Humana, and Medicare, plus delegation entities such as eviCore, AIM, and Carelon. Built by NovaThink Health, Inc. SOC 2 Type I certified, Type II underway. HIPAA-compliant infrastructure.
+                    Makes invisible payer approval rules visible. The hidden thresholds, documentation requirements, and delegation routing that determine whether a claim gets approved or denied, surfaced before submission. Coverage spans 11 surgical specialties and 6 major payers, plus delegation entities including eviCore, AIM, and Carelon.
                   </p>
                 </div>
 
-                {defaultCapabilities.map((cap) => (
-                  <div key={cap.id} className={`${cap.bgColor} rounded-xl p-6 border ${cap.borderColor} relative overflow-hidden group/item transition-colors`}>
-                    <div className="absolute top-0 right-0 p-3 opacity-20">
-                      <svg className="w-16 h-16 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                      </svg>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {defaultCapabilities.map((cap) => (
+                    <div key={cap.id} className={`${cap.bgColor} rounded-xl p-5 border ${cap.borderColor} relative overflow-hidden group/item transition-colors`}>
+                      <div className="absolute top-0 right-0 p-2 opacity-20">
+                        <svg className="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                        </svg>
+                      </div>
+                      <h3 className="text-blue-400 font-bold text-base mb-2">{cap.title}</h3>
+                      <p className="text-slate-300 text-xs mb-3 leading-relaxed">{cap.description}</p>
+                      <div className="flex items-center gap-2 text-[10px] font-mono text-slate-500">
+                        <svg className="w-3 h-3 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                        </svg>
+                        {cap.badge}
+                      </div>
                     </div>
-                    <h3 className="text-blue-400 font-bold text-lg mb-2">{cap.title}</h3>
-                    <p className="text-slate-300 text-sm mb-4 leading-relaxed">{cap.description}</p>
-                    <div className="flex items-center gap-2 text-xs font-mono text-slate-500">
-                      <svg className="w-3 h-3 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                      </svg>
-                      {cap.badge}
-                    </div>
-                  </div>
-                ))}
-                
-                <div className="mt-8 text-center">
+                  ))}
+                </div>
+
+                <div className="mt-6 text-center">
                   <span className="text-[10px] text-slate-500 font-mono uppercase tracking-widest animate-pulse">
                     Hover for Technical Details
                   </span>
