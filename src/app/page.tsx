@@ -7,7 +7,6 @@ import SectionCorePillars from '@/components/SectionCorePillars';
 import SectionNovaThinkLabs from '@/components/SectionNovaThinkLabs';
 {/* import WhoWeServeSection from '@/components/SectionWhoWeServe/WhoWeServeSection'; */}
 import SectionDenialPilot from '@/components/SectionDenialPilot/DenialPilotSection';
-import WhatsNextSection from '@/components/SectionWhatsNext/WhatsNextSection';
 import SectionInMotion from '@/components/SectionInMotion';
 import FooterMinimal from '@/components/FooterMinimal';
 
@@ -21,7 +20,6 @@ export default function Home() {
       <SectionCorePillars />
       <SectionNovaThinkLabs />
       <SectionDenialPilot />
-      <WhatsNextSection />
       <SectionInMotion />
       <FooterMinimal />
     </main>

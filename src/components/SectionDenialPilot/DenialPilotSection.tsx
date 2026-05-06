@@ -52,7 +52,7 @@ export default function DenialPilotSection() {
           </h2>
           <p className="text-slate-400 text-lg max-w-2xl">
             NovaThink is the sovereign infrastructure powering{' '}
-            <span className="text-white font-semibold">DenialPilot</span>—the first automated medical appeal platform for surgical practices.
+            <span className="text-white font-semibold">DenialPilot</span>, the first clinical criteria intelligence platform for surgical practices.
           </p>
         </div>
 
@@ -160,9 +160,9 @@ export default function DenialPilotSection() {
               {/* DEFAULT VIEW */}
               <div className="default-view space-y-6">
                 <div className="mb-6">
-                  <h3 className="text-white font-semibold text-lg mb-3">Healthcare Revenue Defense Platform</h3>
+                  <h3 className="text-white font-semibold text-lg mb-3">Clinical Criteria Intelligence Platform</h3>
                   <p className="text-slate-400 text-sm leading-relaxed">
-                    The first end-to-end appeal automation for surgical specialty practices handling medical necessity, prior authorization, and clinical denials.
+                    Makes invisible payer approval rules visible: the hidden thresholds, documentation requirements, and delegation routing that determine whether a claim gets approved or denied, before submission ever happens. Coverage spans 11 surgical specialties and 6 major payers including UHC, Anthem, Aetna, Cigna, Humana, and Medicare, plus delegation entities such as eviCore, AIM, and Carelon. Built by NovaThink Health, Inc. SOC 2 Type I certified, Type II underway. HIPAA-compliant infrastructure.
                   </p>
                 </div>
 

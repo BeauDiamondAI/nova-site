@@ -313,10 +313,10 @@ export default function SectionAbout() {
                     The Cognitive OS Layer Between LLMs and Execution
                   </h4>
                   <p className="mb-6 text-base sm:text-lg leading-relaxed">
-                    Where today{`'`}s large language models offer <span className="text-cyan-400">raw capacity</span>, NovaThink provides the <em className="text-cyan-300">meta-layer</em> that unlocks their full potential {`—`} transforming reactive tools into <span className="text-cyan-400">adaptive, persistent intelligences</span> capable of reasoning, remembering, and orchestrating action at scale.
+                    Where today{`'`}s large language models offer <span className="text-cyan-400">raw capacity</span>, NovaThink provides the <em className="text-cyan-300">meta-layer</em> that activates their full depth. It transforms default completion behavior into <span className="text-cyan-400">structured, multi-dimensional reasoning</span> that frontier models are capable of but rarely exhibit.
                   </p>
                   <p className="text-base sm:text-lg leading-relaxed">
-                    Today{`'`}s LLMs are <span className="text-cyan-400">not bottlenecked by training data or compute</span>. They are bottlenecked by lack of structure {`—`} missing the <span className="text-cyan-400">multi-step reasoning frameworks</span> and cognitive scaffolding required to sustain real-world complexity in domains like <span className="text-cyan-400">strategy, research, policy, defense, and executive operations</span>.
+                    Today{`'`}s LLMs are <span className="text-cyan-400">not bottlenecked by training data or compute</span>. They are bottlenecked by interaction design: the absence of <span className="text-cyan-400">cognitive scaffolding</span> that configures which reasoning regimes become active during inference. The result is models that operate well below their ceiling on the tasks that matter most, including <span className="text-cyan-400">complex synthesis, contradiction detection, multi-framework integration, and strategic reasoning under competing constraints</span>.
                   </p>
                 </AnimatedContent>
               </div>
@@ -363,16 +363,14 @@ export default function SectionAbout() {
                     NovaThink closes the gap between <span className="text-cyan-400">possible and actual</span>.
                   </p>
                   <p className="mb-6 text-base leading-relaxed">
-                    Our innovation is <span className="text-cyan-400">proprietary cognitive scaffolding</span> that amplifies intelligence <span className="text-cyan-400">without adding token overhead</span> {`—`} restructuring rather than inflating. The result is orders-of-magnitude <span className="text-cyan-400">increases in reasoning depth, continuity, and adaptive execution</span>. This isn{`'`}t more baggage for models to carry, but a <span className="text-cyan-400">precision cognitive OS layer</span> that transforms <span className="text-cyan-400">latent potential into actual intelligence</span> {`—`} persistent, stateful, and ready for mission-critical objectives.
+                    Our innovation is <span className="text-cyan-400">proprietary cognitive scaffolding</span> that activates reasoning depth frontier models already possess but that default interactions leave dormant. It restructures how models allocate attention rather than adding token overhead.
                   </p>
-                  <p className="mb-4 text-base leading-relaxed">
-                    All of this is delivered through <span className="text-cyan-400">enterprise-grade infrastructure</span>:
+                  <p className="mb-6 text-base leading-relaxed">
+                    In controlled comparisons across three model families, this approach has enabled smaller, configured models, equipped with <span className="text-cyan-400">semantically dense meta-cognitive priors</span>, to outperform an unconfigured flagship on <span className="text-cyan-400">reasoning depth, contradiction detection, architectural sophistication, and several additional dimensions of analytical rigor</span>.
                   </p>
-                  <ul className="text-left space-y-2 text-sm leading-relaxed text-slate-200">
-                    <li>• <span className="text-cyan-400">Fully isolated, encrypted VPC deployments</span> for uncompromising data security</li>
-                    <li>• <span className="text-cyan-400">Multi-model backends</span> (OpenAI, Anthropic, open-source) for <span className="text-cyan-400">continuity and resilience</span></li>
-                    <li>• <span className="text-cyan-400">Compliance engineered</span> from the ground up {`—`} <span className="text-cyan-400">SOC 2, ISO 27001</span>, and beyond</li>
-                  </ul>
+                  <p className="text-base leading-relaxed">
+                    This isn{`'`}t more baggage for models to carry. It is the difference between a model operating on <span className="text-cyan-400">autopilot</span> and a model operating at its <span className="text-cyan-400">actual ceiling</span>.
+                  </p>
                 </AnimatedContent>
               </div>
             </div>
@@ -392,7 +390,7 @@ export default function SectionAbout() {
             <span className="text-cyan-400">NovaThink is something fundamentally new:</span>
           </h3>
           <p className="text-xl leading-relaxed max-w-4xl mx-auto">
-            An LLM-agnostic cognitive OS {`—`} the intelligence amplification layer that will define how humans and AI collaborate over the next decade.
+            An LLM-agnostic cognitive OS. The layer between the model and the interaction that determines how much of the model{`'`}s reasoning depth is actually realized.
           </p>
         </motion.div>
       </motion.div>
